@@ -1,0 +1,1744 @@
+/* System Architecture Workspace: current prototype and proposed product journey.
+ * Official service references and icon provenance are recorded in evidence.
+ * No AWS deployment or automated architecture generation is claimed. */
+(() => {
+  "use strict";
+  window.SAWWebsiteData = {
+  "id": "system-architecture-workspace-1-0",
+  "version": "website-architecture-v2",
+  "title": "System Architecture Workspace",
+  "groups": [
+    {
+      "id": "core",
+      "label": "Core Architecture"
+    },
+    {
+      "id": "experience",
+      "label": "Workspace"
+    },
+    {
+      "id": "design",
+      "label": "Design pipeline"
+    },
+    {
+      "id": "storage",
+      "label": "Private data"
+    },
+    {
+      "id": "delivery",
+      "label": "Platform"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "web-user",
+      "name": "User and product owner",
+      "short": "User",
+      "group": "core",
+      "pos": [
+        -36,
+        0,
+        0
+      ],
+      "status": "Current responsibility",
+      "summary": "Starts with a business idea and owns the intended outcome.",
+      "details": "The user supplies an idea, clarifies the workload and reviews what the design means. The product is intended to help a person move from an early concept to a traceable baseline that an AWS engineer can develop further. The person stays outside the AWS service boundary and retains the decision to proceed.",
+      "inputs": [
+        "Business idea",
+        "Intended users and outcomes",
+        "Review decisions"
+      ],
+      "outputs": [
+        "Requirements to clarify",
+        "Design feedback",
+        "Permission to prepare a baseline"
+      ],
+      "aws": {
+        "service": "User / product owner",
+        "key": "user",
+        "why": "A person defines the need. Their identity would be authenticated separately by Amazon Cognito.",
+        "notes": "The user is not an AWS service. A sign-in session must not be interpreted as permission to provision cloud resources.",
+        "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html",
+        "icon": "/assets/aws-icons/user.svg",
+        "status": "Proposed AWS design",
+        "short": "User"
+      },
+      "module": "core",
+      "responsibility": "The user supplies an idea, clarifies the workload and reviews what the design means. The product is intended to help a person move from an early concept to a traceable baseline that an AWS engineer can develop further. The person stays outside the AWS service boundary and retains the decision to proceed.",
+      "cloud": "A person defines the need. Their identity would be authenticated separately by Amazon Cognito.",
+      "icon": "/assets/aws-icons/user.svg",
+      "order": 0,
+      "layer": 0,
+      "journeyStep": 1
+    },
+    {
+      "id": "web-session",
+      "name": "Sign-in and session boundary",
+      "short": "Identity",
+      "group": "experience",
+      "pos": [
+        -6,
+        -11,
+        -2
+      ],
+      "status": "Implemented",
+      "summary": "Protects workspace routes and private page operations.",
+      "details": "The current Worker verifies the configured email and password, limits failed attempts and issues an eight-hour signed HttpOnly session cookie. A matching server-side session record is required. Logout removes that record. This is the current owner workspace, not a complete multi-customer account system. A multi-tenant service would also require an authorisation model for organisations, memberships and page ownership; those capabilities are not implemented by the current owner sign-in.",
+      "inputs": [
+        "Same-origin sign-in request",
+        "Configured password verifier",
+        "Session cookie"
+      ],
+      "outputs": [
+        "Authenticated session",
+        "Rejected request or sign-in error",
+        "Revoked session on logout"
+      ],
+      "aws": {
+        "service": "Amazon Cognito",
+        "key": "cognito",
+        "why": "A user pool is a candidate for managed application sign-in as this product gains separate customer accounts.",
+        "notes": "Authorise every page request by owner or tenant. Authentication does not itself provide tenant isolation. Keep browser sessions protected and retain server-side access checks.",
+        "url": "https://docs.aws.amazon.com/cognito/latest/developerguide/what-is-amazon-cognito.html",
+        "status": "Proposed AWS design",
+        "icon": "/assets/aws-icons/cognito.svg",
+        "short": "Amazon Cognito"
+      },
+      "module": "experience",
+      "responsibility": "The current Worker verifies the configured email and password, limits failed attempts and issues an eight-hour signed HttpOnly session cookie. A matching server-side session record is required. Logout removes that record. This is the current owner workspace, not a complete multi-customer account system. A multi-tenant service would also require an authorisation model for organisations, memberships and page ownership; those capabilities are not implemented by the current owner sign-in.",
+      "cloud": "A user pool is a candidate for managed application sign-in as this product gains separate customer accounts.",
+      "icon": "/assets/aws-icons/graph.svg",
+      "layer": 1,
+      "order": 1
+    },
+    {
+      "id": "web-shell",
+      "name": "Workspace application shell",
+      "short": "Workspace",
+      "group": "experience",
+      "pos": [
+        18,
+        -11,
+        2
+      ],
+      "status": "Implemented",
+      "summary": "Coordinates the canvas, page selection, toolbars and study drawers.",
+      "details": "The workspace shell owns the active page, current architecture view and selection. It coordinates fullscreen, the left canvas controls and the right study controls while retaining the starfield. Opening a drawer changes the interface, not the saved architecture by itself.",
+      "inputs": [
+        "Authenticated workspace document",
+        "Active page and view",
+        "Pointer and keyboard actions"
+      ],
+      "outputs": [
+        "Visible canvas",
+        "Consistent selection state",
+        "Opened study drawer"
+      ],
+      "aws": {
+        "service": "Browser + Amazon CloudFront",
+        "key": "cloudfront",
+        "why": "The interactive shell remains browser JavaScript. CloudFront could deliver the application assets from an origin.",
+        "notes": "Do not move camera interaction to a server. Private APIs still need authentication, and protected responses must not enter a public cache.",
+        "url": "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html",
+        "status": "Proposed AWS design",
+        "icon": "/assets/aws-icons/cloudfront.svg",
+        "short": "CloudFront"
+      },
+      "module": "experience",
+      "responsibility": "The workspace shell owns the active page, current architecture view and selection. It coordinates fullscreen, the left canvas controls and the right study controls while retaining the starfield. Opening a drawer changes the interface, not the saved architecture by itself.",
+      "cloud": "The interactive shell remains browser JavaScript. CloudFront could deliver the application assets from an origin.",
+      "icon": "/assets/aws-icons/graph.svg",
+      "layer": 1,
+      "order": 3
+    },
+    {
+      "id": "web-page",
+      "name": "Design identity and revisions",
+      "short": "Design revisions",
+      "group": "storage",
+      "pos": [
+        -30,
+        -33,
+        2
+      ],
+      "status": "Implemented",
+      "summary": "Keep each design identity and stored revision context together.",
+      "details": "Each current page has a stable ID, name, description, architecture reference, selected view, optional layers and update time. The product direction extends this into immutable accepted revisions with a draft pointer, author and source lineage. Agentic Core models remain separate from the System Architecture Workspace product model. A saved page is structured design data, not deployed infrastructure.",
+      "inputs": [
+        "Selected page record",
+        "Metadata edits",
+        "Section records"
+      ],
+      "outputs": [
+        "Renderable architecture context",
+        "Portable page JSON",
+        "Versioned save payload"
+      ],
+      "aws": {
+        "service": "Amazon DynamoDB",
+        "key": "dynamodb",
+        "why": "DynamoDB is a possible future application store for per-owner page records and their revision metadata.",
+        "notes": "Use an explicit tenant or owner key and a revision condition for writes. Keep GitHub as the current private version history until a deliberate data migration is approved.",
+        "url": "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html",
+        "status": "Proposed AWS design",
+        "icon": "/assets/aws-icons/dynamodb.svg",
+        "short": "DynamoDB"
+      },
+      "module": "storage",
+      "responsibility": "Each current page has a stable ID, name, description, architecture reference, selected view, optional layers and update time. The product direction extends this into immutable accepted revisions with a draft pointer, author and source lineage. Agentic Core models remain separate from the System Architecture Workspace product model. A saved page is structured design data, not deployed infrastructure.",
+      "cloud": "DynamoDB is a possible future application store for per-owner page records and their revision metadata.",
+      "icon": "/assets/aws-icons/graph.svg",
+      "layer": 3,
+      "order": 0
+    },
+    {
+      "id": "web-entry",
+      "name": "Public entry and portfolio",
+      "short": "Entry",
+      "group": "experience",
+      "pos": [
+        -18,
+        -11,
+        2
+      ],
+      "status": "Implemented",
+      "summary": "Introduces the product and provides sign-in and portfolio navigation.",
+      "details": "The public entry presents the workspace idea, a teal galaxy and the portfolio. Its navigation changes the entry view without loading a second animated galaxy. Access to the introduction is public, while the workspace and its private data still require sign-in.",
+      "inputs": [
+        "Public website request",
+        "Portfolio navigation"
+      ],
+      "outputs": [
+        "Product introduction",
+        "Sign-in form",
+        "Portfolio view"
+      ],
+      "aws": {
+        "service": "Amazon S3 + CloudFront",
+        "key": "s3",
+        "why": "S3 can hold static entry assets, with CloudFront delivering them to visitors.",
+        "notes": "Separate public assets from protected design data. The application must not bundle private repository content or credentials into public JavaScript.",
+        "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html",
+        "status": "Proposed AWS design",
+        "icon": "/assets/aws-icons/s3.svg",
+        "short": "Amazon S3"
+      },
+      "module": "experience",
+      "responsibility": "The public entry presents the workspace idea, a teal galaxy and the portfolio. Its navigation changes the entry view without loading a second animated galaxy. Access to the introduction is public, while the workspace and its private data still require sign-in.",
+      "cloud": "S3 can hold static entry assets, with CloudFront delivering them to visitors.",
+      "icon": "/assets/aws-icons/graph.svg",
+      "layer": 1,
+      "order": 0
+    },
+    {
+      "id": "web-transition",
+      "name": "Loading and fullscreen transition",
+      "short": "Loading",
+      "group": "experience",
+      "pos": [
+        6,
+        -11,
+        0
+      ],
+      "status": "Implemented",
+      "summary": "Moves successful sign-in into the workspace with the existing five-second experience.",
+      "details": "Sign-in requests fullscreen during the user gesture. After authentication succeeds, the existing galaxy moves into the loading presentation for five seconds. The workspace then loads. If fullscreen is accepted, a same-origin frame preserves it; otherwise the site navigates normally. Hidden entry animations stop when the workspace takes over.",
+      "inputs": [
+        "Successful authentication",
+        "Browser fullscreen capability"
+      ],
+      "outputs": [
+        "Workspace entry after the loading presentation",
+        "Paused hidden entry animations"
+      ],
+      "aws": {
+        "service": "Browser transition",
+        "key": "cloudfront",
+        "why": "This is a browser experience, not a separate AWS service. The hosting layer only supplies its files.",
+        "notes": "Fullscreen remains subject to the browser. The transition must never bypass sign-in or hide an authentication error.",
+        "url": "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html",
+        "status": "Proposed AWS design",
+        "icon": "/assets/aws-icons/browser.svg",
+        "short": "Loading"
+      },
+      "module": "experience",
+      "responsibility": "Sign-in requests fullscreen during the user gesture. After authentication succeeds, the existing galaxy moves into the loading presentation for five seconds. The workspace then loads. If fullscreen is accepted, a same-origin frame preserves it; otherwise the site navigates normally. Hidden entry animations stop when the workspace takes over.",
+      "cloud": "This is a browser experience, not a separate AWS service. The hosting layer only supplies its files.",
+      "icon": "/assets/aws-icons/browser.svg",
+      "layer": 1,
+      "order": 2
+    },
+    {
+      "id": "web-canvas",
+      "name": "Editable 3D system model",
+      "short": "3D design",
+      "group": "core",
+      "pos": [
+        -12,
+        0,
+        -1.8
+      ],
+      "status": "Implemented",
+      "summary": "Make components, interfaces and dependencies inspectable.",
+      "details": "Today the browser renders manually authored architecture datasets with orbit, selection and contextual explanations. The product direction is to turn a confirmed brief into an editable graph whose nodes represent responsibilities and whose directed edges represent interfaces or data flows. The 3D brain is a way to inspect this structured model; spatial proximity is not proof of a dependency. Generated editing and prompt-to-model creation remain proposed.",
+      "inputs": [
+        "Architecture nodes and directed connections",
+        "Confirmed requirements and assumptions",
+        "User edits and camera gestures"
+      ],
+      "outputs": [
+        "Inspectable 3D reference model",
+        "Selected component and documented relationships",
+        "Candidate graph revision for checks"
+      ],
+      "aws": {
+        "service": "Browser 3D workspace",
+        "key": "browser",
+        "why": "Rendering remains on the user device. CloudFront could deliver application and model assets while protected APIs serve private records.",
+        "notes": "Browser graphics are not an AWS service. Use bounded scene work, pause hidden rendering and preserve a keyboard-accessible way to inspect every component.",
+        "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html",
+        "icon": "/assets/aws-icons/browser.svg",
+        "status": "Proposed AWS design",
+        "short": "Browser 3D"
+      },
+      "module": "core",
+      "responsibility": "Today the browser renders manually authored architecture datasets with orbit, selection and contextual explanations. The product direction is to turn a confirmed brief into an editable graph whose nodes represent responsibilities and whose directed edges represent interfaces or data flows. The 3D brain is a way to inspect this structured model; spatial proximity is not proof of a dependency. Generated editing and prompt-to-model creation remain proposed.",
+      "cloud": "Rendering remains on the user device. CloudFront could deliver application and model assets while protected APIs serve private records.",
+      "icon": "/assets/aws-icons/browser.svg",
+      "order": 2,
+      "layer": 0,
+      "journeyStep": 3
+    },
+    {
+      "id": "web-study",
+      "name": "Architecture study views",
+      "short": "Study views",
+      "group": "design",
+      "pos": [
+        6,
+        -22,
+        0
+      ],
+      "status": "Implemented",
+      "summary": "Explains the system, individual components and proposed AWS choices.",
+      "details": "System Overview describes the current website flow. Individual Nodes explains a selected responsibility, its inputs, outputs and connections. AWS explains a possible AWS implementation with official references. This manually designed website does not need the Agentic Core mathematical proof interface.",
+      "inputs": [
+        "Selected component",
+        "Architecture descriptions",
+        "AWS learning references"
+      ],
+      "outputs": [
+        "Contextual explanation",
+        "Service rationale",
+        "Explicit current and proposed status"
+      ],
+      "aws": {
+        "service": "Browser + versioned reference data",
+        "key": "s3",
+        "why": "Keep explanatory material and architecture versions as reviewable data; S3 is a possible AWS home for reference bundles.",
+        "notes": "The browser presents these records. A service mapping is a design option and must not be displayed as a deployed AWS resource.",
+        "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html",
+        "status": "Proposed AWS design",
+        "icon": "/assets/aws-icons/s3.svg",
+        "short": "Amazon S3"
+      },
+      "module": "design",
+      "responsibility": "System Overview describes the current website flow. Individual Nodes explains a selected responsibility, its inputs, outputs and connections. AWS explains a possible AWS implementation with official references. This manually designed website does not need the Agentic Core mathematical proof interface.",
+      "cloud": "Keep explanatory material and architecture versions as reviewable data; S3 is a possible AWS home for reference bundles.",
+      "icon": "/assets/aws-icons/graph.svg",
+      "layer": 2,
+      "order": 2
+    },
+    {
+      "id": "web-sections",
+      "name": "Versioned design data contract",
+      "short": "Design schema",
+      "group": "storage",
+      "pos": [
+        -18,
+        -33,
+        -2
+      ],
+      "status": "Implemented",
+      "summary": "Keep design records portable and compatible across versions.",
+      "details": "The current stored page format carries stable identity, metadata, view choices and optional documented sections. The simplified presentation removes Page settings from the interface, while stored records remain intact. The proposed graph contract should extend this with typed components, directed interfaces, assumptions and revision lineage. Schema migration must preserve old records and reject invalid imports without discarding a good draft.",
+      "inputs": [
+        "Versioned page or graph record",
+        "Supported schema version",
+        "Validated imported content"
+      ],
+      "outputs": [
+        "Portable structured design data",
+        "Migration or validation findings",
+        "Stable revision lineage"
+      ],
+      "aws": {
+        "service": "Amazon DynamoDB",
+        "key": "dynamodb",
+        "why": "DynamoDB could hold per-tenant design metadata and revision pointers. Larger versioned graph bundles can remain in S3.",
+        "notes": "Use conditional writes for revision conflicts and enforce tenant ownership on every access. Document schema migrations; a new schema must not silently reinterpret an old accepted design.",
+        "url": "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html",
+        "icon": "/assets/aws-icons/dynamodb.svg",
+        "status": "Proposed AWS design",
+        "short": "DynamoDB"
+      },
+      "module": "storage",
+      "responsibility": "The current stored page format carries stable identity, metadata, view choices and optional documented sections. The simplified presentation removes Page settings from the interface, while stored records remain intact. The proposed graph contract should extend this with typed components, directed interfaces, assumptions and revision lineage. Schema migration must preserve old records and reject invalid imports without discarding a good draft.",
+      "cloud": "DynamoDB could hold per-tenant design metadata and revision pointers. Larger versioned graph bundles can remain in S3.",
+      "icon": "/assets/aws-icons/graph.svg",
+      "layer": 3,
+      "order": 1
+    },
+    {
+      "id": "web-guide",
+      "name": "Architecture reference guide",
+      "short": "Reference guide",
+      "group": "design",
+      "pos": [
+        18,
+        -22,
+        2
+      ],
+      "status": "Implemented",
+      "summary": "Answers supported questions from the current architecture references.",
+      "details": "The current free guide uses deterministic lookup over recorded components, connections, sections and AWS notes. It can explain reference material and open a relevant study view. It does not call a generative model or create a new architecture from a prompt. The custom AI design assistant is the product direction shown separately.",
+      "inputs": [
+        "Question",
+        "Current page and selected component",
+        "Recorded reference content"
+      ],
+      "outputs": [
+        "Grounded reference response",
+        "Navigation to relevant content"
+      ],
+      "aws": {
+        "service": "Browser reference lookup",
+        "key": "lambda",
+        "why": "The current guide needs no cloud model. Lambda is an option if reference retrieval later needs server-side access control.",
+        "notes": "Do not add a paid model merely to answer a lookup question. Generative assistance requires a separately designed model connection, quotas and user consent.",
+        "url": "https://docs.aws.amazon.com/lambda/latest/dg/welcome.html",
+        "status": "Proposed AWS design",
+        "icon": "/assets/aws-icons/browser.svg",
+        "short": "Reference guide"
+      },
+      "module": "design",
+      "responsibility": "The current free guide uses deterministic lookup over recorded components, connections, sections and AWS notes. It can explain reference material and open a relevant study view. It does not call a generative model or create a new architecture from a prompt. The custom AI design assistant is the product direction shown separately.",
+      "cloud": "The current guide needs no cloud model. Lambda is an option if reference retrieval later needs server-side access control.",
+      "icon": "/assets/aws-icons/browser.svg",
+      "layer": 2,
+      "order": 3
+    },
+    {
+      "id": "web-drafts",
+      "name": "Browser draft retention",
+      "short": "Local drafts",
+      "group": "storage",
+      "pos": [
+        -6,
+        -33,
+        0
+      ],
+      "status": "Implemented",
+      "summary": "Keep local page state available between visits.",
+      "details": "The browser retains current page records and view choices locally. The stored format is portable JSON, and the retained data adapter validates supported records. Page settings and its file controls are removed from this presentation. Browser data remains local to this device and can be cleared by the user or browser; it is not a confirmed GitHub save or a multi-device backup.",
+      "inputs": [
+        "Current page records",
+        "Selected architecture view"
+      ],
+      "outputs": [
+        "Retained browser state",
+        "Restored page context"
+      ],
+      "aws": {
+        "service": "Browser drafts / optional S3 exports",
+        "key": "s3",
+        "why": "Local drafts should still work in the browser. S3 could store optional durable exports in a future cloud account.",
+        "notes": "A local write is not a server receipt. Show unsynced changes clearly and avoid uploading a draft until the user requests a save.",
+        "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html",
+        "status": "Proposed AWS design",
+        "icon": "/assets/aws-icons/browser.svg",
+        "short": "Local drafts"
+      },
+      "module": "storage",
+      "responsibility": "The browser retains current page records and view choices locally. The stored format is portable JSON, and the retained data adapter validates supported records. Page settings and its file controls are removed from this presentation. Browser data remains local to this device and can be cleared by the user or browser; it is not a confirmed GitHub save or a multi-device backup.",
+      "cloud": "Local drafts should still work in the browser. S3 could store optional durable exports in a future cloud account.",
+      "icon": "/assets/aws-icons/graph.svg",
+      "layer": 3,
+      "order": 2
+    },
+    {
+      "id": "web-store-api",
+      "name": "Private page storage API",
+      "short": "Page API",
+      "group": "storage",
+      "pos": [
+        6,
+        -33,
+        2
+      ],
+      "status": "Implemented, connection required",
+      "summary": "Validates and mediates explicit reads and saves to the private repository.",
+      "details": "The current Worker exposes status, connect, list, read and save routes under /api/workspace-store. It requires a valid session, rejects cross-origin writes, validates page fields and sizes, and checks repository privacy. GitHub updates use the last-read file SHA so a conflicting revision requires review rather than silent replacement.",
+      "inputs": [
+        "Authenticated request",
+        "Validated page and last-read SHA",
+        "Server-held repository connection"
+      ],
+      "outputs": [
+        "Saved page receipt",
+        "Loaded records",
+        "Conflict or actionable error"
+      ],
+      "aws": {
+        "service": "API Gateway + AWS Lambda",
+        "key": "api",
+        "why": "API Gateway could expose the authenticated endpoints and Lambda could perform the validation and GitHub calls.",
+        "notes": "Retain same-origin browser controls, request limits, ownership checks and revision conditions. A successful API request must still include a trustworthy save receipt.",
+        "url": "https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html",
+        "status": "Proposed AWS design",
+        "icon": "/assets/aws-icons/api.svg",
+        "short": "API Gateway"
+      },
+      "module": "storage",
+      "responsibility": "The current Worker exposes status, connect, list, read and save routes under /api/workspace-store. It requires a valid session, rejects cross-origin writes, validates page fields and sizes, and checks repository privacy. GitHub updates use the last-read file SHA so a conflicting revision requires review rather than silent replacement.",
+      "cloud": "API Gateway could expose the authenticated endpoints and Lambda could perform the validation and GitHub calls.",
+      "icon": "/assets/aws-icons/graph.svg",
+      "layer": 3,
+      "order": 3
+    },
+    {
+      "id": "web-github",
+      "name": "Private GitHub page history",
+      "short": "GitHub history",
+      "group": "storage",
+      "pos": [
+        18,
+        -33,
+        -2
+      ],
+      "status": "Private repository created; runtime connection required",
+      "summary": "Stores explicit page revisions as private JSON files.",
+      "details": "The private repository is jyotheshkar/system-architecture-workspace-data. Page records live under workspace/pages, one file per design. The website adapter needs a repository-scoped connection before browser save and load can operate. GitHub gives a reviewable revision trail; it is not being presented as a high-volume multi-tenant database.",
+      "inputs": [
+        "Validated page JSON",
+        "Expected file SHA"
+      ],
+      "outputs": [
+        "New file revision",
+        "Commit and content SHA",
+        "Readable version history"
+      ],
+      "aws": {
+        "service": "Private GitHub repository",
+        "key": "dynamodb",
+        "why": "Keep GitHub as the current external revision store. DynamoDB is a future option for application records if collaborative workload needs justify it.",
+        "notes": "GitHub has no identical AWS database substitute. Preserve the versioned design history and plan migration deliberately; do not silently replace private storage.",
+        "url": "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html",
+        "status": "Proposed AWS design",
+        "icon": "/assets/aws-icons/history.svg",
+        "short": "Private GitHub"
+      },
+      "module": "storage",
+      "responsibility": "The private repository is jyotheshkar/system-architecture-workspace-data. Page records live under workspace/pages, one file per design. The website adapter needs a repository-scoped connection before browser save and load can operate. GitHub gives a reviewable revision trail; it is not being presented as a high-volume multi-tenant database.",
+      "cloud": "Keep GitHub as the current external revision store. DynamoDB is a future option for application records if collaborative workload needs justify it.",
+      "icon": "/assets/aws-icons/graph.svg",
+      "layer": 3,
+      "order": 4
+    },
+    {
+      "id": "web-secrets",
+      "name": "Server-side connection credentials",
+      "short": "Credentials",
+      "group": "storage",
+      "pos": [
+        30,
+        -33,
+        0
+      ],
+      "status": "Implemented, connection required",
+      "summary": "Keeps the repository credential out of client storage and public assets.",
+      "details": "The existing server adapter encrypts a repository-scoped GitHub token with AES-GCM before storing it in the archive binding and decrypts it only for server-side calls. Page settings is removed from the presentation, so this view does not expose a credential form. A connection still needs to be configured before runtime repository operations can work. Secrets must stay outside public assets, browser storage and diagnostic logs.",
+      "inputs": [
+        "Repository-scoped server connection",
+        "Server session secret"
+      ],
+      "outputs": [
+        "Encrypted connection record",
+        "Server-side authorised GitHub request"
+      ],
+      "aws": {
+        "service": "AWS Secrets Manager",
+        "key": "secrets",
+        "why": "Secrets Manager is a candidate for holding the GitHub credential outside application code and browser storage.",
+        "notes": "Limit the execution role to the required secret. Rotation and revocation need an operational procedure, and secret values must never appear in client bundles or logs.",
+        "url": "https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html",
+        "status": "Proposed AWS design",
+        "icon": "/assets/aws-icons/secrets.svg",
+        "short": "Secrets Manager"
+      },
+      "module": "storage",
+      "responsibility": "The existing server adapter encrypts a repository-scoped GitHub token with AES-GCM before storing it in the archive binding and decrypts it only for server-side calls. Page settings is removed from the presentation, so this view does not expose a credential form. A connection still needs to be configured before runtime repository operations can work. Secrets must stay outside public assets, browser storage and diagnostic logs.",
+      "cloud": "Secrets Manager is a candidate for holding the GitHub credential outside application code and browser storage.",
+      "icon": "/assets/aws-icons/graph.svg",
+      "layer": 3,
+      "order": 5
+    },
+    {
+      "id": "web-router",
+      "name": "Worker routing and request handling",
+      "short": "Worker API",
+      "group": "delivery",
+      "pos": [
+        -12,
+        -44,
+        2
+      ],
+      "status": "Implemented",
+      "summary": "Serves the public entry, protects workspace routes and dispatches APIs.",
+      "details": "The current website uses an edge Worker. It routes entry and portfolio URLs to public assets, redirects unsigned workspace requests to sign-in, handles login and logout, and dispatches private page operations. Non-public content is served only after session validation. Errors return bounded responses rather than exposing internals.",
+      "inputs": [
+        "HTTPS request",
+        "Route and method",
+        "Session context"
+      ],
+      "outputs": [
+        "Asset response",
+        "API response",
+        "Sign-in redirect or error"
+      ],
+      "aws": {
+        "service": "CloudFront + API Gateway + Lambda",
+        "key": "lambda",
+        "why": "An AWS migration could divide static delivery, API routing and request logic between these services.",
+        "notes": "This is a proposed migration from the current Worker. Preserve route semantics, private cache policy and authentication checks rather than assuming hosting changes are equivalent.",
+        "url": "https://docs.aws.amazon.com/lambda/latest/dg/welcome.html",
+        "status": "Proposed AWS design",
+        "icon": "/assets/aws-icons/lambda.svg",
+        "short": "AWS Lambda"
+      },
+      "module": "delivery",
+      "responsibility": "The current website uses an edge Worker. It routes entry and portfolio URLs to public assets, redirects unsigned workspace requests to sign-in, handles login and logout, and dispatches private page operations. Non-public content is served only after session validation. Errors return bounded responses rather than exposing internals.",
+      "cloud": "An AWS migration could divide static delivery, API routing and request logic between these services.",
+      "icon": "/assets/aws-icons/graph.svg",
+      "layer": 4,
+      "order": 0
+    },
+    {
+      "id": "web-archive",
+      "name": "Archive and session storage",
+      "short": "Archive storage",
+      "group": "delivery",
+      "pos": [
+        0,
+        -44,
+        -2
+      ],
+      "status": "Implemented",
+      "summary": "Provides server-side storage used by the current Worker.",
+      "details": "The ARCHIVE binding stores private large files, session records, failed-attempt state and the encrypted repository connection. Small static files are embedded by the build. Each purpose has different retention and access needs, so an AWS migration should separate object storage, session state and secrets rather than copying them into one undifferentiated bucket.",
+      "inputs": [
+        "Session and throttle updates",
+        "Private file lookup",
+        "Encrypted connection record"
+      ],
+      "outputs": [
+        "Stored session state",
+        "Private download",
+        "Connection data for the Worker"
+      ],
+      "aws": {
+        "service": "Amazon S3 + DynamoDB",
+        "key": "s3",
+        "why": "S3 suits private object files; DynamoDB is a candidate for session and application state. Credentials belong in Secrets Manager.",
+        "notes": "Session validity must be checked on every protected request. Object retention and session expiry are different requirements, even if the current binding stores both.",
+        "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html",
+        "status": "Proposed AWS design",
+        "icon": "/assets/aws-icons/s3.svg",
+        "short": "Amazon S3"
+      },
+      "module": "delivery",
+      "responsibility": "The ARCHIVE binding stores private large files, session records, failed-attempt state and the encrypted repository connection. Small static files are embedded by the build. Each purpose has different retention and access needs, so an AWS migration should separate object storage, session state and secrets rather than copying them into one undifferentiated bucket.",
+      "cloud": "S3 suits private object files; DynamoDB is a candidate for session and application state. Credentials belong in Secrets Manager.",
+      "icon": "/assets/aws-icons/graph.svg",
+      "layer": 4,
+      "order": 1
+    },
+    {
+      "id": "web-release",
+      "name": "Build, verification and publication",
+      "short": "Release",
+      "group": "delivery",
+      "pos": [
+        12,
+        -44,
+        0
+      ],
+      "status": "Implemented",
+      "summary": "Packages reviewed source and publishes a specific tested website version.",
+      "details": "The build embeds site resources and copies the Worker modules into the deployable output. Authentication and private-storage checks are run alongside browser checks of the interface. Publication selects a saved source version. A successful deployment still needs a reachable page and useful user interactions to be considered a working release.",
+      "inputs": [
+        "Reviewed source revision",
+        "Build output",
+        "Automated and browser verification"
+      ],
+      "outputs": [
+        "Published website version",
+        "Release evidence",
+        "Follow-up issues if checks fail"
+      ],
+      "aws": {
+        "service": "AWS delivery pipeline + CloudWatch",
+        "key": "cloudwatch",
+        "why": "A future AWS deployment should emit logs and metrics to CloudWatch so releases can be checked against real operating signals.",
+        "notes": "Choose a delivery pipeline to suit the source repository. Track errors and latency without logging passwords, tokens or private prompt content. No monitoring pipeline is claimed as deployed here.",
+        "url": "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/WhatIsCloudWatch.html",
+        "status": "Proposed AWS design",
+        "icon": "/assets/aws-icons/cloudwatch.svg",
+        "short": "CloudWatch"
+      },
+      "module": "delivery",
+      "responsibility": "The build embeds site resources and copies the Worker modules into the deployable output. Authentication and private-storage checks are run alongside browser checks of the interface. Publication selects a saved source version. A successful deployment still needs a reachable page and useful user interactions to be considered a working release.",
+      "cloud": "A future AWS deployment should emit logs and metrics to CloudWatch so releases can be checked against real operating signals.",
+      "icon": "/assets/aws-icons/graph.svg",
+      "layer": 4,
+      "order": 2
+    },
+    {
+      "id": "web-ai",
+      "name": "Model drafting assistant",
+      "short": "AI drafting",
+      "group": "design",
+      "pos": [
+        -18,
+        -22,
+        2
+      ],
+      "status": "Product direction",
+      "summary": "Draft an architecture proposal from the confirmed brief.",
+      "details": "The proposed assistant can suggest components, interfaces and explanations using a confirmed brief and approved patterns. Its output must pass the graph schema and retain traceable assumptions. The current guide only looks up recorded architecture information; it has no live generative model connection. Prompt-to-model creation requires a separately implemented model adapter, access policy and usage controls.",
+      "inputs": [
+        "Confirmed requirements brief",
+        "Approved pattern context",
+        "Existing graph revision"
+      ],
+      "outputs": [
+        "Candidate graph data",
+        "Clarification questions",
+        "Recorded model and prompt version"
+      ],
+      "aws": {
+        "service": "Amazon Bedrock",
+        "key": "bedrock",
+        "why": "Bedrock is a candidate managed inference service for producing schema-constrained design proposals.",
+        "notes": "Keep private design access scoped to the tenant, validate every output and limit retries and token budgets. Choose model, region, data handling and access explicitly. No free or unlimited inference is implied.",
+        "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html",
+        "icon": "/assets/aws-icons/bedrock.svg",
+        "status": "Proposed AWS design",
+        "short": "Amazon Bedrock"
+      },
+      "module": "design",
+      "responsibility": "The proposed assistant can suggest components, interfaces and explanations using a confirmed brief and approved patterns. Its output must pass the graph schema and retain traceable assumptions. The current guide only looks up recorded architecture information; it has no live generative model connection. Prompt-to-model creation requires a separately implemented model adapter, access policy and usage controls.",
+      "cloud": "Bedrock is a candidate managed inference service for producing schema-constrained design proposals.",
+      "icon": "/assets/aws-icons/graph.svg",
+      "layer": 2,
+      "order": 0
+    },
+    {
+      "id": "web-checks",
+      "name": "Schema checks and design findings",
+      "short": "Design checks",
+      "group": "core",
+      "pos": [
+        0,
+        0,
+        0
+      ],
+      "status": "Product direction",
+      "summary": "Expose missing, inconsistent or unsafe assumptions before AWS mapping.",
+      "details": "A proposed validation stage checks the graph schema, stable IDs, valid edge endpoints, required interfaces, unsupported components and policy constraints. Findings should refer to the exact requirement and model revision that produced them. A reviewer can return the model for revision. These checks establish declared design properties; they do not prove runtime security, resilience or business correctness. This website architecture is manually designed and does not require a mathematical proof.",
+      "inputs": [
+        "Candidate graph revision",
+        "Versioned schema and design policies",
+        "Requirements and assumptions"
+      ],
+      "outputs": [
+        "Machine-readable findings",
+        "Accepted model or request for revision",
+        "Traceable validation report"
+      ],
+      "aws": {
+        "service": "AWS Lambda",
+        "key": "lambda",
+        "why": "Bounded validation functions could check the model and produce a deterministic findings report.",
+        "notes": "Validate model output as untrusted input. Keep these rules separate from generative suggestions and record their version. A passing schema check does not approve a production deployment.",
+        "url": "https://docs.aws.amazon.com/lambda/latest/dg/welcome.html",
+        "icon": "/assets/aws-icons/lambda.svg",
+        "status": "Proposed AWS design",
+        "short": "AWS Lambda"
+      },
+      "module": "core",
+      "responsibility": "A proposed validation stage checks the graph schema, stable IDs, valid edge endpoints, required interfaces, unsupported components and policy constraints. Findings should refer to the exact requirement and model revision that produced them. A reviewer can return the model for revision. These checks establish declared design properties; they do not prove runtime security, resilience or business correctness. This website architecture is manually designed and does not require a mathematical proof.",
+      "cloud": "Bounded validation functions could check the model and produce a deterministic findings report.",
+      "icon": "/assets/aws-icons/check.svg",
+      "order": 3,
+      "layer": 0,
+      "journeyStep": 4
+    },
+    {
+      "id": "web-baseline",
+      "name": "Reviewed AWS baseline package",
+      "short": "Baseline output",
+      "group": "core",
+      "pos": [
+        36,
+        0,
+        0
+      ],
+      "status": "Product direction",
+      "summary": "Deliver a traceable starting architecture for AWS engineers.",
+      "details": "The intended output is a reviewable baseline package: requirements, a structured graph, an AWS diagram, service rationale, interfaces, trust boundaries, assumptions, findings and the engineer review record. Optional candidate infrastructure as code is labelled for further validation. Each package records source revisions so an engineer can see what was accepted. The commercial hypothesis is faster movement from an idea to an informed engineering starting point, to be evaluated through pilots rather than promised as a measured saving.",
+      "inputs": [
+        "Engineer-reviewed AWS candidate",
+        "Accepted brief and graph revisions",
+        "Validation report and unresolved risks"
+      ],
+      "outputs": [
+        "Versioned baseline package",
+        "Engineer handoff documentation",
+        "Traceable source and review manifest"
+      ],
+      "aws": {
+        "service": "Amazon S3",
+        "key": "s3",
+        "why": "Private S3 objects could hold baseline bundles and their manifests, with application metadata in DynamoDB.",
+        "notes": "Authorise download against the tenant and design owner. Use immutable revision identifiers and defined retention. The package is an engineering input, not an automatic production deployment.",
+        "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html",
+        "icon": "/assets/aws-icons/s3.svg",
+        "status": "Proposed AWS design",
+        "short": "Amazon S3"
+      },
+      "module": "core",
+      "responsibility": "The intended output is a reviewable baseline package: requirements, a structured graph, an AWS diagram, service rationale, interfaces, trust boundaries, assumptions, findings and the engineer review record. Optional candidate infrastructure as code is labelled for further validation. Each package records source revisions so an engineer can see what was accepted. The commercial hypothesis is faster movement from an idea to an informed engineering starting point, to be evaluated through pilots rather than promised as a measured saving.",
+      "cloud": "Private S3 objects could hold baseline bundles and their manifests, with application metadata in DynamoDB.",
+      "icon": "/assets/aws-icons/package.svg",
+      "order": 6,
+      "layer": 0,
+      "journeyStep": 7
+    },
+    {
+      "id": "web-requirements",
+      "name": "Idea and requirements brief",
+      "short": "Requirements",
+      "group": "core",
+      "status": "Product direction",
+      "summary": "Make the idea specific enough to design and review.",
+      "details": "The proposed intake converts a prompt into an editable brief: who uses the system, the outcome, data sensitivity, expected traffic, latency, availability, recovery objectives, region and budget assumptions. Missing decisions stay visible instead of being invented. The user confirms the brief before generation starts. A natural-language prompt is input evidence, not executable configuration.",
+      "inputs": [
+        "User idea or prompt",
+        "Workload and data constraints",
+        "Answers to clarification questions"
+      ],
+      "outputs": [
+        "Versioned requirements brief",
+        "Explicit assumptions and open questions",
+        "Scope accepted by the user"
+      ],
+      "aws": {
+        "service": "Amazon API Gateway + AWS Lambda",
+        "key": "api",
+        "why": "Authenticated APIs can accept the brief and validate its shape before a generation job starts.",
+        "notes": "Derive tenant identity from trusted session claims. Enforce request-size limits, per-tenant quotas and an idempotency key. Retain the exact brief revision used by each job.",
+        "url": "https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html",
+        "icon": "/assets/aws-icons/api.svg",
+        "status": "Proposed AWS design",
+        "short": "API Gateway"
+      },
+      "icon": "/assets/aws-icons/brief.svg",
+      "module": "core",
+      "responsibility": "The proposed intake converts a prompt into an editable brief: who uses the system, the outcome, data sensitivity, expected traffic, latency, availability, recovery objectives, region and budget assumptions. Missing decisions stay visible instead of being invented. The user confirms the brief before generation starts. A natural-language prompt is input evidence, not executable configuration.",
+      "cloud": "Authenticated APIs can accept the brief and validate its shape before a generation job starts.",
+      "order": 1,
+      "layer": 0,
+      "pos": [
+        -24,
+        0,
+        1.8
+      ],
+      "journeyStep": 2
+    },
+    {
+      "id": "web-aws-mapping",
+      "name": "AWS architecture synthesis",
+      "short": "AWS mapping",
+      "group": "core",
+      "status": "Product direction",
+      "summary": "Translate the reviewed model into justified AWS responsibilities.",
+      "details": "The proposed mapper matches validated responsibilities and interfaces to a curated, versioned library of AWS patterns. It should produce service choices, identity and data boundaries, failure paths and alternatives tied to the brief. It must ask for missing workload information instead of adding an arbitrary stack. Candidate infrastructure as code can accompany the diagram, but remains subject to linting, policy checks, account and region validation, and engineering review.",
+      "inputs": [
+        "Checked graph revision",
+        "Approved AWS patterns and service constraints",
+        "Workload, data, cost and recovery requirements"
+      ],
+      "outputs": [
+        "Candidate AWS diagram and service rationale",
+        "Interface and trust-boundary records",
+        "Optional candidate infrastructure as code"
+      ],
+      "aws": {
+        "service": "AWS Lambda + pattern catalogue",
+        "key": "lambda",
+        "why": "Lambda could apply deterministic mappings, with versioned pattern data in S3 and optional Bedrock assistance for explanations.",
+        "notes": "Keep the model, catalogue and rule revisions in the output manifest. Generation needs no deployment credentials. Treat unsupported requirements as review findings, not silent defaults.",
+        "url": "https://docs.aws.amazon.com/lambda/latest/dg/welcome.html",
+        "icon": "/assets/aws-icons/lambda.svg",
+        "status": "Proposed AWS design",
+        "short": "AWS Lambda"
+      },
+      "icon": "/assets/aws-icons/graph.svg",
+      "module": "core",
+      "responsibility": "The proposed mapper matches validated responsibilities and interfaces to a curated, versioned library of AWS patterns. It should produce service choices, identity and data boundaries, failure paths and alternatives tied to the brief. It must ask for missing workload information instead of adding an arbitrary stack. Candidate infrastructure as code can accompany the diagram, but remains subject to linting, policy checks, account and region validation, and engineering review.",
+      "cloud": "Lambda could apply deterministic mappings, with versioned pattern data in S3 and optional Bedrock assistance for explanations.",
+      "order": 4,
+      "layer": 0,
+      "pos": [
+        12,
+        0,
+        1.8
+      ],
+      "journeyStep": 5
+    },
+    {
+      "id": "web-engineer",
+      "name": "AWS engineer review",
+      "short": "Engineer review",
+      "group": "core",
+      "status": "Product direction",
+      "summary": "Bring human engineering judgement into the handoff.",
+      "details": "An AWS engineer reviews the candidate against actual security, networking, tenancy, availability, data retention, recovery and cost requirements. The reviewer can accept it as a starting baseline or return it with changes. Infrastructure as code needs linting, policy checks, account-specific planning and isolated testing before a separate deployment decision. Approval records must identify the exact brief and model revision; a changed model needs a new review.",
+      "inputs": [
+        "Candidate AWS design and assumptions",
+        "Validation findings and service rationale",
+        "Workload owner and engineering requirements"
+      ],
+      "outputs": [
+        "Review decision linked to a specific revision",
+        "Accepted changes or returned findings",
+        "Baseline approved for further engineering"
+      ],
+      "aws": {
+        "service": "AWS engineer / reviewer",
+        "key": "review",
+        "why": "The review is a human responsibility. A workflow service could wait for a signed review decision; it cannot replace that judgement.",
+        "notes": "Acceptance means the baseline is ready for engineering refinement. It does not mean the design is production-ready, deployed or endorsed by AWS.",
+        "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html",
+        "icon": "/assets/aws-icons/review.svg",
+        "status": "Proposed AWS design",
+        "short": "Engineer review"
+      },
+      "icon": "/assets/aws-icons/review.svg",
+      "module": "core",
+      "responsibility": "An AWS engineer reviews the candidate against actual security, networking, tenancy, availability, data retention, recovery and cost requirements. The reviewer can accept it as a starting baseline or return it with changes. Infrastructure as code needs linting, policy checks, account-specific planning and isolated testing before a separate deployment decision. Approval records must identify the exact brief and model revision; a changed model needs a new review.",
+      "cloud": "The review is a human responsibility. A workflow service could wait for a signed review decision; it cannot replace that judgement.",
+      "order": 5,
+      "layer": 0,
+      "pos": [
+        24,
+        0,
+        -1.8
+      ],
+      "journeyStep": 6
+    },
+    {
+      "id": "web-workflow",
+      "name": "Asynchronous generation workflow",
+      "short": "Generation jobs",
+      "group": "design",
+      "status": "Product direction",
+      "summary": "Run generation as observable, bounded work that can be retried safely.",
+      "details": "A proposed job has an owner, tenant, input revision, idempotency key and explicit states such as queued, running, needs review, failed and completed. It orchestrates model drafting, checks and baseline preparation outside a browser request. The UI shows progress and can reopen a job by ID. Each stage needs timeouts, bounded retries, failure reporting and cancellation handling. Persist results by revision so retrying never silently overwrites an accepted design.",
+      "inputs": [
+        "Authenticated job request",
+        "Brief and model revisions",
+        "Per-tenant budget and concurrency limits"
+      ],
+      "outputs": [
+        "Job ID and status",
+        "Versioned stage results",
+        "Failure or review action"
+      ],
+      "aws": {
+        "service": "AWS Step Functions",
+        "key": "stepfunctions",
+        "why": "A Standard workflow is a candidate for a multi-stage process that needs execution history and a human review callback.",
+        "notes": "Make task effects idempotent. Set explicit retry and timeout policies, protect callback tokens, bound model calls and keep large documents in object storage rather than workflow state.",
+        "url": "https://docs.aws.amazon.com/step-functions/latest/dg/welcome.html",
+        "icon": "/assets/aws-icons/stepfunctions.svg",
+        "status": "Proposed AWS design",
+        "short": "Step Functions"
+      },
+      "icon": "/assets/aws-icons/graph.svg",
+      "module": "design",
+      "responsibility": "A proposed job has an owner, tenant, input revision, idempotency key and explicit states such as queued, running, needs review, failed and completed. It orchestrates model drafting, checks and baseline preparation outside a browser request. The UI shows progress and can reopen a job by ID. Each stage needs timeouts, bounded retries, failure reporting and cancellation handling. Persist results by revision so retrying never silently overwrites an accepted design.",
+      "cloud": "A Standard workflow is a candidate for a multi-stage process that needs execution history and a human review callback.",
+      "layer": 2,
+      "order": 1,
+      "pos": [
+        -6,
+        -22,
+        -2
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "web-e01",
+      "from": "web-user",
+      "to": "web-entry",
+      "source": "web-user",
+      "target": "web-entry",
+      "label": "Open the website",
+      "name": "Open the website",
+      "details": "The visitor reads the product introduction or portfolio before entering the workspace.",
+      "purpose": "The visitor reads the product introduction or portfolio before entering the workspace.",
+      "status": "Current relationship"
+    },
+    {
+      "id": "web-e02",
+      "from": "web-entry",
+      "to": "web-session",
+      "source": "web-entry",
+      "target": "web-session",
+      "label": "Submit sign-in",
+      "name": "Submit sign-in",
+      "details": "The form sends a same-origin authentication request. Failed sign-in stays on the entry page.",
+      "purpose": "The form sends a same-origin authentication request. Failed sign-in stays on the entry page.",
+      "status": "Current relationship"
+    },
+    {
+      "id": "web-e03",
+      "from": "web-session",
+      "to": "web-transition",
+      "source": "web-session",
+      "target": "web-transition",
+      "label": "Start the experience",
+      "name": "Start the experience",
+      "details": "Only a successful authentication response starts the loading presentation.",
+      "purpose": "Only a successful authentication response starts the loading presentation.",
+      "status": "Current relationship"
+    },
+    {
+      "id": "web-e04",
+      "from": "web-transition",
+      "to": "web-shell",
+      "source": "web-transition",
+      "target": "web-shell",
+      "label": "Enter workspace",
+      "name": "Enter workspace",
+      "details": "After the loading presentation, the browser opens the protected workspace, preserving fullscreen when supported.",
+      "purpose": "After the loading presentation, the browser opens the protected workspace, preserving fullscreen when supported.",
+      "status": "Current relationship"
+    },
+    {
+      "id": "web-e05",
+      "from": "web-user",
+      "to": "web-shell",
+      "source": "web-user",
+      "target": "web-shell",
+      "label": "Explore and edit",
+      "name": "Explore and edit",
+      "details": "The user selects pages, operates canvas controls and opens contextual drawers.",
+      "purpose": "The user selects pages, operates canvas controls and opens contextual drawers.",
+      "status": "Current relationship"
+    },
+    {
+      "id": "web-e06",
+      "from": "web-shell",
+      "to": "web-page",
+      "source": "web-shell",
+      "target": "web-page",
+      "label": "Select a design",
+      "name": "Select a design",
+      "details": "The active page determines which architecture, view and section records are in focus.",
+      "purpose": "The active page determines which architecture, view and section records are in focus.",
+      "status": "Current relationship"
+    },
+    {
+      "id": "web-e07",
+      "from": "web-page",
+      "to": "web-canvas",
+      "source": "web-page",
+      "target": "web-canvas",
+      "label": "Render the architecture",
+      "name": "Render the architecture",
+      "details": "The selected architecture dataset supplies nodes and documented connections to the canvas.",
+      "purpose": "The selected architecture dataset supplies nodes and documented connections to the canvas.",
+      "status": "Current relationship"
+    },
+    {
+      "id": "web-e08",
+      "from": "web-canvas",
+      "to": "web-study",
+      "source": "web-canvas",
+      "target": "web-study",
+      "label": "Study a selection",
+      "name": "Study a selection",
+      "details": "Selecting a component provides context to its overview, individual explanation or AWS study.",
+      "purpose": "Selecting a component provides context to its overview, individual explanation or AWS study.",
+      "status": "Current relationship"
+    },
+    {
+      "id": "web-e11",
+      "from": "web-page",
+      "to": "web-guide",
+      "source": "web-page",
+      "target": "web-guide",
+      "label": "Provide reference context",
+      "name": "Provide reference context",
+      "details": "The guide uses the active page and its recorded architecture material.",
+      "purpose": "The guide uses the active page and its recorded architecture material.",
+      "status": "Current relationship"
+    },
+    {
+      "id": "web-e12",
+      "from": "web-guide",
+      "to": "web-study",
+      "source": "web-guide",
+      "target": "web-study",
+      "label": "Open relevant information",
+      "name": "Open relevant information",
+      "details": "Guide actions navigate to documented components and study views.",
+      "purpose": "Guide actions navigate to documented components and study views.",
+      "status": "Current relationship"
+    },
+    {
+      "id": "web-e13",
+      "from": "web-page",
+      "to": "web-drafts",
+      "source": "web-page",
+      "target": "web-drafts",
+      "label": "Save a local draft",
+      "name": "Save a local draft",
+      "details": "Edits are written to browser storage; failures prompt the user to export.",
+      "purpose": "Edits are written to browser storage; failures prompt the user to export.",
+      "status": "Current relationship"
+    },
+    {
+      "id": "web-e14",
+      "from": "web-drafts",
+      "to": "web-page",
+      "source": "web-drafts",
+      "target": "web-page",
+      "label": "Restore or import",
+      "name": "Restore or import",
+      "details": "Validated local or imported records restore a page without claiming a GitHub save.",
+      "purpose": "Validated local or imported records restore a page without claiming a GitHub save.",
+      "status": "Current relationship"
+    },
+    {
+      "id": "web-e15",
+      "from": "web-page",
+      "to": "web-store-api",
+      "source": "web-page",
+      "target": "web-store-api",
+      "label": "Save explicitly",
+      "name": "Save explicitly",
+      "details": "A user-requested save sends the page and last-read file SHA to the protected storage API.",
+      "purpose": "A user-requested save sends the page and last-read file SHA to the protected storage API.",
+      "status": "Requires repository connection"
+    },
+    {
+      "id": "web-e16",
+      "from": "web-session",
+      "to": "web-store-api",
+      "source": "web-session",
+      "target": "web-store-api",
+      "label": "Authorise page operations",
+      "name": "Authorise page operations",
+      "details": "The server requires a valid session before repository reads, writes or connection changes.",
+      "purpose": "The server requires a valid session before repository reads, writes or connection changes.",
+      "status": "Current relationship"
+    },
+    {
+      "id": "web-e17",
+      "from": "web-store-api",
+      "to": "web-secrets",
+      "source": "web-store-api",
+      "target": "web-secrets",
+      "label": "Read server credential",
+      "name": "Read server credential",
+      "details": "The server obtains the encrypted repository connection without returning its token to the browser.",
+      "purpose": "The server obtains the encrypted repository connection without returning its token to the browser.",
+      "status": "Requires repository connection"
+    },
+    {
+      "id": "web-e18",
+      "from": "web-store-api",
+      "to": "web-github",
+      "source": "web-store-api",
+      "target": "web-github",
+      "label": "Commit private revision",
+      "name": "Commit private revision",
+      "details": "The adapter rechecks repository privacy, validates data and uses the expected SHA for a bounded Contents API write.",
+      "purpose": "The adapter rechecks repository privacy, validates data and uses the expected SHA for a bounded Contents API write.",
+      "status": "Requires repository connection"
+    },
+    {
+      "id": "web-e19",
+      "from": "web-github",
+      "to": "web-store-api",
+      "source": "web-github",
+      "target": "web-store-api",
+      "label": "Return revision or conflict",
+      "name": "Return revision or conflict",
+      "details": "The repository returns a content and commit receipt, a saved record, or an error requiring review.",
+      "purpose": "The repository returns a content and commit receipt, a saved record, or an error requiring review.",
+      "status": "Requires repository connection"
+    },
+    {
+      "id": "web-e20",
+      "from": "web-store-api",
+      "to": "web-page",
+      "source": "web-store-api",
+      "target": "web-page",
+      "label": "Reconcile saved state",
+      "name": "Reconcile saved state",
+      "details": "The frontend retains dirty drafts, checks loaded files before merging and shows conflicts explicitly.",
+      "purpose": "The frontend retains dirty drafts, checks loaded files before merging and shows conflicts explicitly.",
+      "status": "Requires repository connection"
+    },
+    {
+      "id": "web-e21",
+      "from": "web-entry",
+      "to": "web-router",
+      "source": "web-entry",
+      "target": "web-router",
+      "label": "Request public assets",
+      "name": "Request public assets",
+      "details": "The Worker serves the entry and its allowlisted public assets.",
+      "purpose": "The Worker serves the entry and its allowlisted public assets.",
+      "status": "Current relationship"
+    },
+    {
+      "id": "web-e22",
+      "from": "web-shell",
+      "to": "web-router",
+      "source": "web-shell",
+      "target": "web-router",
+      "label": "Request protected resources",
+      "name": "Request protected resources",
+      "details": "Workspace resource requests are checked at the server boundary.",
+      "purpose": "Workspace resource requests are checked at the server boundary.",
+      "status": "Current relationship"
+    },
+    {
+      "id": "web-e23",
+      "from": "web-router",
+      "to": "web-session",
+      "source": "web-router",
+      "target": "web-session",
+      "label": "Validate or revoke session",
+      "name": "Validate or revoke session",
+      "details": "Protected routes require both a valid signature and a matching stored session record.",
+      "purpose": "Protected routes require both a valid signature and a matching stored session record.",
+      "status": "Current relationship"
+    },
+    {
+      "id": "web-e24",
+      "from": "web-router",
+      "to": "web-store-api",
+      "source": "web-router",
+      "target": "web-store-api",
+      "label": "Dispatch page API",
+      "name": "Dispatch page API",
+      "details": "Workspace-store paths are routed to the private page handler after session validation.",
+      "purpose": "Workspace-store paths are routed to the private page handler after session validation.",
+      "status": "Current relationship"
+    },
+    {
+      "id": "web-e25",
+      "from": "web-session",
+      "to": "web-archive",
+      "source": "web-session",
+      "target": "web-archive",
+      "label": "Persist server session",
+      "name": "Persist server session",
+      "details": "Sign-in, failed-attempt state and logout use server-side archive records.",
+      "purpose": "Sign-in, failed-attempt state and logout use server-side archive records.",
+      "status": "Current relationship"
+    },
+    {
+      "id": "web-e26",
+      "from": "web-router",
+      "to": "web-archive",
+      "source": "web-router",
+      "target": "web-archive",
+      "label": "Fetch private file",
+      "name": "Fetch private file",
+      "details": "Large private downloads are read from the archive only after authentication.",
+      "purpose": "Large private downloads are read from the archive only after authentication.",
+      "status": "Current relationship"
+    },
+    {
+      "id": "web-e27",
+      "from": "web-secrets",
+      "to": "web-archive",
+      "source": "web-secrets",
+      "target": "web-archive",
+      "label": "Store encrypted connection",
+      "name": "Store encrypted connection",
+      "details": "The repository token is encrypted before writing the connection record.",
+      "purpose": "The repository token is encrypted before writing the connection record.",
+      "status": "Requires repository connection"
+    },
+    {
+      "id": "web-e28",
+      "from": "web-release",
+      "to": "web-router",
+      "source": "web-release",
+      "target": "web-router",
+      "label": "Publish checked version",
+      "name": "Publish checked version",
+      "details": "Reviewed assets and Worker code are packaged into a version selected for deployment.",
+      "purpose": "Reviewed assets and Worker code are packaged into a version selected for deployment.",
+      "status": "Current relationship"
+    },
+    {
+      "id": "web-e29",
+      "from": "web-requirements",
+      "to": "web-ai",
+      "source": "web-requirements",
+      "target": "web-ai",
+      "label": "Draft from the confirmed brief",
+      "name": "Draft from the confirmed brief",
+      "details": "The proposed assistant receives a confirmed requirements revision and must expose any additional assumptions.",
+      "purpose": "The proposed assistant receives a confirmed requirements revision and must expose any additional assumptions.",
+      "status": "Product direction"
+    },
+    {
+      "id": "web-j01",
+      "from": "web-user",
+      "to": "web-requirements",
+      "source": "web-user",
+      "target": "web-requirements",
+      "label": "Clarify the idea",
+      "name": "Clarify the idea",
+      "details": "Record objectives, constraints and open questions; the user confirms the brief before generation.",
+      "purpose": "Record objectives, constraints and open questions; the user confirms the brief before generation.",
+      "status": "Product direction"
+    },
+    {
+      "id": "web-j02",
+      "from": "web-requirements",
+      "to": "web-canvas",
+      "source": "web-requirements",
+      "target": "web-canvas",
+      "label": "Build the model",
+      "name": "Build the model",
+      "details": "Convert the agreed brief into typed components and interfaces. Today this model is authored manually; automatic generation is proposed.",
+      "purpose": "Convert the agreed brief into typed components and interfaces. Today this model is authored manually; automatic generation is proposed.",
+      "status": "Product direction"
+    },
+    {
+      "id": "web-j03",
+      "from": "web-canvas",
+      "to": "web-checks",
+      "source": "web-canvas",
+      "target": "web-checks",
+      "label": "Check the design",
+      "name": "Check the design",
+      "details": "Evaluate a fixed model revision against its schema and declared design constraints.",
+      "purpose": "Evaluate a fixed model revision against its schema and declared design constraints.",
+      "status": "Product direction"
+    },
+    {
+      "id": "web-j04",
+      "from": "web-checks",
+      "to": "web-aws-mapping",
+      "source": "web-checks",
+      "target": "web-aws-mapping",
+      "label": "Map the accepted model",
+      "name": "Map the accepted model",
+      "details": "Only a model with resolved blocking findings moves into AWS pattern selection.",
+      "purpose": "Only a model with resolved blocking findings moves into AWS pattern selection.",
+      "status": "Product direction"
+    },
+    {
+      "id": "web-j05",
+      "from": "web-aws-mapping",
+      "to": "web-engineer",
+      "source": "web-aws-mapping",
+      "target": "web-engineer",
+      "label": "Review the candidate",
+      "name": "Review the candidate",
+      "details": "Present service rationale, boundaries, findings and optional candidate infrastructure as code for engineering judgement.",
+      "purpose": "Present service rationale, boundaries, findings and optional candidate infrastructure as code for engineering judgement.",
+      "status": "Product direction"
+    },
+    {
+      "id": "web-j06",
+      "from": "web-engineer",
+      "to": "web-baseline",
+      "source": "web-engineer",
+      "target": "web-baseline",
+      "label": "Approve the baseline",
+      "name": "Approve the baseline",
+      "details": "A recorded review on the exact input revisions releases a baseline package for further engineering, not deployment.",
+      "purpose": "A recorded review on the exact input revisions releases a baseline package for further engineering, not deployment.",
+      "status": "Product direction"
+    },
+    {
+      "id": "web-p01",
+      "from": "web-requirements",
+      "to": "web-workflow",
+      "source": "web-requirements",
+      "target": "web-workflow",
+      "label": "Create a generation job",
+      "name": "Create a generation job",
+      "details": "An authenticated, quota-checked request starts a job with a durable ID and immutable input references.",
+      "purpose": "An authenticated, quota-checked request starts a job with a durable ID and immutable input references.",
+      "status": "Product direction"
+    },
+    {
+      "id": "web-p02",
+      "from": "web-workflow",
+      "to": "web-ai",
+      "source": "web-workflow",
+      "target": "web-ai",
+      "label": "Draft the model",
+      "name": "Draft the model",
+      "details": "A bounded model task proposes graph records from the confirmed brief.",
+      "purpose": "A bounded model task proposes graph records from the confirmed brief.",
+      "status": "Product direction"
+    },
+    {
+      "id": "web-p03",
+      "from": "web-ai",
+      "to": "web-canvas",
+      "source": "web-ai",
+      "target": "web-canvas",
+      "label": "Inspect the candidate",
+      "name": "Inspect the candidate",
+      "details": "The user can examine the draft spatial model and its recorded assumptions before acceptance.",
+      "purpose": "The user can examine the draft spatial model and its recorded assumptions before acceptance.",
+      "status": "Product direction"
+    },
+    {
+      "id": "web-p04",
+      "from": "web-workflow",
+      "to": "web-checks",
+      "source": "web-workflow",
+      "target": "web-checks",
+      "label": "Run validation",
+      "name": "Run validation",
+      "details": "The job records schema and policy findings against the candidate revision.",
+      "purpose": "The job records schema and policy findings against the candidate revision.",
+      "status": "Product direction"
+    },
+    {
+      "id": "web-p05",
+      "from": "web-workflow",
+      "to": "web-aws-mapping",
+      "source": "web-workflow",
+      "target": "web-aws-mapping",
+      "label": "Prepare AWS candidate",
+      "name": "Prepare AWS candidate",
+      "details": "A validated revision drives versioned AWS pattern mapping.",
+      "purpose": "A validated revision drives versioned AWS pattern mapping.",
+      "status": "Product direction"
+    },
+    {
+      "id": "web-p06",
+      "from": "web-workflow",
+      "to": "web-engineer",
+      "source": "web-workflow",
+      "target": "web-engineer",
+      "label": "Wait for review",
+      "name": "Wait for review",
+      "details": "The workflow pauses for an authorised decision tied to the candidate revision.",
+      "purpose": "The workflow pauses for an authorised decision tied to the candidate revision.",
+      "status": "Product direction"
+    },
+    {
+      "id": "web-p07",
+      "from": "web-baseline",
+      "to": "web-archive",
+      "source": "web-baseline",
+      "target": "web-archive",
+      "label": "Store output bundle",
+      "name": "Store output bundle",
+      "details": "Keep an immutable baseline manifest and package under the correct tenant access boundary.",
+      "purpose": "Keep an immutable baseline manifest and package under the correct tenant access boundary.",
+      "status": "Product direction"
+    },
+    {
+      "id": "web-p08",
+      "from": "web-checks",
+      "to": "web-canvas",
+      "source": "web-checks",
+      "target": "web-canvas",
+      "label": "Return design findings",
+      "name": "Return design findings",
+      "details": "A failed check returns precise findings for an explicit revision; it never silently certifies a design.",
+      "purpose": "A failed check returns precise findings for an explicit revision; it never silently certifies a design.",
+      "status": "Product direction"
+    },
+    {
+      "id": "web-p09",
+      "from": "web-engineer",
+      "to": "web-aws-mapping",
+      "source": "web-engineer",
+      "target": "web-aws-mapping",
+      "label": "Request engineering changes",
+      "name": "Request engineering changes",
+      "details": "A reviewer can reject the candidate and return requirements for a new version.",
+      "purpose": "A reviewer can reject the candidate and return requirements for a new version.",
+      "status": "Product direction"
+    },
+    {
+      "id": "web-p10",
+      "from": "web-page",
+      "to": "web-sections",
+      "source": "web-page",
+      "target": "web-sections",
+      "label": "Validate the record",
+      "name": "Validate the record",
+      "details": "Stored and imported design records are checked against their supported schema.",
+      "purpose": "Stored and imported design records are checked against their supported schema.",
+      "status": "Current relationship"
+    }
+  ],
+  "overview": {
+    "title": "From an idea to an engineer-reviewed AWS baseline",
+    "summary": "Shape a requirement, explore its 3D system model and turn a reviewed design into a baseline AWS engineers can build on.",
+    "current": "The working prototype provides sign-in, selectable pages, an interactive 3D model and architectural depth analysis, contextual explanations, proposed AWS mappings and browser-retained design records. Its current free guide retrieves recorded information. The website runs on a Worker, not on the proposed AWS stack.",
+    "approach": "The core view explains the intended product journey. The supporting groups expose the current website and the proposed platform services. This manually authored system design is assessed through requirements, interfaces, implementation checks and review, without a mathematical-proof claim.",
+    "workflow": [
+      {
+        "title": "1. User and product owner",
+        "detail": "Starts with a business idea and owns the intended outcome.",
+        "nodes": [
+          "web-user"
+        ]
+      },
+      {
+        "title": "2. Idea and requirements brief",
+        "detail": "Make the idea specific enough to design and review.",
+        "nodes": [
+          "web-requirements"
+        ]
+      },
+      {
+        "title": "3. Editable 3D system model",
+        "detail": "Make components, interfaces and dependencies inspectable.",
+        "nodes": [
+          "web-canvas"
+        ]
+      },
+      {
+        "title": "4. Schema checks and design findings",
+        "detail": "Expose missing, inconsistent or unsafe assumptions before AWS mapping.",
+        "nodes": [
+          "web-checks"
+        ]
+      },
+      {
+        "title": "5. AWS architecture synthesis",
+        "detail": "Translate the reviewed model into justified AWS responsibilities.",
+        "nodes": [
+          "web-aws-mapping"
+        ]
+      },
+      {
+        "title": "6. AWS engineer review",
+        "detail": "Bring human engineering judgement into the handoff.",
+        "nodes": [
+          "web-engineer"
+        ]
+      },
+      {
+        "title": "7. Reviewed AWS baseline package",
+        "detail": "Deliver a traceable starting architecture for AWS engineers.",
+        "nodes": [
+          "web-baseline"
+        ]
+      }
+    ],
+    "aws": "This is a proposed AWS target for the product, not a deployed environment. CloudFront and S3 deliver assets, Cognito provides application identity, API Gateway and Lambda serve authenticated APIs, DynamoDB stores tenant-scoped design metadata, Bedrock drafts candidate models, Step Functions coordinates jobs and human review, and S3 retains baseline bundles. Private GitHub remains the current revision store. Service choices require workload and regional validation before implementation.",
+    "failures": [
+      "Incomplete brief: ask the user to resolve missing requirements before starting generation.",
+      "Invalid generated model: retain the candidate and return explicit schema or design findings.",
+      "Job timeout or model error: record a resumable failure, use bounded retries and preserve the input revision.",
+      "Concurrent edit: reject a stale write and preserve both revisions for review.",
+      "Engineer rejects the AWS candidate: return findings to a new revision without releasing the baseline.",
+      "Private storage unavailable: show unsaved status and preserve the local draft; do not claim a successful save."
+    ],
+    "boundaries": [
+      "Implemented prototype: manually authored 3D models, sign-in, page selection, study panels and local page retention.",
+      "Private GitHub: repository created; runtime operations require a server connection.",
+      "Proposed product pipeline: prompt-to-model, automated checks, AWS synthesis and formal engineer review.",
+      "Proposed AWS infrastructure: architecture options, not deployed services.",
+      "Final output: a reviewed starting baseline, not production certification or automatic deployment."
+    ],
+    "operational": [
+      {
+        "title": "Identity and tenant isolation",
+        "detail": "Authenticate the user, derive tenant identity from trusted claims and authorise every record, job and download. Isolation needs independent tests; a Cognito login is only one part of the boundary."
+      },
+      {
+        "title": "Schema and versioning",
+        "detail": "Store stable design IDs, schema versions, immutable accepted revisions and source lineage. Use conditional writes, recoverable migrations and review decisions tied to exact revisions."
+      },
+      {
+        "title": "Asynchronous jobs",
+        "detail": "Use durable job IDs, idempotency keys, bounded retries, timeouts, cancellation handling and visible failure states. Keep the interface responsive while work runs."
+      },
+      {
+        "title": "Validation and handoff",
+        "detail": "Separate model suggestions, deterministic findings, human review and deployment authority. Candidate infrastructure as code needs linting, policy checks and testing in an isolated account before use."
+      },
+      {
+        "title": "Cost and operations",
+        "detail": "Set tenant usage quotas and model budgets, measure latency and failures, protect prompt content in logs, define retention and test backup and restore. Validate cost assumptions using the actual workload."
+      }
+    ],
+    "vision": "Help people explain an idea, inspect a structured 3D brain and create a traceable AWS baseline that shortens the engineer’s discovery work. Validate that benefit with pilots, measured review time, design quality and engineer feedback."
+  },
+  "verifiedAt": "2026-10-10",
+  "evidence": {
+    "scope": "Source review of the website implementation. This is not a claim that every production path has been exercised.",
+    "currentFiles": [
+      "dist/assets/login.js",
+      "dist/assets/workspace-product.js",
+      "dist/assets/workspace-guide.js",
+      "worker/index.mjs",
+      "worker/workspace-store.mjs",
+      "worker/build.mjs"
+    ],
+    "repository": "https://github.com/jyotheshkar/system-architecture-workspace-data",
+    "repositoryVisibility": "Private, verified on 2026-10-10",
+    "awsSources": [
+      {
+        "id": "cloudfront",
+        "url": "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html"
+      },
+      {
+        "id": "s3",
+        "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html"
+      },
+      {
+        "id": "cognito",
+        "url": "https://docs.aws.amazon.com/cognito/latest/developerguide/what-is-amazon-cognito.html"
+      },
+      {
+        "id": "api",
+        "url": "https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html"
+      },
+      {
+        "id": "lambda",
+        "url": "https://docs.aws.amazon.com/lambda/latest/dg/welcome.html"
+      },
+      {
+        "id": "dynamodb",
+        "url": "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html"
+      },
+      {
+        "id": "secrets",
+        "url": "https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html"
+      },
+      {
+        "id": "cloudwatch",
+        "url": "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/WhatIsCloudWatch.html"
+      },
+      {
+        "id": "bedrock",
+        "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html"
+      },
+      {
+        "id": "stepfunctions",
+        "url": "https://docs.aws.amazon.com/step-functions/latest/dg/welcome.html"
+      },
+      {
+        "id": "cloudformation",
+        "url": "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/best-practices.html"
+      },
+      {
+        "id": "isolation",
+        "url": "https://docs.aws.amazon.com/whitepapers/latest/saas-tenant-isolation-strategies/saas-tenant-isolation-strategies.html"
+      },
+      {
+        "id": "wellarchitected",
+        "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html"
+      }
+    ],
+    "iconSource": {
+      "url": "https://aws.amazon.com/architecture/icons/",
+      "package": "Icon-package_07312026",
+      "download": "https://d1.awsstatic.com/onedam/marketing-channels/website/public/shared/architecture-icon-release/Icon-package_07312026.5846e92413caa21490223536cc97f1269e44fa92.zip",
+      "retrievedAt": "2026-10-10",
+      "note": "Official service SVGs are used unchanged. Person, browser and generic design symbols are local neutral icons."
+    }
+  },
+  "journey": [
+    "web-user",
+    "web-requirements",
+    "web-canvas",
+    "web-checks",
+    "web-aws-mapping",
+    "web-engineer",
+    "web-baseline"
+  ],
+  "presentation": {
+    "kicker": "IDEA TO AWS BASELINE",
+    "title": "A clearer path from an idea to an AWS architecture",
+    "summary": "Shape a requirement, explore its 3D system model and turn a reviewed design into a baseline AWS engineers can build on.",
+    "journey": [
+      "web-user",
+      "web-requirements",
+      "web-canvas",
+      "web-checks",
+      "web-aws-mapping",
+      "web-engineer",
+      "web-baseline"
+    ],
+    "journeyEdges": [
+      "web-j01",
+      "web-j02",
+      "web-j03",
+      "web-j04",
+      "web-j05",
+      "web-j06"
+    ],
+    "disclosure": "Working 3D model and architectural analysis prototype. Prompt generation, automated design checks and AWS baseline synthesis are proposed capabilities.",
+    "output": "Reviewed baseline: diagram, service rationale, interfaces, assumptions, findings and revision history.",
+    "stages": [
+      {
+        "title": "Define",
+        "nodes": [
+          "web-user",
+          "web-requirements"
+        ]
+      },
+      {
+        "title": "Model and check",
+        "nodes": [
+          "web-canvas",
+          "web-checks"
+        ]
+      },
+      {
+        "title": "Map and review",
+        "nodes": [
+          "web-aws-mapping",
+          "web-engineer"
+        ]
+      },
+      {
+        "title": "Deliver",
+        "nodes": [
+          "web-baseline"
+        ]
+      }
+    ]
+  }
+};
+})();

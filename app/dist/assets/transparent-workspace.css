@@ -1,0 +1,74 @@
+/* One continuous sky behind both the HTML controls and the 3D canvas. */
+html,body{background:#000!important}
+#inspector{border-top:1px solid #262626}
+html#ac-sky-root body#ac-transparent-workspace *:not(canvas):not(img):not(svg):not(svg *):not(:where(header,header *,.modulebar,.modulebar *,.websiteModulebar,.websiteModulebar *,.inspectorHead,.inspectorHead *,#productDrawer,#productDrawer *,#activePageBadge,#activePageBadge *,#designSections,#designSections *,#detailsDock,#detailsDock *,#rightDock,#rightDock *,.tabs,.tabs *,#conceptViewport,#conceptViewport *)){
+ background-color:transparent!important;background-image:none!important;
+ backdrop-filter:none!important;-webkit-backdrop-filter:none!important;box-shadow:none!important;
+}
+#ac-starfield{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+body>header,body>nav,body>main,#workspace,#placeholder{position:relative;z-index:1}
+svg rect:not(.edgeHit):not(:where(#rightDock *,header *,.modulebar *)){fill:transparent!important}
+/* Preserve the original control dock, including its selected white buttons. */
+#rightDock .rightDockRail{background:#0b0b0b}
+/* Neutral rails stay transparent; the original white selection tracks remain. */
+header.architectureHeader nav,.modulebar,.inspectorHead .tabs{background:transparent!important;box-shadow:none!important}
+.architectureTitle h1{font-weight:450;line-height:1.4;overflow:visible}
+.architectureTitle .silver-agentic,.architectureTitle .silver-core,.architectureTitle .title-rest,.login-brand .silver-agentic{display:inline-block;line-height:1.28;padding:.045em .045em .16em;margin-bottom:-.16em;overflow:visible;background-image:linear-gradient(90deg,#a7afb9 0%,#d0d6df 10%,#fff 19%,#fff 22.5%,#c6ccd6 30%,#a7afb9 50%,#d0d6df 60%,#fff 69%,#fff 72.5%,#c6ccd6 80%,#a7afb9 100%);background-size:200% 100%;background-repeat:repeat-x;background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:brand-silver-sweep 6s linear infinite;font-weight:450;text-shadow:none}
+.login-brand .silver-core{color:#fff;-webkit-text-fill-color:#fff;font-weight:450}
+@keyframes brand-silver-sweep{from{background-position:100% 50%}to{background-position:0% 50%}}
+#rightDock a.dockIcon{text-decoration:none;color:#d8d8dd}
+.stage-credit{position:absolute;bottom:9px;left:50%;transform:translateX(-50%);z-index:8;pointer-events:none;color:#9298a4;font:11px/1.4 Inter,"Segoe UI",sans-serif;white-space:nowrap}
+.inspectorHead{position:relative;padding-right:45px}
+#inspectorMinimise{position:absolute;top:13px;right:13px;padding:6px;width:28px;height:28px;display:grid;place-items:center;border:0;color:#b4b4bc;font-size:20px;line-height:1}
+@media(prefers-reduced-motion:reduce){.architectureTitle .silver-agentic,.architectureTitle .silver-core,.architectureTitle .title-rest,.login-brand .silver-agentic{animation:none;background-position:50% 50%}}
+html[data-ac-embedded] ,html[data-ac-embedded] body{background:transparent!important}
+html[data-ac-embedded] #ac-starfield{display:block}
+html[data-ac-arrival] body>header,html[data-ac-arrival] #workspace,html[data-ac-arrival] #placeholder{opacity:0}
+html[data-ac-arrival=ready] body>header,html[data-ac-arrival=ready] #workspace,html[data-ac-arrival=ready] #placeholder{opacity:1;transition:opacity .45s ease}
+@media(prefers-reduced-motion:reduce){html[data-ac-arrival=ready] body>header,html[data-ac-arrival=ready] #workspace,html[data-ac-arrival=ready] #placeholder{transition:none}}
+
+.workspace-brand-row{display:flex;align-items:center;justify-content:center;gap:11px}.workspace-brand-row h1{margin:0}.ac-home-link{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;flex:0 0 44px;border:0;background:transparent!important;border-radius:8px}.ac-home-link .ac-mark{display:block;width:36px;height:36px;object-fit:contain}.ac-home-link:focus-visible{outline:2px solid #fff;outline-offset:2px}#rightDock #landingHome{width:28px;height:28px;padding:5px}#rightDock #landingHome svg{width:16px;height:16px}@media(max-width:760px){.workspace-brand-row{gap:6px}.ac-home-link{width:34px;height:34px;flex-basis:34px}.ac-home-link .ac-mark{width:28px;height:28px}}
+@media(max-height:520px){#rightDock .rightDockRail{gap:1px;padding:3px}#rightDock .dockIcon{height:20px;min-height:20px;padding:5px}#rightDock #landingHome{height:24px;padding:4px}#rightDock .dockDivider{margin:0}}
+
+#rightDock .dockStack{display:flex;flex-direction:column;align-items:center;gap:10px;pointer-events:none}#rightDock .exitRail{padding:6px;pointer-events:auto}#rightDock .exitRail #landingHome{width:28px;height:28px}#rightDock .rightDockRail>.dockDivider:last-child{display:none}@media(max-height:520px){#rightDock .dockStack{gap:6px}#rightDock .exitRail{padding:3px}#rightDock .exitRail #landingHome{height:24px}}
+
+/* The sky is the canvas boundary. Focusing an orbit region must not draw a
+   white rectangle around the entire model; actionable controls keep their
+   own existing keyboard focus indicators. */
+html#ac-sky-root body#ac-transparent-workspace #stage,
+html#ac-sky-root body#ac-transparent-workspace #stage > :is(#viewport,#conceptViewport,#awsViewport,#websiteViewport){
+ border:0!important;outline:none!important;box-shadow:none!important;
+ overflow:hidden;
+}
+html#ac-sky-root body#ac-transparent-workspace #stage > :is(#viewport,#conceptViewport,#awsViewport,#websiteViewport):is(:focus,:focus-visible){outline:none!important;outline-offset:0!important}
+
+/* Keep text from scrolling beneath a transparent tools header. */
+html#ac-sky-root body#ac-transparent-workspace #rightControlPanel:not([hidden]){display:flex;flex-direction:column;overflow:hidden!important}
+html#ac-sky-root body#ac-transparent-workspace #rightControlPanel > .dockPanelHead{position:relative!important;flex:0 0 auto}
+html#ac-sky-root body#ac-transparent-workspace #rightControlPanel > :is(.dockSection,#websiteTools):not([hidden]){flex:1 1 auto;min-height:0;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#67cfc0 transparent}
+
+/* Transparent readers need real layout space, rather than a dark cover over
+   the graph. The existing ResizeObservers reframe each resized viewport. */
+@media(min-width:761px) and (min-height:561px){
+ #stage:has(#rightControlPanel:not([hidden])){--canvas-tools-inset:438px}
+ body[data-fullscreen=true] #stage:has(#rightControlPanel:not([hidden])) > :is(#viewport,#conceptViewport,#awsViewport,#websiteViewport){left:var(--canvas-tools-inset)!important}
+ body[data-fullscreen=true] #stage:has(#rightControlPanel:not([hidden])) #stageContext{left:var(--canvas-tools-inset)!important;right:20px;max-width:540px}
+ body[data-fullscreen=true] #stage:has(#rightControlPanel:not([hidden])) .stage-credit{left:calc(50% + var(--canvas-tools-inset)/2)}
+}
+@media(min-width:761px) and (max-width:1050px) and (min-height:561px){
+ #stage:has(#rightControlPanel:not([hidden])){--canvas-tools-inset:392px}
+}
+/* A narrow reader is a temporary reading mode. Hide the model underneath,
+   then reveal the unchanged view when the drawer is dismissed. */
+@media(max-width:760px){
+ body:not(.panelClosed) #stage > :is(#viewport,#conceptViewport,#awsViewport,#websiteViewport,#stageContext,#nodeAwsCard,#linkWalk,#tourBar,#designSections){visibility:hidden!important;pointer-events:none!important}
+}
+@media(max-width:760px),(max-height:560px){
+ body[data-fullscreen=true] #stage:has(#rightControlPanel:not([hidden])) > :is(#viewport,#conceptViewport,#awsViewport,#websiteViewport,#stageContext,#nodeAwsCard,#linkWalk,#tourBar,#designSections){visibility:hidden!important;pointer-events:none!important}
+ /* A node may explicitly set visibility:visible during 3D projection. Hide
+    its host instead, without resizing the viewport or covering the sky. */
+ body:is(:not(.panelClosed),[data-product-drawer]) #websiteViewport > :is(.referenceModelHost,.brainModelHost,.awsSystemDiagram),
+ body[data-fullscreen=true] #stage:has(#rightControlPanel:not([hidden])) #websiteViewport > :is(.referenceModelHost,.brainModelHost,.awsSystemDiagram){display:none!important}
+ body:is(:not(.panelClosed),[data-product-drawer]) #websiteViewport .brainConceptHeader,
+ body:is(:not(.panelClosed),[data-product-drawer]) #stageContext{visibility:hidden!important;pointer-events:none!important}
+}

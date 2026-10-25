@@ -1,0 +1,42 @@
+.inspectorHead .tabs{display:grid;grid-template-columns:minmax(0,1fr) 64px minmax(0,1fr)}
+.inspectorHead .tabs button{min-width:0;padding:10px 7px;font-size:11px;white-space:nowrap}
+.aws-service-icon{display:block;flex:none;width:36px;height:36px;object-fit:contain}
+#architectureModelName{width:29.4px;height:19.6px;margin:5px auto 0!important;display:block;background:transparent!important}
+#architectureModelName svg{display:block;width:100%;height:100%}
+.original-node-icon,.aws-node-icon{display:grid;place-items:center}
+body[data-study-tab="aws"] .original-node-icon{display:none}
+body:not([data-study-tab="aws"]) .aws-node-icon{display:none}
+body:not([data-study-tab="aws"]) #awsWorld image,body:not([data-study-tab="aws"]) #nodeAwsCard{display:none!important}
+.nodeGlyph .aws-service-icon{width:20px;height:20px}
+#labels .nodeLabel .nodeGlyph{width:20px;height:20px;flex:0 0 20px}
+#labels .nodeLabel.expanded .nodeName,#labels .nodeLabel.boundary .nodeName{max-width:44px}
+#labels .nodeLabel:not(.expanded):not(.boundary){width:22px;height:22px;min-width:22px;max-width:22px;min-height:22px}
+.conceptGlyph .aws-service-icon{width:27px;height:27px}
+.aws-study-title,.aws-card-heading{display:flex;gap:12px;align-items:center}
+.aws-study-title{margin:16px 0}.aws-study-title h2{margin:0!important}.aws-study-title p{margin:4px 0 0!important;color:#b4c7c5!important;font-size:12px!important}
+.aws-study-title .aws-service-icon{width:44px;height:44px}
+#study .study-note{font-size:12px;line-height:1.7;color:#a7bfbb;border-left:2px solid #67cfc0;padding-left:12px}
+#study details{border-top:1px solid #ffffff1c;padding:12px 0;margin:12px 0}
+#study details details{margin:7px 0;padding:9px 0}
+#study summary{cursor:pointer;color:#e5ecec;font-size:13px;line-height:1.6}
+#study .researchMath{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;line-height:1.8;padding:12px;border-left:2px solid #709b96;background:transparent}
+#study .formal-stage-list{padding-left:22px}
+#study .formal-stage-list>li{padding:4px 0 16px}
+#study .formal-stage-list p{margin:8px 0}
+#study .aws-source-list{font-size:12px;line-height:1.7;padding-left:18px}
+#study .aws-source-list a{color:#9cded1;text-decoration:underline;text-underline-offset:3px}
+#study .aws-directory-node{width:100%;display:flex;align-items:center;gap:12px;text-align:left;padding:10px 0;border:0;background:transparent;font-size:13px;line-height:1.4;border-radius:0}
+#study .aws-directory-node small{display:block;font-size:11px;color:#a5b8b5;margin-top:4px}
+#study .aws-directory-node .aws-service-icon{width:28px;height:28px}
+#study .aws-directory-node:hover{color:#9de2d5}
+.node-aws-card{position:absolute;right:16px;top:18px;z-index:10;width:235px;padding:15px 18px;border:1px solid #ffffff25;border-radius:16px;background:transparent;color:#e0e7e8;text-align:left}
+.aws-card-heading{margin:10px 0}.aws-card-heading strong{display:block;font-size:13px;font-weight:500}.aws-card-heading span{display:block;font-size:11px;color:#b3c2c0;line-height:1.5;margin-top:3px}
+.node-aws-card .inlineLink{font-size:11px;color:#9dded3;text-align:left;padding:4px 0}
+.aws-card-dismiss{position:absolute;right:5px;top:3px;font-size:19px;padding:4px 8px;color:#9caaa9}
+.guard-demonstration{margin:24px 0;padding:16px 0;border-top:1px solid #ffffff25;border-bottom:1px solid #ffffff25}
+#formalScenario{display:block;width:100%;margin:8px 0 16px;padding:10px;color:#e4ecea;background:#090909;border:1px solid #ffffff35;border-radius:8px;font:inherit;font-size:12px}
+#study .gate-checks{list-style:none;padding-left:0;font-size:12px;line-height:1.8}
+#study .gate-checks li{padding:3px 0}.gate-status{font-size:13px}.gate-allowed{color:#94decb!important}.gate-blocked{color:#e9ba91!important}
+.node-aws-card .researchLabel{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:#adbfbc}
+@media(max-width:760px){body:not(.panelClosed) #viewport,body:not(.panelClosed) #labels,body:not(.panelClosed) #conceptViewport,body:not(.panelClosed) #awsViewport,body:not(.panelClosed) #nodeAwsCard,body:not(.panelClosed) #delta,body:not(.panelClosed) .stage-credit{visibility:hidden!important;opacity:0!important;pointer-events:none!important}}
+@media(max-width:760px){.node-aws-card{right:10px;top:10px;width:190px;padding:12px}.node-aws-card .aws-service-icon{width:26px;height:26px}.node-aws-card .researchLabel{font-size:8px}.aws-card-heading{gap:8px}.inspectorHead .tabs{grid-template-columns:minmax(0,1fr) 54px minmax(0,1fr)}}

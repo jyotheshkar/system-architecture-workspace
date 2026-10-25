@@ -1,0 +1,1 @@
+{"name":"agentic-core-reference-workspace","private":true,"type":"module","scripts":{"build":"node worker/build.mjs","test":"node worker/test.mjs"}}

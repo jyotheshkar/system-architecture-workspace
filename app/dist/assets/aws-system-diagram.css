@@ -1,0 +1,65 @@
+/* Transparent AWS deployment drawings with persistent grey component outlines. */
+.awsSystemDiagram{position:absolute;inset:0;overflow:hidden;pointer-events:none;background:transparent;color:#e5e7eb;font-family:Arial,Helvetica,sans-serif;isolation:isolate;user-select:none}
+.awsSystemDiagram[hidden]{display:none!important}
+.awsDesignCanvas{position:absolute;left:0;top:0;transform-origin:0 0;background:transparent;will-change:transform}
+.awsDesignWires,.awsDesignServices,.awsDesignInterfaces{position:absolute;inset:0;overflow:visible;pointer-events:none}
+.awsDesignBoundary rect{fill:none;stroke:#626a73;stroke-width:1;vector-effect:non-scaling-stroke}
+.awsDesignBoundary text{font-size:14px;font-weight:600;fill:#d3d7dc;letter-spacing:.02em;paint-order:stroke;stroke:rgba(0,0,0,.9);stroke-width:3px;stroke-linejoin:round}
+.awsDesignBoundary .awsBoundarySub{font-size:11px;font-weight:400;fill:#8e9ba8;letter-spacing:0}
+.awsDesignBoundary.region rect{stroke:#58797a;stroke-dasharray:6 5;stroke-opacity:.64}
+.awsDesignBoundary.region>text:first-of-type{fill:#a4cfcd}
+.awsDesignBoundary.lane rect{stroke:#48545c;stroke-opacity:.52;stroke-dasharray:2 4}
+.awsDesignBoundary.library rect{stroke:#5a626d;stroke-dasharray:4 5;stroke-opacity:.7}
+.awsDesignBoundary.vpc rect{stroke:#9274be;stroke-opacity:.82}
+.awsDesignBoundary.vpc>text:first-of-type{fill:#c7b2e8}
+.awsDesignBoundary.subnet rect{stroke:#548978;stroke-opacity:.75;stroke-dasharray:5 4}
+.awsDesignBoundary.subnet>text:first-of-type{fill:#a8c7bd}
+.awsDesignBoundary.external rect{stroke-opacity:.34;stroke-dasharray:2 5}
+.awsDesignBoundary.global rect{stroke-opacity:.55;stroke-dasharray:4 5}
+.awsDesignWire{fill:none;stroke:#84929c;stroke-width:1.1;stroke-opacity:.38;vector-effect:non-scaling-stroke;transition:stroke-opacity .12s,stroke .12s}
+.awsDesignWire.major{stroke-opacity:.72;stroke-width:1.25}
+.awsDesignWire.selected{stroke:#fff;stroke-opacity:1;stroke-width:1.65}
+.awsDesignBadgeLeader{fill:none;stroke:#74818a;stroke-width:.7;stroke-opacity:.45;stroke-dasharray:2 3;vector-effect:non-scaling-stroke}
+.awsDesignWires marker path{stroke:#bcc6ce;stroke-width:1.1;fill:none}
+.awsDesignWires marker.selectedArrow path{stroke:#fff}
+#websiteViewport .awsDesignNode{position:absolute;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;width:166px;height:112px;padding:5px 6px;box-sizing:border-box;transform:translate(-50%,-50%);border:1px solid #747d87;border-radius:5px;background:transparent;box-shadow:none;color:#f1f3f4;pointer-events:auto;cursor:pointer;text-align:center;line-height:1.2;transition:color .15s,border-color .15s;outline-offset:4px}
+#websiteViewport .awsDesignNode:hover,#websiteViewport .awsDesignNode:focus-visible{background:transparent;box-shadow:none;border-color:#747d87;transform:translate(-50%,-50%);color:#fff}
+#websiteViewport .awsDesignNode.selected{background:transparent;box-shadow:none;border-color:#fff;transform:translate(-50%,-50%);color:#fff}
+#websiteViewport .awsDesignNode.destination{border-color:#fff;animation:awsDestinationBorder 1.1s ease-in-out infinite}
+@keyframes awsDestinationBorder{0%,100%{border-color:#fff}50%{border-color:#747d87}}
+#websiteViewport .awsDesignNode:focus-visible{outline:2px solid #f1f3f4}
+.awsDesignNodeNumber{position:absolute;left:7px;top:5px;color:#d6dbe0;font-size:12px;font-weight:600;line-height:1.1;pointer-events:none}
+.awsDesignNode.selected .awsDesignNodeNumber,.awsDesignNode.destination .awsDesignNodeNumber{color:#fff}
+.awsDesignSymbols{height:38px;flex:0 0 38px;display:flex;align-items:center;justify-content:center;gap:7px}
+.awsDesignSymbols img{display:block;width:38px;height:38px;object-fit:contain;max-width:none;filter:none!important;user-select:none}
+.awsDesignSymbols img:only-child{width:40px;height:40px}
+.awsDesignService{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;max-width:154px;max-height:39px;flex:0 0 auto;font-size:17px;font-weight:600;line-height:1.12;text-wrap:balance;overflow-wrap:normal;text-shadow:0 1px 5px #000,0 0 3px #000}
+.awsDesignRole{display:block;max-width:155px;flex:0 0 auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#a4aeb8;font-size:14px;line-height:1.12;text-shadow:0 1px 5px #000,0 0 3px #000}
+#websiteViewport .awsDesignInterface{position:absolute;display:flex;align-items:center;justify-content:center;gap:4px;width:45px;min-width:45px;max-width:none;height:25px;min-height:25px;box-sizing:border-box;transform:translate(-50%,-50%);padding:2px;border:0;border-radius:0;background:transparent;box-shadow:none;color:#a4afb9;font-size:11px;font-weight:500;line-height:1.15;pointer-events:auto;cursor:pointer;text-shadow:0 0 3px #000,0 0 6px #000,0 0 4px #000;outline-offset:4px;transition:color .12s}
+#websiteViewport .awsDesignInterface.labelled{width:130px;height:32px}
+.awsInterfaceNumber{display:inline-flex;align-items:center;justify-content:center;flex:0 0 38px;height:20px;border:1px solid #697781;border-radius:10px;font-size:10px;color:#c8d0d7;text-shadow:0 0 5px #000}
+.awsInterfaceLabel{display:none;max-width:80px;font-size:11px;text-wrap:balance}
+.awsDesignInterface.labelled .awsInterfaceLabel{display:inline}
+#websiteViewport .awsDesignInterface:hover,#websiteViewport .awsDesignInterface:focus-visible,#websiteViewport .awsDesignInterface.selected{background:transparent;box-shadow:none;transform:translate(-50%,-50%);color:#fff}
+#websiteViewport .awsDesignInterface:focus-visible{outline:2px solid #e5e7eb}
+.awsDesignInterface.selected .awsInterfaceNumber,.awsDesignInterface.related .awsInterfaceNumber{border-color:#fff;color:#fff}
+.awsDesignInterface:not(.labelled):is(:hover,:focus-visible) .awsInterfaceLabel{display:block;position:absolute;left:49px;top:0;width:180px;max-width:180px;color:#edf0f2;font-size:13px;text-align:left;pointer-events:none}
+.awsSystemDiagram.hideInterfaceLabels .awsInterfaceLabel{display:none!important}
+@media(prefers-reduced-motion:reduce){.awsDesignWire,#websiteViewport .awsDesignNode,#websiteViewport .awsDesignInterface{transition:none}#websiteViewport .awsDesignNode.destination{animation:none;border-color:#fff}}
+
+/* Node 01: native scrolling keeps the service names readable at every size. */
+#websiteViewport .awsSystemDiagram.node01Diagram{inset:64px 70px 44px 66px;overflow:auto;pointer-events:auto;touch-action:pan-x pan-y;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#7e858e transparent;outline-offset:-2px;isolation:isolate}
+.awsSystemDiagram.node01Diagram::-webkit-scrollbar{width:5px;height:5px}.awsSystemDiagram.node01Diagram::-webkit-scrollbar-thumb{background:#7e858e;border-radius:5px}
+.awsSystemDiagram.node01Diagram:focus-visible{outline:1px solid #8e949c}
+.awsDesignScrollSpace{pointer-events:none}.awsSystemDiagram:not(.node01Diagram) .awsDesignScrollSpace{display:none}
+.node01Diagram .awsDesignBoundary.region rect{stroke:#75818c;stroke-opacity:.75;stroke-dasharray:7 5}.node01Diagram .awsDesignBoundary.region>text:first-of-type{fill:#d3d7dc}
+.node01Diagram .awsDesignBoundary.account rect{stroke:#626a73;stroke-opacity:.6}.node01Diagram .awsDesignBoundary.unresolved rect{stroke:#858d96;stroke-dasharray:6 5}
+.node01Diagram .awsDesignBoundary text{font-size:15px}.node01Diagram .awsDesignBoundary .awsBoundarySub{font-size:11px}
+.node01Diagram .awsNode01Note{font-size:14px;fill:#9ea7b1;paint-order:stroke;stroke:#000;stroke-width:3px;stroke-linejoin:round}
+.node01Diagram .awsDesignService{font-size:17px}.node01Diagram .awsDesignRole{font-size:12px;max-width:154px;white-space:normal;line-height:1.15;text-wrap:balance}
+.node01Diagram .awsDesignSymbols{height:38px;flex-basis:38px}
+.node01Diagram .awsDesignNode[data-aws-placement="interface-boundary"]{border-style:dashed}
+@media(max-width:760px){#websiteViewport .awsSystemDiagram.node01Diagram{inset:64px 54px 42px 52px}}
+@media(max-width:480px){#websiteViewport .awsSystemDiagram.node01Diagram{inset:58px 48px 42px 48px}}
+@media(max-width:760px),(max-height:560px){body:is(:not(.panelClosed),[data-product-drawer]) #websiteViewport>.awsSystemDiagram.node01Diagram,body[data-fullscreen=true] #stage:has(#rightControlPanel:not([hidden])) #websiteViewport>.awsSystemDiagram.node01Diagram{display:none!important}}
+.node01Diagram .awsDesignWire.async{stroke-dasharray:6 4}

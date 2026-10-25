@@ -1,0 +1,44 @@
+#rightDock{left:18px;gap:10px;max-height:calc(100% - 20px)}
+#rightDock .dockStack{gap:10px;align-items:center}
+#rightDock .rightDockRail{padding:2px;gap:6px;border-radius:999px;background:transparent;border:1px solid #ffffff24;box-shadow:none}
+#rightDock .dockIcon,#rightDock #landingHome,#rightDock .exitRail #landingHome{height:34px;width:34px;min-width:34px;min-height:34px;padding:8px;border-radius:50%;border:1px solid transparent;display:grid;place-items:center;color:#c5c9cf;transition:color .18s,background-color .18s,border-color .18s}
+#rightDock .dockIcon svg,#rightDock #landingHome svg{width:16px;height:16px;stroke-width:1.5}
+#rightDock .dockIcon:hover{background:#ffffff0b;border-color:#ffffff24;color:#fff;transform:none}
+#rightDock .dockIcon:focus-visible{outline:2px solid #f4f5f6;outline-offset:3px;color:white}
+#rightDock .dockIcon[aria-expanded=true],#rightDock .dockIcon.isOpen,#rightDock .fullscreenRail .dockIcon[aria-pressed=true]{background:#f4f5f6;color:#0a0a0a;border-color:#f4f5f6;box-shadow:none;z-index:2}
+#rightDock .dockIcon:after{left:calc(100% + 18px);border-radius:999px;background:#101112;color:#edf1f3;border:1px solid #ffffff20;font-size:12px;padding:7px 12px;box-shadow:none;transition:opacity .14s;line-height:1.3}
+#rightDock .dockDivider{width:16px;height:1px;margin:2px 0;background:#ffffff20}
+#rightControlPanel{border-radius:24px;border-color:#ffffff24;background:transparent;width:354px;max-width:calc(100vw - 104px);overflow:auto;scrollbar-width:thin;scrollbar-color:#67cfc0 transparent}
+#rightControlPanel .dockPanelHead{border-radius:24px 24px 0 0;padding:11px 12px 11px 18px;background:transparent;border-bottom-color:#ffffff14}
+#rightControlPanel .dockPanelHead strong{font-size:14px;font-weight:500;letter-spacing:0}
+#rightControlPanel .dockPanelHead button{width:34px;height:34px;border:1px solid transparent;border-radius:50%;font-size:23px;padding:0;line-height:1}
+#rightControlPanel .dockSection{padding:18px 20px 26px}
+#rightControlPanel .dockHint,#rightControlPanel .displayHint{font-size:12px;line-height:1.6;margin-bottom:12px}
+#rightControlPanel .dockActions button,#rightControlPanel #displayOptions button,#rightControlPanel .scopeControls button{min-height:40px;border-radius:10px;font-size:12px;padding:10px 11px;background:transparent;border-color:#ffffff26}
+#rightControlPanel .cameraTools{gap:8px}#rightControlPanel .cameraTools button{min-height:40px;border-radius:10px}#rightControlPanel .cameraTools button span{font-size:12px}
+@media(max-width:760px){#rightDock{left:10px}#rightDock .rightDockRail{padding:2px;gap:6px}#rightDock .dockStack{gap:10px}#rightDock .dockIcon,#rightDock #landingHome,#rightDock .exitRail #landingHome{width:32px;height:32px;min-width:32px;min-height:32px;padding:7px}#rightControlPanel .dockPanelHead{padding:9px 10px 9px 16px}#rightControlPanel .dockPanelHead strong{font-size:12px}#rightControlPanel .dockSection{padding:16px 18px 24px}#rightControlPanel{max-width:calc(100vw - 88px)}}
+@media(max-height:560px){#rightDock{position:absolute!important;top:auto!important;bottom:10px;left:50%;transform:translateX(-50%);max-height:none!important;flex-direction:column;gap:8px}#rightDock .dockStack{flex-direction:row;gap:8px}#rightDock .rightDockRail{flex-direction:row;gap:3px;padding:2px}#rightDock .dockDivider{width:.6px;height:13.2px;margin:0 1.8px}#rightDock .dockIcon:after{top:auto;bottom:calc(100% + 16px);left:50%;transform:translateX(-50%)}#rightControlPanel{position:absolute;bottom:calc(100% + 12px);left:50%;transform:translateX(-50%);max-height:calc(100dvh - 95px);width:310px;max-width:calc(100vw - 30px)}.stage-credit{display:none}}
+@media(prefers-reduced-motion:reduce){#rightDock .dockIcon,#rightDock .dockIcon:after{transition:none}#rightDock .dockIcon:hover{transform:none}}
+
+/* Standalone controls have one circle, without a second enclosing ring. */
+#rightDock :is(.fullscreenRail,.exitRail){border-color:transparent;background:transparent;box-shadow:none}
+#rightDock :is(.fullscreenRail,.exitRail) .dockIcon{border-color:#ffffff24}
+#rightDock .dockIcon:focus-visible{color:#fff}
+#rightDock .dockIcon:after{visibility:hidden}
+#rightDock .dockIcon:hover:after,#rightDock .dockIcon:focus-visible:after{visibility:visible}
+#rightDock .dockIcon:is([aria-expanded=true],[aria-pressed=true],.isOpen):after{opacity:0;visibility:hidden}
+@media(max-width:760px){#rightDock .dockIcon:after{display:none}}
+#rightControlPanel :is(button:hover,button:focus-visible){color:#fff;border-color:#ffffff70}
+#rightControlPanel :is(button:focus-visible,input:focus-visible,select:focus-visible){outline:2px solid #f4f5f6;outline-offset:3px}
+#rightControlPanel .dockPanelHead button:hover{background:#ffffff0b;border-color:#ffffff24}
+#rightControlPanel :is(.dockHint,.displayHint,.guideIntro,.guideSteps,.guideSteps li,.guideLegend){color:#c3c8cf}
+#rightControlPanel input{accent-color:#f4f5f6}
+@media(max-height:560px){#rightDock .dockIcon,#rightDock #landingHome,#rightDock .exitRail #landingHome{width:32px;height:32px;min-width:32px;min-height:32px;padding:7px}}
+
+@media(min-width:761px) and (max-width:1050px){#rightControlPanel{width:308px}}
+@media(max-width:760px) and (min-height:561px){#rightControlPanel{width:calc(100vw - 120px);max-width:calc(100vw - 120px)}}
+
+/* Match both docks even when a legacy control rule is injected by the reference view. */
+html#ac-sky-root body#ac-transparent-workspace #rightDock .dockIcon,html#ac-sky-root body#ac-transparent-workspace #rightDock #landingHome{width:34px!important;height:34px!important;min-width:34px!important;min-height:34px!important;padding:8px!important;box-sizing:border-box}
+html#ac-sky-root body#ac-transparent-workspace #rightDock .dockIcon svg,html#ac-sky-root body#ac-transparent-workspace #rightDock #landingHome svg{width:16px!important;height:16px!important;min-width:16px!important;min-height:16px!important}
+@media(max-width:760px),(max-height:560px){html#ac-sky-root body#ac-transparent-workspace #rightDock .dockIcon,html#ac-sky-root body#ac-transparent-workspace #rightDock #landingHome{width:32px!important;height:32px!important;min-width:32px!important;min-height:32px!important;padding:7px!important}}

@@ -1,0 +1,109 @@
+/* Workspace product controls share the existing compact dock language. */
+body:not([data-fullscreen=true]) #rightDock .dockStack>.rightDockRail:not(.fullscreenRail),body:not([data-fullscreen=true]) #rightControlPanel{display:none!important}
+#rightDock #panelToggle{display:none!important}
+#rightDock .rightDockRail>.dockDivider:last-child{display:none}
+#rightControlPanel .scopeControls{display:grid;gap:5px;border:0;padding:0}
+#rightControlPanel .scopeControls button{width:100%;text-align:left;white-space:normal}
+#detailsDock{display:flex;flex-direction:column;gap:10px}
+#workspace #productDrawer{position:relative;display:flex;flex-direction:column;width:auto;min-width:0;min-height:0;overflow:hidden;margin:0 58px 0 14px;border:1px solid #ffffff24;border-radius:24px;background:transparent;box-shadow:none;z-index:12}
+#productDrawer[hidden]{display:none!important}
+body[data-product-drawer] #workspace #inspector{display:none!important}
+.productHeader{position:relative;display:flex;flex:0 0 auto;align-items:center;justify-content:space-between;padding:11px 12px 11px 18px;gap:10px;border-bottom:1px solid #ffffff14;background:transparent;border-radius:24px 24px 0 0}
+.productHeader h2{font-size:14px;line-height:1.5;font-weight:500;margin:0;letter-spacing:0;color:#e7e9ec}
+.productHeader button{flex:0 0 34px;width:34px;height:34px;border:1px solid transparent;border-radius:50%;padding:0;font-size:23px;line-height:1;color:#c5c9cf}
+.productHeader button:hover{background:#ffffff0b;border-color:#ffffff24;color:#fff}
+#productBody{overflow-y:auto;overflow-x:hidden;min-width:0;min-height:0;flex:1;padding:18px 20px 26px;overflow-wrap:anywhere;scrollbar-width:thin;scrollbar-color:#67cfc0 transparent;overscroll-behavior:contain}
+#productBody:focus-visible{outline:none}
+#productDrawer:has(#productBody:focus-visible) .productHeader h2{text-decoration:underline;text-underline-offset:6px;text-decoration-color:#f4f5f6}
+#productBody .productKicker{color:#a7abb0;font-size:9px;letter-spacing:1.6px;margin:0 0 10px}
+#productBody .productLead{font-size:17px;line-height:1.5;margin:0 0 18px;color:#f1f2f3}
+#productBody .productHint,#productBody .emptyState{font-size:12px;line-height:1.7;color:#b4b8be;margin:10px 0 14px}
+.workspacePageList{display:grid;grid-template-columns:minmax(0,1fr);min-width:0;max-width:100%;gap:0;margin:0;padding:0}
+#productBody .workspacePage{position:relative;display:flex;flex-direction:row;align-items:center;width:100%;min-width:0;max-width:100%;min-height:46px;box-sizing:border-box;text-align:left;padding:12px;gap:10px;border:0;border-bottom:1px solid #ffffff16;border-radius:0;background:transparent;color:#dce0e5;transition:background-color .16s,color .16s}
+#productBody .workspacePage span{display:block;flex:1 1 0;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px;line-height:1.55;color:inherit}
+#productBody .workspacePage small{display:none}
+#productBody .workspacePage[aria-pressed=true]{background:#f4f5f6;border-color:transparent;border-radius:9px;color:#101113;font-weight:550;z-index:1}
+#productBody .workspacePage:hover{background:#ffffff09;color:#fff}#productBody .workspacePage[aria-pressed=true]:hover{background:#fff;color:#101113}#productBody .workspacePage:focus-visible{outline:2px solid #fff;outline-offset:3px;z-index:2}
+#productBody .productPrimary{border:1px solid #ffffff36;background:#ffffff0c;color:#f4f5f6;border-radius:12px;padding:10px 13px;font-size:12px;min-height:40px}
+#productBody .productPrimary:hover{background:#ffffff16}
+#productBody button:disabled{cursor:wait;opacity:.5}
+#productBody .productQuiet{font-size:12px;color:#c4c7cb;padding:9px 0;text-align:left;text-decoration:underline;text-underline-offset:4px}
+#productBody hr{border:0;border-top:1px solid #ffffff14;margin:22px 0}
+#productBody h3{font-size:14px;font-weight:500;margin:0 0 8px;color:#e7e9ec;line-height:1.5}
+#productBody .saveState{font-size:10px;color:#a6abb1;margin:0 0 16px}
+.productDetails{border-top:1px solid #ffffff14;padding:13px 0;font-size:12px}
+.productDetails summary{cursor:pointer;color:#d0d3d8;line-height:1.5;min-height:24px}
+.productDetails summary small{color:#a0a5ac;margin-left:8px}
+.productForm{display:grid;grid-template-columns:minmax(0,1fr);min-width:0;max-width:100%;gap:12px;padding:14px 0;font-size:12px}
+.productForm label{display:grid;grid-template-columns:minmax(0,1fr);min-width:0;gap:7px;color:#c0c5cb}
+.productForm input,.productForm textarea,.productForm select,.guideComposer textarea{display:block;box-sizing:border-box;min-width:0;max-width:100%;width:100%;background:#ffffff03;color:#edf0f3;border:1px solid #ffffff26;border-radius:10px;padding:10px 11px;font:inherit;line-height:1.55}
+.productForm textarea,.guideComposer textarea{resize:vertical}
+.productForm input:focus,.productForm textarea:focus,.productForm select:focus,.guideComposer textarea:focus{outline:1px solid #f4f5f6;outline-offset:1px;border-color:#f4f5f6}
+.productForm input[type=password]{letter-spacing:.04em}
+.productActions{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+#productBody .productActions button,.importButton{font-size:11px;border:1px solid #ffffff24;border-radius:10px;padding:9px 11px;cursor:pointer}
+.layerChoices{display:grid;gap:2px;padding-top:5px}
+.layerChoices label{display:flex;align-items:center;gap:8px;min-height:37px;font-size:12px;color:#ccd0d5;cursor:pointer}
+.layerChoices input{accent-color:#f4f5f6;width:15px;height:15px}
+.layerChoices small{font-size:9px;color:#a0a5ac;margin-left:auto}
+.sectionTitleRow{display:flex;align-items:center;justify-content:space-between;margin-top:17px}
+.sectionTitleRow button{font-size:23px;width:34px;height:34px;border:1px solid #ffffff20;border-radius:50%;padding:0;color:#f0f2f4}
+.sectionList{display:grid;gap:6px}
+.sectionRow{display:grid;gap:5px;text-align:left;padding:12px;border:1px solid #ffffff1c;border-radius:12px}
+.sectionRow strong{font-size:12px;font-weight:500}.sectionRow small{font-size:10px;color:#a0a5ac}
+#productBody a{font-size:12px;color:#e5e8eb;text-decoration:underline;text-underline-offset:4px}
+#productBody .productMessage{font-size:12px;line-height:1.7;color:#cbd0d6;white-space:pre-wrap;overflow-wrap:anywhere}
+#productMessage button{margin:8px 4px 0 0;border:1px solid #ffffff28;border-radius:10px;font-size:11px}
+.importButton input{position:absolute;width:1px;height:1px;opacity:0}.importButton:focus-within{outline:2px solid #f4f5f6}
+#stageContext{position:absolute;top:15px;left:20px;right:20px;z-index:5;max-width:540px;pointer-events:none}
+#activePageBadge{position:relative;text-align:left;display:grid;grid-template-columns:7px minmax(0,1fr);gap:4px 8px;border:0;padding:0;max-width:100%;font-size:12px;line-height:1.4;color:#fff;background:transparent;pointer-events:auto;overflow-wrap:anywhere}
+#activePageBadge .pageDot{width:5px;height:5px;border-radius:50%;background:#67cfc0;align-self:center}
+#activePageBadge small{grid-column:2;font-size:9px;color:#9da3ab}
+#stageContext #delta{position:relative;top:auto;bottom:auto!important;left:auto;right:auto;width:100%;max-width:100%;margin-top:10px;padding:6px 0 6px 12px;font-size:11px;line-height:1.6;overflow-wrap:anywhere;transform:none;z-index:auto}
+#stageContext #delta:empty{display:none}
+#designSections{display:none}
+.sectionShelfLabel{font-size:9px;color:#a0a5ac;white-space:nowrap}
+.sectionChip{border:1px solid #ffffff28;border-radius:11px;padding:8px 10px;background:#ffffff06;color:#d2d7dd;white-space:nowrap;font-size:10px}
+.sectionChip span{color:#f4f5f6}
+.guideSuggestions{display:flex;flex-wrap:wrap;gap:6px;margin:15px 0}
+.guideSuggestions button{border:1px solid #ffffff20;border-radius:999px;padding:7px 10px;font-size:10px;color:#c0c6cd}
+#guideTranscript{max-height:47vh;overflow:auto;scrollbar-width:thin;scrollbar-color:#67cfc0 transparent}
+.guideMessage{border-top:1px solid #ffffff15;padding:14px 0}
+.guideMessage small{font-size:10px;color:#c3c8ce}
+.guideMessage.user small{color:#a8aeb6}
+.guideMessage p{font-size:12px;line-height:1.75;color:#d5d9df;white-space:pre-wrap;overflow-wrap:anywhere;margin:8px 0}
+.guideMessage button{border:1px solid #ffffff28;border-radius:9px;padding:7px 9px;color:#dce1e7;font-size:10px;margin:3px}
+.guideComposer{display:grid;grid-template-columns:minmax(0,1fr);min-width:0;gap:9px;margin-top:15px}
+.guideComposer textarea{font-size:12px}.srOnly{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+@media(max-width:760px){#workspace #productDrawer{position:absolute;top:0;bottom:0;left:42px;right:54px;width:auto;margin:0;z-index:12}#productBody{padding:16px 18px 24px}.productHeader{padding:9px 10px 9px 16px}.productHeader h2{font-size:12px}#stageContext{left:10px;right:10px;top:12px}#activePageBadge{font-size:11px}#activePageBadge small{font-size:8px}#stageContext #delta{font-size:10px}#designSections{left:12px;right:60px;bottom:28px}body[data-product-drawer] #viewport,body[data-product-drawer] #labels,body[data-product-drawer] #conceptViewport,body[data-product-drawer] #awsViewport,body[data-product-drawer] #nodeAwsCard{visibility:hidden!important}#guideTranscript{max-height:40vh}}
+@media(max-height:560px){.productHeader{padding-top:5px;padding-bottom:5px}#detailsDock{top:10px;gap:8px}#detailsDock .detailsRail{gap:3px;padding:2px}#detailsDock .studyCircle{width:32px;height:32px;min-width:32px;padding:7px}#detailsDock .studyCircle svg{width:16px;height:16px}#guideTranscript{max-height:none}}
+
+/* A single white surface identifies the active action; the starfield remains visible. */
+#detailsDock .productRail{border-color:transparent;background:transparent;box-shadow:none}
+#productBody :is(button,summary,a):focus-visible{outline:2px solid #f4f5f6;outline-offset:3px}
+#productBody .productPrimary{background:#f4f5f6;border-color:#f4f5f6;color:#101113}
+#productBody .productPrimary:hover{background:#fff;border-color:#fff;color:#101113}
+#productBody :is(.productQuiet,a,summary):hover{color:#fff}
+#productBody .productActions{gap:8px}
+#productBody .guideSuggestions button:hover,#productBody .guideMessage button:hover{background:#ffffff0b;border-color:#ffffff48;color:#fff}
+#productBody .productForm input::placeholder,#productBody .productForm textarea::placeholder,#productBody .guideComposer textarea::placeholder{color:#9198a1}
+#productBody .productForm select{color-scheme:dark}
+@media(prefers-reduced-motion:reduce){#productBody .workspacePage{transition:none}}
+
+.productHeader h2{margin-right:auto}
+.productHeader .pagesHeaderAction{display:grid;place-items:center;flex:0 0 34px;width:34px;height:34px;padding:8px;border-radius:50%;color:#c5c9cf;font-size:18px;line-height:1}
+.productHeader .pagesHeaderAction svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.productHeader :is(.pagesHeaderAction,button):focus-visible{outline:2px solid #f4f5f6;outline-offset:3px}
+#productBody .productVision{margin:0 0 20px;padding:0 0 20px;border-bottom:1px solid #ffffff1c;color:#cbd0d6;font-size:12px;line-height:1.8}
+#productBody .productVision :is(h3,strong){color:#eef0f3}
+#productBody .productVision p{margin:8px 0}
+
+#detailsDock .productRail .studyCircle:not([aria-expanded=true]){border-color:#ffffff24}
+
+#productBody .workspacePage .pageSelectedMark{display:block;flex:0 0 18px;width:18px;height:18px;min-width:18px;max-width:18px;margin-left:auto;visibility:hidden;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#productBody .workspacePage[aria-pressed=true] .pageSelectedMark{visibility:visible}
+#productBody .workspacePage .pageSelectedMark svg{display:block;width:18px;height:18px;max-width:18px}
+
+/* In a narrow landscape viewport the bottom canvas dock shares the drawer's
+   column. Desktop drawers have their own column and use the full height. */
+@media(max-width:760px) and (max-height:560px){body[data-fullscreen=true] #workspace :is(#inspector,#productDrawer){bottom:58px}}

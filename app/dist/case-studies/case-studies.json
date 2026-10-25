@@ -1,0 +1,512 @@
+{
+  "updated": "24 October 2026",
+  "author": "Jyothesh Karnam",
+  "status": "AWS design case studies; cloud deployment and runtime validation pending",
+  "projects": [
+    {
+      "id": "agentic",
+      "title": "Agentic Core",
+      "subtitle": "From an approved business requirement to a governed workflow package.",
+      "diagram": "agentic-core",
+      "scope": "A supported document-tracker workflow for an architectural firm. Agentic Core compiles a reusable specification, reviewed operators, tests and controls into a package. Operating that package is a separately authorised activity.",
+      "goal": "Make the transition from ambiguous intent to a reviewable, verified workflow explicit and auditable.",
+      "outcomes": [
+        "A versioned contract with acceptance criteria and work limits.",
+        "A finite plan using supported reviewed operators.",
+        "An exact candidate with independently produced verification evidence.",
+        "Owner acceptance and a matching delivery receipt for the released package."
+      ],
+      "constraints": [
+        "Single workload account; target Region eu-west-2. Selected Bedrock model/version availability must be checked before deployment.",
+        "One project and supported input schema per run; 1,000 rows and 256 KiB are proposed prototype limits.",
+        "Two total candidate attempts: the first cycle and at most one admitted repair. Reserve once per cycle; bound SDK and transport retries within its resource/deadline limits.",
+        "Reviewed data-only workflow plans. No arbitrary generated-code execution or autonomous permission grants.",
+        "Contract approval, verified-candidate owner acceptance, release authority and child operating authority are distinct."
+      ],
+      "flow": [
+        [
+          "1",
+          "Intake",
+          "Cognito + API Gateway + Lambda",
+          "Authenticate and authorise the project operation; atomically persist requirement, receipt and outbox."
+        ],
+        [
+          "2",
+          "Contract",
+          "Lambda + DynamoDB",
+          "Clarify supported scope and record approval of the exact contract revision/hash."
+        ],
+        [
+          "3",
+          "Controller",
+          "Step Functions Standard + guards",
+          "Admit the run and plan, reserve work, coordinate building, verification, repair and owner acceptance."
+        ],
+        [
+          "4",
+          "Builder",
+          "Bedrock + reviewed Lambda compiler",
+          "Propose a finite data-only DAG, validate it deterministically, compile pinned reviewed operators and seal candidate bytes."
+        ],
+        [
+          "5",
+          "Verifier",
+          "Separate Lambda role + S3",
+          "Read precise candidate versions; execute trusted tests; record evidence outside the evaluated package."
+        ],
+        [
+          "6",
+          "PIC",
+          "Pinned source/library + IAM",
+          "Enforce approval, ownership, permission scope, current verification, bounded repair and release conditions."
+        ],
+        [
+          "7",
+          "Package",
+          "S3 + delivery Lambda + ledger",
+          "Release only the accepted verified version; reconcile its actual receipt. Keep child operation separately authorised."
+        ]
+      ],
+      "decisions": [
+        [
+          "Trusted control and AI proposals",
+          "Step Functions coordinates phases; deterministic guards and a conditional DynamoDB ledger decide authority. Bedrock proposes a bounded plan.",
+          "A deterministic plan template is simpler for the first supported workflow; a free-running model controller is outside this baseline."
+        ],
+        [
+          "Durable intake and recoverable handoff",
+          "Retain v7.1 intake: transactionally record requirement + receipt + outbox; Streams/relay send to SQS; DLQ and scheduled reconciliation expose unresolved work.",
+          "A direct synchronous handoff is simpler but would require explicit write/start-gap reconciliation. Queue acknowledgement alone does not prove Contract Engine acceptance."
+        ],
+        [
+          "Bounded construction",
+          "Validate a finite DAG and reviewed operator versions before compilation. One candidate-attempt ID spans proposal, compile and verify; rejected proposals consume the attempt.",
+          "More workers or agents can be explored after measuring useful package quality and cost."
+        ],
+        [
+          "Independent verification",
+          "Separate builder and verifier IAM roles. The builder cannot replace trusted fixtures, publish passing evidence or change release records.",
+          "Roles in one account are the prototype isolation choice; separate accounts remain an enterprise extension."
+        ],
+        [
+          "Two human decisions",
+          "Contract approval permits bounded engineering. Exact owner acceptance follows passing verification and binds the candidate and evidence.",
+          "Automatic post-verification release is a different policy and is not the selected v79 case-study design."
+        ],
+        [
+          "Exact release and truthful delivery",
+          "A conditional release intent pins contract, plan, candidate, evidence, owner decision, destination and handoff ID. DELIVERED needs a matching durable receipt; timeout stays unconfirmed.",
+          "Object storage alone establishes availability, not recipient delivery. A candidate package does not grant authority to operate it."
+        ],
+        [
+          "Keep the deployment bounded",
+          "Use managed regional services without an invented customer VPC/NAT/Fargate layer for these reviewed operators. IAM, logging, retention and recovery remain required.",
+          "Private networking or isolated container jobs require a workload need and further threat analysis. Managed Lambda isolation is not a claim of safe arbitrary hostile-code execution."
+        ]
+      ],
+      "interfaces": [
+        [
+          "Browser → API",
+          "HTTPS + Cognito access token",
+          "Validate issuer/audience/scope; derive project access from trusted records. Never trust submitted owner IDs."
+        ],
+        [
+          "Intake → DynamoDB",
+          "Transactional write",
+          "Persist requirement, receipt and outbox together; same scoped idempotency key + same payload reuses receipt; changed payload conflicts."
+        ],
+        [
+          "Outbox → Contract Engine",
+          "Streams → relay Lambda → SQS",
+          "Deduplicate event ID and handle partial failures. Durable downstream acceptance closes the handoff; not SendMessage success."
+        ],
+        [
+          "Controller → Builder / Verifier",
+          "Step Functions Lambda tasks",
+          "Pin exact inputs; recheck authority; cap time and work. Retry mechanisms do not guarantee exactly-once business effects."
+        ],
+        [
+          "Builder / Verifier → S3",
+          "AWS API + scoped IAM",
+          "Pin VersionIds and byte digests; candidate, trusted fixture and evidence namespaces have distinct writers."
+        ],
+        [
+          "Owner → Controller",
+          "Authenticated decision endpoint",
+          "Record candidate/evidence-bound acceptance. The backend owns any callback token; the browser and model do not receive it."
+        ],
+        [
+          "Release → Recipient",
+          "Scoped delivery adapter",
+          "Match handoff, destination and digest to durable receipt; reconcile uncertainty before retrying."
+        ]
+      ],
+      "pillars": [
+        [
+          "Operational Excellence",
+          "Correlated run/contract/attempt IDs, explicit phase status and versioned deployment/rollback.",
+          "A worker fails after writing a partial candidate.",
+          "Trace one run; inspect a tested alert and recover from a runbook without publishing partial content."
+        ],
+        [
+          "Security",
+          "Current project permissions, exact approvals, scoped builder/verifier/release roles and private artifacts.",
+          "Another owner submits a project ID; builder attempts evidence or release writes.",
+          "Deny cross-project access, revoked approval, builder self-acceptance and stale acceptance. Review actual IAM policies."
+        ],
+        [
+          "Reliability",
+          "Durable outbox, deduplication, conditional state and exact evidence bindings.",
+          "Stream relay outage, queue redelivery, stale evidence or lost delivery receipt.",
+          "Recover an outage beyond the stream retention window; replay duplicates; block a swapped candidate; preserve DELIVERY_UNCONFIRMED."
+        ],
+        [
+          "Performance Efficiency",
+          "Asynchronous execution; bounded CSV, DAG, tokens and concurrency.",
+          "Oversized payload or demand exceeding a worker/model quota.",
+          "Measure intake p95, phase latency, throttles and errors on the declared pilot workload. Quota and model availability checks remain predeployment work."
+        ],
+        [
+          "Cost Optimization",
+          "Two total attempts, capped inference, application work reservations and lifecycle retention.",
+          "Rejected plans and retries amplify calls or retain many versions.",
+          "Record per-package usage and price the pilot plus 10x volume using dated eu-west-2 rates. A budget alert does not enforce a hard spending cap."
+        ],
+        [
+          "Sustainability",
+          "Reuse reviewed operators and valid exact results; use demand-based workers and bounded artifact retention.",
+          "Unchanged work is regenerated or obsolete versions accumulate.",
+          "Compare tokens, compute-seconds and retained bytes per useful package; record reuse. No carbon-reduction claim is made."
+        ]
+      ],
+      "existing": [
+        "Authored reference architecture, directed interfaces and v79 seven-scope AWS mapping.",
+        "Detailed supplied intake design, reviewable rules and documented acceptance-test obligations."
+      ],
+      "designed": [
+        "The AWS runtime, durable handoff, conditional ledger, Bedrock proposal path, independent verifier and release adapter.",
+        "Two human gates, two total attempts, exact artifact/evidence bindings and recovery paths."
+      ],
+      "pending": [
+        "Deploy AWS resources and execute authentication/IAM, recovery, failure and workload tests.",
+        "Measure actual model quality, latency, per-run usage and costs. Confirm selected model access in the target Region."
+      ],
+      "walkthrough": [
+        [
+          "0:00–0:45",
+          "Customer problem",
+          "Explain the architectural firm's input, expected output and exclusions."
+        ],
+        [
+          "0:45–1:45",
+          "Choose services",
+          "Explain trusted orchestration versus Bedrock proposals and durable records versus artifacts."
+        ],
+        [
+          "1:45–3:00",
+          "Trace one package",
+          "Follow contract approval, plan admission, build, independent verification, owner acceptance and receipt."
+        ],
+        [
+          "3:00–4:15",
+          "Challenge failure",
+          "Show how duplicate handoff, stale approval or a substituted candidate is handled."
+        ],
+        [
+          "4:15–5:00",
+          "Defend the trade-off",
+          "Explain the single-Region scope, six-pillar evidence and what still needs deployment validation."
+        ]
+      ],
+      "cv": "Designed a bounded AWS reference architecture for governed workflow generation using Step Functions, Lambda, DynamoDB, S3 and Bedrock, with revision-bound approvals, independent verification and controlled release; assessed decisions across all six AWS Well-Architected pillars.",
+      "boundary": "The case study is complete as a design baseline when the business scope, deployment diagram, interfaces, decisions, six-pillar review, cost model and evidence boundaries are explainable. Runtime credibility grows through deployment and measured tests; the diagram alone is not implementation evidence.",
+      "sources": [
+        [
+          "AWS Well-Architected six pillars",
+          "https://docs.aws.amazon.com/wellarchitected/latest/framework/the-pillars-of-the-framework.html"
+        ],
+        [
+          "API Gateway JWT authorizers",
+          "https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-jwt-authorizer.html"
+        ],
+        [
+          "DynamoDB transactions",
+          "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/transaction-apis.html"
+        ],
+        [
+          "Step Functions Standard and Express",
+          "https://docs.aws.amazon.com/step-functions/latest/dg/choosing-workflow-type.html"
+        ],
+        [
+          "S3 versioning and lifecycle",
+          "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Versioning.html"
+        ],
+        [
+          "CloudFront origin access control",
+          "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-restricting-access-to-s3.html"
+        ],
+        [
+          "AWS Pricing Calculator",
+          "https://calculator.aws/"
+        ],
+        [
+          "DynamoDB Streams retention",
+          "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.html"
+        ],
+        [
+          "Lambda with SQS and partial failures",
+          "https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html"
+        ]
+      ]
+    },
+    {
+      "id": "workspace",
+      "title": "System Architecture Workspace",
+      "subtitle": "From a customer idea to an explorable model and an engineer-reviewed AWS baseline.",
+      "diagram": "workspace",
+      "scope": "A browser workspace for manually authored, versioned architecture models. The bounded AWS target adds controlled requirements/model proposals, deterministic checks, AWS mapping and explicit engineer review. All views share one canonical model.",
+      "goal": "Help an engineer explain requirements, inspect connections, review trade-offs and produce a traceable architecture baseline.",
+      "outcomes": [
+        "An owned, versioned requirements brief with explicit unknowns.",
+        "One canonical graph projected into 3D, concept, ADA and AWS views.",
+        "Version-bound findings and accountable engineer review.",
+        "A baseline export containing models, readable diagrams, assumptions, decisions and evidence."
+      ],
+      "constraints": [
+        "One workload account and one Region, targeting eu-west-2. Start with an explicitly single-owner pilot; general customer tenancy is later work.",
+        "Prototype design limits: 50 components, 100 interfaces and 256 KiB canonical model JSON. These are chosen test assumptions, not measured capacity.",
+        "The browser renders the graph. Longer drafting/checking jobs are asynchronous and bounded.",
+        "Generated graphs are data. No generated script executes and no architecture output automatically provisions AWS resources.",
+        "A changed brief, graph or AWS mapping invalidates dependent eligibility and engineer approval."
+      ],
+      "flow": [
+        [
+          "1",
+          "Customer intake",
+          "CloudFront/S3 + Cognito + API",
+          "Accept an owned idea and return the actual durable revision receipt."
+        ],
+        [
+          "2",
+          "Requirements brief",
+          "Lambda + DynamoDB; bounded Bedrock proposal",
+          "Expose unanswered questions and record customer confirmation of an exact brief."
+        ],
+        [
+          "3",
+          "3D model",
+          "Canonical model in S3; browser rendering",
+          "Draft or manually edit connected components and interfaces; preserve source lineage across views."
+        ],
+        [
+          "4",
+          "Design checks",
+          "Step Functions + validator Lambdas",
+          "Check structure, references, ownership and constraints; incomplete results remain inconclusive."
+        ],
+        [
+          "5",
+          "AWS mapping",
+          "Reviewed catalog + Lambda",
+          "Choose services with alternatives, boundaries, interfaces and cost assumptions; save an exact candidate."
+        ],
+        [
+          "6",
+          "Engineer review",
+          "Authenticated review API + ledger",
+          "Record reviewer identity and disposition for the exact candidate and evidence; changes require re-review."
+        ],
+        [
+          "7",
+          "Baseline package",
+          "Private S3 + export Lambda",
+          "Deliver diagrams, canonical model, assumptions, findings and decisions under one manifest. Implementation needs separate authority."
+        ]
+      ],
+      "decisions": [
+        [
+          "One canonical architecture model",
+          "Store nodes, edges, revisions and requirement references once. 3D, concept, ADA and AWS views project that same revision.",
+          "Independently maintained diagrams are simpler initially but create version drift and conflicting source claims."
+        ],
+        [
+          "Static delivery separate from private data",
+          "CloudFront with an S3 REST origin and OAC serves versioned assets. Cognito/API Gateway/Lambda handle private project operations.",
+          "The existing Worker-hosted site remains the implemented prototype. This AWS hosting target is a proposed migration."
+        ],
+        [
+          "Keep identity and authorisation separate",
+          "Cognito identifies the principal; trusted application records decide each project read, edit and review. Begin with an explicit single-owner AWS pilot.",
+          "A general multi-tenant service needs membership, revocation and cross-tenant isolation design/testing beyond this baseline."
+        ],
+        [
+          "Metadata versus artifacts",
+          "DynamoDB holds project/revision/status/approval records and exact artifact references. Private versioned S3 holds briefs, graph JSON, findings, diagrams and baselines.",
+          "The current private GitHub contents backend remains an optional versioned persistence path; it is not already DynamoDB."
+        ],
+        [
+          "Bounded proposals and deterministic checks",
+          "Bedrock may propose typed requirements or graphs from reviewed patterns. Lambda validates shape, references, acyclicity where required, limits and findings.",
+          "Manual authoring is a supported baseline. Model-written text and graph completeness do not establish design correctness."
+        ],
+        [
+          "Review the exact candidate",
+          "Engineer approval binds graph, requirements, AWS mapping, findings and rule versions. Missing mandatory checks or expired authority block baseline release.",
+          "A generated diagram or completion status cannot substitute for accountable engineer review."
+        ],
+        [
+          "Export an engineering baseline",
+          "Package source data, readable diagrams, decisions and evidence with version/digest lineage. Storage versions are not automatically immutable.",
+          "Optional candidate CloudFormation is a future export; validation or generation never grants deployment or spending authority."
+        ]
+      ],
+      "interfaces": [
+        [
+          "Browser → CloudFront/S3",
+          "HTTPS static asset delivery",
+          "Use OAC with a regular private S3 origin; private customer data is excluded from static bundles and public caching."
+        ],
+        [
+          "Browser → API",
+          "HTTPS + validated token",
+          "Derive owner access from trusted records. Keep private responses uncached and return actual revision/save status."
+        ],
+        [
+          "Application → DynamoDB/S3",
+          "Conditional metadata writes + versioned objects",
+          "Persist artifacts before publishing pointers; preserve the last valid model; resolve conflicts explicitly."
+        ],
+        [
+          "Brief → Draft / Check job",
+          "Step Functions + stable job identity",
+          "Pin source revisions, constrain prompt/graph/work limits and record pending/running/pass/fail/inconclusive states."
+        ],
+        [
+          "Canonical model → Views",
+          "Version-bound JSON in the browser",
+          "The same node/edge identities drive every view and export. Editing creates a new revision."
+        ],
+        [
+          "Reviewer → Review API",
+          "Authenticated decision + conditional write",
+          "Approve only the current candidate/evidence; stale or revoked review cannot advance packaging."
+        ],
+        [
+          "Baseline → Customer / Engineer",
+          "Authorised retrieval",
+          "Check manifest completeness and exact references. A reviewed baseline is an implementation starting point."
+        ]
+      ],
+      "pillars": [
+        [
+          "Operational Excellence",
+          "Correlated project/revision/job IDs, explicit save states and reproducible deployment.",
+          "Persistence fails after a local edit or a checker job stops.",
+          "Preserve the draft, show truthful status, trace the job and run an alert/recovery exercise."
+        ],
+        [
+          "Security",
+          "Project-aware authorisation, private artifacts, untrusted model output and separate reviewer authority.",
+          "A user requests another project or a changed candidate inherits old approval.",
+          "Deny wrong-owner/project operations, expired tokens and stale reviews; inspect private-object and IAM policies."
+        ],
+        [
+          "Reliability",
+          "Conditional revision writes, stable job identities, valid-model recovery and exact baseline lineage.",
+          "Lost save response, concurrent edit conflict or duplicate modelling job.",
+          "Reconcile the durable receipt; preserve both conflicting drafts; recover the last valid model and block stale packaging."
+        ],
+        [
+          "Performance Efficiency",
+          "Render in browser; bound graph/payload size; keep inference asynchronous.",
+          "Large graphs or slow inference freeze navigation.",
+          "Measure save, interaction and job latency on declared devices and pilot load. Graph limits are test assumptions."
+        ],
+        [
+          "Cost Optimization",
+          "Debounce saves, use explicit generation, bound tokens and lifecycle artifacts.",
+          "Every canvas movement triggers a model call or a full save.",
+          "Meter requests, tokens, jobs, artifact versions and logs per project; estimate pilot and 10x volume."
+        ],
+        [
+          "Sustainability",
+          "Reuse unchanged results, avoid hidden rendering work and expire redundant artifacts.",
+          "Hidden animation or repeated full regeneration wastes compute.",
+          "Measure idle rendering, transmitted bytes, model calls and reuse per useful reviewed baseline; no emissions claim."
+        ]
+      ],
+      "existing": [
+        "Interactive browser models and study views, local page drafts and owner sign-in through the current Cloudflare Worker.",
+        "Server-side session records, optional encrypted private GitHub connection settings, private-repository checks and SHA-based revision conflicts.",
+        "A deterministic reference guide using authored data. Production GitHub saves require the configured repository-scoped connection."
+      ],
+      "designed": [
+        "AWS hosting/identity/data target and the seven-stage customer-idea-to-reviewed-baseline pipeline.",
+        "Bounded model proposals, future customer accounts and version-bound engineer approval controls."
+      ],
+      "pending": [
+        "AWS migration, prompt-driven architecture generation and multi-customer tenancy are not implemented by the current prototype.",
+        "Cloud auth/IAM/recovery tests and measured browser/job capacity, model quality and billing evidence remain to be collected."
+      ],
+      "walkthrough": [
+        [
+          "0:00–0:45",
+          "Customer problem",
+          "Explain why disconnected diagrams and ambiguous requirements make reviews difficult."
+        ],
+        [
+          "0:45–1:45",
+          "Separate concerns",
+          "Trace static delivery, private project APIs, metadata and versioned artifacts."
+        ],
+        [
+          "1:45–3:00",
+          "Follow a revision",
+          "Show confirmed brief, canonical graph, findings, AWS mapping and exact engineer review."
+        ],
+        [
+          "3:00–4:15",
+          "Explain a conflict",
+          "Describe how a stale save or changed model preserves the last valid revision and invalidates old approval."
+        ],
+        [
+          "4:15–5:00",
+          "Defend scope",
+          "Explain browser rendering, bounded proposal jobs, costs and current prototype versus AWS target."
+        ]
+      ],
+      "cv": "Built an interactive architecture-modelling prototype with owner authentication, browser drafts and optional private GitHub revision storage; designed a serverless AWS target covering canonical models, deterministic design checks, engineer review and traceable baseline exports across all six Well-Architected pillars.",
+      "boundary": "The design baseline is ready to discuss when one idea can be traced through the seven stages, shared model, AWS services, engineer review and versioned baseline, with alternatives and evidence limits. Automatic architecture generation, broad tenancy and cloud provisioning remain separate extensions.",
+      "sources": [
+        [
+          "AWS Well-Architected six pillars",
+          "https://docs.aws.amazon.com/wellarchitected/latest/framework/the-pillars-of-the-framework.html"
+        ],
+        [
+          "API Gateway JWT authorizers",
+          "https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-jwt-authorizer.html"
+        ],
+        [
+          "DynamoDB transactions",
+          "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/transaction-apis.html"
+        ],
+        [
+          "Step Functions Standard and Express",
+          "https://docs.aws.amazon.com/step-functions/latest/dg/choosing-workflow-type.html"
+        ],
+        [
+          "S3 versioning and lifecycle",
+          "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Versioning.html"
+        ],
+        [
+          "CloudFront origin access control",
+          "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-restricting-access-to-s3.html"
+        ],
+        [
+          "AWS Pricing Calculator",
+          "https://calculator.aws/"
+        ]
+      ]
+    }
+  ]
+}

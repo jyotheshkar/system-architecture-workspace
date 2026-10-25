@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1500" viewBox="0 0 1800 1500" role="img" aria-labelledby="title desc">
+<title id="title">System Architecture Workspace — AWS Target Architecture</title>
+<desc id="desc">Proposed junior Solutions Architect design case study. AWS resources have not been deployed or cloud runtime validation performed.</desc>
+<rect width="1800" height="1500" fill="#07111e"/>
+<text x="60" y="35" dominant-baseline="text-before-edge" fill="#f2f6fc" font-family="Segoe UI,Arial,sans-serif" font-size="42" font-weight="600">System Architecture Workspace — AWS Target Architecture</text>
+<text x="62" y="93" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="21" font-weight="400">Idea to engineer-reviewed baseline | One canonical versioned model | Separate product from Agentic Core</text>
+<text x="90" y="128" dominant-baseline="text-before-edge" fill="#ffb15d" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="600">CUSTOMER ENVIRONMENT · OUTSIDE AWS</text>
+<text x="510" y="128" dominant-baseline="text-before-edge" fill="#ffb15d" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="600">GLOBAL FRONTEND DELIVERY</text>
+<rect x="50" y="310" width="1700" height="920" rx="14" fill="#0a1727" stroke="#3b5570" stroke-width="2"/>
+<text x="78" y="329" dominant-baseline="text-before-edge" fill="#75dfe1" font-family="Segoe UI,Arial,sans-serif" font-size="20" font-weight="600">AWS WORKLOAD ACCOUNT  /  EUROPE (LONDON) — eu-west-2</text>
+<text x="1230" y="331" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="17" font-weight="400">Managed services · no customer VPC</text>
+<polyline points="510,210 420,210" fill="none" stroke="#75dfe1" stroke-width="2"/>
+<polygon points="420,210 431.0,205.05 431.0,214.95" fill="#75dfe1"/>
+<rect x="434" y="189" width="52.00" height="24" fill="#0a1727"/>
+<text x="438" y="191" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400">Assets</text>
+<polyline points="255,265 255,380" fill="none" stroke="#75dfe1" stroke-width="2"/>
+<polygon points="255,380 250.05,369.0 259.95,369.0" fill="#75dfe1"/>
+<rect x="271" y="353" width="83.00" height="24" fill="#0a1727"/>
+<text x="275" y="355" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400">PKCE login</text>
+<polyline points="420,235 675,235 675,380" fill="none" stroke="#75dfe1" stroke-width="2"/>
+<polygon points="675,380 670.05,369.0 679.95,369.0" fill="#75dfe1"/>
+<polygon points="420,235 431.0,230.05 431.0,239.95" fill="#75dfe1"/>
+<rect x="461" y="282" width="258.00" height="24" fill="#0a1727"/>
+<text x="465" y="284" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400">HTTPS commands / model revisions</text>
+<polyline points="420,435 510,435" fill="none" stroke="#ffb15d" stroke-width="2" stroke-dasharray="7 6"/>
+<polygon points="510,435 499.0,439.95 499.0,430.05" fill="#ffb15d"/>
+<rect x="434" y="415" width="37.00" height="24" fill="#0a1727"/>
+<text x="438" y="417" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400">JWT</text>
+<polyline points="840,435 930,435" fill="none" stroke="#75dfe1" stroke-width="2"/>
+<polygon points="930,435 919.0,439.95 919.0,430.05" fill="#75dfe1"/>
+<rect x="850" y="415" width="54.00" height="24" fill="#0a1727"/>
+<text x="854" y="417" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400">Invoke</text>
+<polyline points="1260,435 1350,435" fill="none" stroke="#75dfe1" stroke-width="2"/>
+<polygon points="1350,435 1339.0,439.95 1339.0,430.05" fill="#75dfe1"/>
+<rect x="1280" y="415" width="31.98" height="24" fill="#0a1727"/>
+<text x="1284" y="417" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400">Txn</text>
+<polyline points="1095,490 1095,590" fill="none" stroke="#75dfe1" stroke-width="2"/>
+<polygon points="1095,590 1090.05,579.0 1099.95,579.0" fill="#75dfe1"/>
+<rect x="1109" y="546" width="192.00" height="24" fill="#0a1727"/>
+<text x="1113" y="548" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400">Confirmed brief + revision</text>
+<polyline points="1515,490 1515,590" fill="none" stroke="#ffb15d" stroke-width="2" stroke-dasharray="7 6"/>
+<polygon points="1515,590 1510.05,579.0 1519.95,579.0" fill="#ffb15d"/>
+<rect x="1531" y="542" width="90.98" height="24" fill="#0a1727"/>
+<text x="1535" y="544" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400">Version refs</text>
+<polyline points="930,645 875,645 875,752 255,752 255,820" fill="none" stroke="#75dfe1" stroke-width="2"/>
+<polygon points="255,820 250.05,809.0 259.95,809.0" fill="#75dfe1"/>
+<rect x="297" y="738" width="388.00" height="24" fill="#0a1727"/>
+<text x="301" y="740" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400">Bounded proposal request; deterministic path available</text>
+<polyline points="420,875 510,875" fill="none" stroke="#75dfe1" stroke-width="2"/>
+<polygon points="510,875 499.0,879.95 499.0,870.05" fill="#75dfe1"/>
+<rect x="433" y="855" width="47.00" height="24" fill="#0a1727"/>
+<text x="437" y="857" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400">JSON</text>
+<polyline points="840,875 930,875" fill="none" stroke="#75dfe1" stroke-width="2"/>
+<polygon points="930,875 919.0,879.95 919.0,870.05" fill="#75dfe1"/>
+<rect x="849" y="855" width="56.00" height="24" fill="#0a1727"/>
+<text x="853" y="857" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400">Pinned</text>
+<polyline points="1260,875 1350,875" fill="none" stroke="#75dfe1" stroke-width="2"/>
+<polygon points="1350,875 1339.0,879.95 1339.0,870.05" fill="#75dfe1"/>
+<rect x="1264" y="855" width="58.00" height="24" fill="#0a1727"/>
+<text x="1268" y="857" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400">Eligible</text>
+<polyline points="1515,700 1515,820" fill="none" stroke="#75dfe1" stroke-width="2"/>
+<polygon points="1515,820 1510.05,809.0 1519.95,809.0" fill="#75dfe1"/>
+<polygon points="1515,700 1519.95,711.0 1510.05,711.0" fill="#75dfe1"/>
+<rect x="1530" y="760" width="159.00" height="24" fill="#0a1727"/>
+<text x="1534" y="762" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400">Exact inputs / artifacts</text>
+<polyline points="1515,930 1515,990 1095,990 1095,1050" fill="none" stroke="#75dfe1" stroke-width="2"/>
+<polygon points="1095,1050 1090.05,1039.0 1099.95,1039.0" fill="#75dfe1"/>
+<rect x="1154" y="978" width="263.00" height="24" fill="#0a1727"/>
+<text x="1158" y="980" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400">Candidate + revision-bound findings</text>
+<polyline points="930,1105 867,1105 867,975 675,975 675,930" fill="none" stroke="#ffb15d" stroke-width="2" stroke-dasharray="7 6"/>
+<polygon points="675,930 679.95,941.0 670.05,941.0" fill="#ffb15d"/>
+<rect x="493" y="963" width="251.00" height="24" fill="#0a1727"/>
+<text x="497" y="965" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400">Changes return to affected revision</text>
+<polyline points="1260,1105 1350,1105" fill="none" stroke="#75dfe1" stroke-width="2"/>
+<polygon points="1350,1105 1339.0,1109.95 1339.0,1100.05" fill="#75dfe1"/>
+<rect x="1265" y="1085" width="67.00" height="24" fill="#0a1727"/>
+<text x="1269" y="1087" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400">Approve</text>
+<polyline points="1680,1105 1720,1105 1720,645 1680,645" fill="none" stroke="#ffb15d" stroke-width="2" stroke-dasharray="7 6"/>
+<polygon points="1680,645 1691.0,640.05 1691.0,649.95" fill="#ffb15d"/>
+<text x="1733" y="1020" transform="rotate(-90 1733 1020)" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400">Write exact baseline / confirm availability</text>
+<rect x="90" y="155" width="330" height="110" rx="10" fill="#25364c" stroke="#3b5570" stroke-width="2"/>
+<polyline points="105,167 105,253" fill="none" stroke="#ffb15d" stroke-width="3"/>
+<text x="119" y="168" dominant-baseline="text-before-edge" fill="#f2f6fc" font-family="Segoe UI,Arial,sans-serif" font-size="23" font-weight="600">Customer / engineer</text>
+<text x="119" y="198" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400">Browser renders the workspace</text>
+<text x="119" y="222" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400">3D · Concept · ADA · AWS views</text>
+<rect x="510" y="155" width="330" height="110" rx="10" fill="#101e30" stroke="#3b5570" stroke-width="2"/>
+<polyline points="525,167 525,253" fill="none" stroke="#75dfe1" stroke-width="3"/>
+<text x="539" y="168" dominant-baseline="text-before-edge" fill="#f2f6fc" font-family="Segoe UI,Arial,sans-serif" font-size="23" font-weight="600">CloudFront + S3 origin</text>
+<text x="539" y="198" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400">Versioned static application</text>
+<text x="539" y="222" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400">Private origin; global delivery</text>
+<rect x="90" y="380" width="330" height="110" rx="10" fill="#101e30" stroke="#3b5570" stroke-width="2"/>
+<polyline points="105,392 105,478" fill="none" stroke="#75dfe1" stroke-width="3"/>
+<text x="119" y="393" dominant-baseline="text-before-edge" fill="#f2f6fc" font-family="Segoe UI,Arial,sans-serif" font-size="23" font-weight="600">Amazon Cognito</text>
+<text x="119" y="423" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400">Customer identity via PKCE</text>
+<text x="119" y="447" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400">Current membership checked by</text>
+<text x="119" y="471" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400">API</text>
+<rect x="510" y="380" width="330" height="110" rx="10" fill="#101e30" stroke="#3b5570" stroke-width="2"/>
+<polyline points="525,392 525,478" fill="none" stroke="#75dfe1" stroke-width="3"/>
+<text x="539" y="393" dominant-baseline="text-before-edge" fill="#f2f6fc" font-family="Segoe UI,Arial,sans-serif" font-size="23" font-weight="600">API Gateway HTTP API</text>
+<text x="539" y="423" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400">JWT / scope validation</text>
+<text x="539" y="447" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400">Private project operations</text>
+<rect x="930" y="380" width="330" height="110" rx="10" fill="#101e30" stroke="#3b5570" stroke-width="2"/>
+<polyline points="945,392 945,478" fill="none" stroke="#75dfe1" stroke-width="3"/>
+<text x="959" y="393" dominant-baseline="text-before-edge" fill="#f2f6fc" font-family="Segoe UI,Arial,sans-serif" font-size="23" font-weight="600">Workspace API Lambda</text>
+<text x="959" y="423" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400">Intake, edits and review actions</text>
+<text x="959" y="447" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400">Revision / project authorisation</text>
+<rect x="1350" y="380" width="330" height="110" rx="10" fill="#101e30" stroke="#3b5570" stroke-width="2"/>
+<polyline points="1365,392 1365,478" fill="none" stroke="#75dfe1" stroke-width="3"/>
+<text x="1379" y="393" dominant-baseline="text-before-edge" fill="#f2f6fc" font-family="Segoe UI,Arial,sans-serif" font-size="23" font-weight="600">Amazon DynamoDB</text>
+<text x="1379" y="423" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400">Membership + project metadata</text>
+<text x="1379" y="447" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400">Revision, job and review state</text>
+<rect x="930" y="590" width="330" height="110" rx="10" fill="#101e30" stroke="#3b5570" stroke-width="2"/>
+<polyline points="945,602 945,688" fill="none" stroke="#75dfe1" stroke-width="3"/>
+<text x="959" y="603" dominant-baseline="text-before-edge" fill="#f2f6fc" font-family="Segoe UI,Arial,sans-serif" font-size="23" font-weight="600">Step Functions Standard</text>
+<text x="959" y="633" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400">Draft → check → map → review</text>
+<text x="959" y="657" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400">Bounded jobs; explicit outcomes</text>
+<rect x="1350" y="590" width="330" height="110" rx="10" fill="#101e30" stroke="#3b5570" stroke-width="2"/>
+<polyline points="1365,602 1365,688" fill="none" stroke="#75dfe1" stroke-width="3"/>
+<text x="1379" y="603" dominant-baseline="text-before-edge" fill="#f2f6fc" font-family="Segoe UI,Arial,sans-serif" font-size="23" font-weight="600">Private versioned S3</text>
+<text x="1379" y="633" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400">Brief, graph, findings, baseline</text>
+<text x="1379" y="657" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400">Exact versions + content digests</text>
+<rect x="90" y="820" width="330" height="110" rx="10" fill="#101e30" stroke="#3b5570" stroke-width="2"/>
+<polyline points="105,832 105,918" fill="none" stroke="#75dfe1" stroke-width="3"/>
+<text x="119" y="833" dominant-baseline="text-before-edge" fill="#f2f6fc" font-family="Segoe UI,Arial,sans-serif" font-size="23" font-weight="600">Amazon Bedrock</text>
+<text x="119" y="863" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400">Optional bounded JSON proposals</text>
+<text x="119" y="887" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400">Requirements / graph drafting</text>
+<rect x="510" y="820" width="330" height="110" rx="10" fill="#101e30" stroke="#3b5570" stroke-width="2"/>
+<polyline points="525,832 525,918" fill="none" stroke="#75dfe1" stroke-width="3"/>
+<text x="539" y="833" dominant-baseline="text-before-edge" fill="#f2f6fc" font-family="Segoe UI,Arial,sans-serif" font-size="23" font-weight="600">Canonical model Lambda</text>
+<text x="539" y="863" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400">Validate graph schema and limits</text>
+<text x="539" y="887" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400">Pin one shared model revision</text>
+<rect x="930" y="820" width="330" height="110" rx="10" fill="#101e30" stroke="#3b5570" stroke-width="2"/>
+<polyline points="945,832 945,918" fill="none" stroke="#75dfe1" stroke-width="3"/>
+<text x="959" y="833" dominant-baseline="text-before-edge" fill="#f2f6fc" font-family="Segoe UI,Arial,sans-serif" font-size="23" font-weight="600">Design checks Lambda</text>
+<text x="959" y="863" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400">Structure, scope and evidence</text>
+<text x="959" y="887" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400">Missing checks are inconclusive</text>
+<rect x="1350" y="820" width="330" height="110" rx="10" fill="#101e30" stroke="#3b5570" stroke-width="2"/>
+<polyline points="1365,832 1365,918" fill="none" stroke="#75dfe1" stroke-width="3"/>
+<text x="1379" y="833" dominant-baseline="text-before-edge" fill="#f2f6fc" font-family="Segoe UI,Arial,sans-serif" font-size="23" font-weight="600">AWS mapping Lambda</text>
+<text x="1379" y="863" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400">Reviewed service catalogue</text>
+<text x="1379" y="887" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400">Alternatives and assumptions</text>
+<rect x="930" y="1050" width="330" height="110" rx="10" fill="#25364c" stroke="#3b5570" stroke-width="2"/>
+<polyline points="945,1062 945,1148" fill="none" stroke="#ffb15d" stroke-width="3"/>
+<text x="959" y="1063" dominant-baseline="text-before-edge" fill="#f2f6fc" font-family="Segoe UI,Arial,sans-serif" font-size="23" font-weight="600">Engineer review API</text>
+<text x="959" y="1093" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400">Human accepts exact candidate</text>
+<text x="959" y="1117" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400">Changes invalidate stale approval</text>
+<rect x="1350" y="1050" width="330" height="110" rx="10" fill="#101e30" stroke="#3b5570" stroke-width="2"/>
+<polyline points="1365,1062 1365,1148" fill="none" stroke="#75dfe1" stroke-width="3"/>
+<text x="1379" y="1063" dominant-baseline="text-before-edge" fill="#f2f6fc" font-family="Segoe UI,Arial,sans-serif" font-size="23" font-weight="600">Baseline packager Lambda</text>
+<text x="1379" y="1093" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400">Manifest + designs + findings</text>
+<text x="1379" y="1117" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400">Private engineer-ready baseline</text>
+<rect x="90" y="1260" width="1590" height="90" rx="10" fill="#25364c" stroke="#3b5570" stroke-width="2"/>
+<polyline points="105,1272 105,1338" fill="none" stroke="#ffb15d" stroke-width="3"/>
+<text x="119" y="1273" dominant-baseline="text-before-edge" fill="#f2f6fc" font-family="Segoe UI,Arial,sans-serif" font-size="23" font-weight="600">Customer browser: one model, four views</text>
+<text x="119" y="1303" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400">Browser-local rendering · private model revisions returned through the authenticated API</text>
+<text x="119" y="1327" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400">3D Brain · Concept · ADA · AWS — consistent IDs and canonical source lineage</text>
+<text x="64" y="1393" dominant-baseline="text-before-edge" fill="#f2f6fc" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400">Lifecycle: customer intake → requirements brief → 3D model → design checks → AWS mapping → engineer review → baseline.</text>
+<text x="64" y="1421" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400">IAM + CloudWatch apply across the workload. Proposed AI output is data; no generated code or cloud resources execute.</text>
+<text x="64" y="1449" dominant-baseline="text-before-edge" fill="#c2cfdf" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="400">Current prototype uses browser + Worker owner sessions + optional private GitHub storage. AWS migration remains proposed.</text>
+<text x="64" y="1480" dominant-baseline="text-before-edge" fill="#ffb15d" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="600">DESIGN CASE STUDY  |  AWS RUNTIME VALIDATION PENDING</text>
+</svg>

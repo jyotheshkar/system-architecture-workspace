@@ -1,0 +1,18 @@
+/* One architecture rail, with a light breadcrumb inside the canvas. */
+#websiteViewport.programModel .programCrumb{position:absolute;top:55px;left:66px;right:70px;display:flex;align-items:center;gap:12px;min-height:28px;z-index:4;color:#aeb5bf;font-size:11px;line-height:1.5;pointer-events:auto}
+#websiteViewport.programModel .programCrumb[hidden]{display:none}
+#websiteViewport.programModel .programCrumb strong{color:#e5e8ed;font-size:12px;font-weight:500}
+#websiteViewport.programModel .programCrumb button{font:inherit;min-height:28px;color:#dfe3e9;padding:2px 0;border:0;background:transparent;border-radius:0;white-space:nowrap}
+#websiteViewport.programModel .programCrumb button:hover{text-decoration:underline;text-underline-offset:4px}
+.programHint{margin-left:auto;font-size:10px;color:#89919d}
+#websiteViewport.programModel .brainConceptHeader{top:96px!important}
+#websiteViewport.programModel :is(.conceptDesignHost,.adaViewport,.awsSystemDiagram){top:100px!important}
+#websiteViewport.programModel[data-mode=aws]{touch-action:pan-y}
+html#ac-sky-root body#ac-transparent-workspace .programExplore{display:block;width:100%;padding:13px 15px;margin:0 0 24px;border:1px solid #89919d;border-radius:8px;background:transparent;color:#f1f3f7;text-align:left;font-size:13px;font-weight:500;line-height:1.5;transform:none}
+html#ac-sky-root body#ac-transparent-workspace .programExplore:hover{border-color:#fff}
+.programExplore:focus-visible,.programCrumb button:focus-visible{outline:2px solid #fff;outline-offset:4px}
+.adaDecisionGroup{padding:14px 0;border-bottom:1px solid #ffffff20}
+.adaDecisionGroup h3{margin-top:0!important}
+@media(max-width:760px){#websiteViewport.programModel .programCrumb{top:50px;left:51px;right:51px;gap:8px;align-items:flex-start;flex-wrap:wrap}#websiteViewport.programModel .programHint{display:none}#websiteViewport.programModel .programCrumb strong{max-width:100%;font-size:11px}#websiteViewport.programModel .brainConceptHeader{top:104px!important}#websiteViewport.programModel :is(.conceptDesignHost,.adaViewport,.awsSystemDiagram){top:112px!important}}
+@media(max-width:760px),(max-height:560px){body:is(:not(.panelClosed),[data-product-drawer]) #websiteViewport.programModel .programCrumb{visibility:hidden;pointer-events:none}}
+@media(max-height:560px) and (min-width:761px){#websiteViewport.programModel .programCrumb{top:38px}#websiteViewport.programModel :is(.conceptDesignHost,.adaViewport,.awsSystemDiagram){top:75px!important}#websiteViewport.programModel .brainConceptHeader{top:73px!important}}

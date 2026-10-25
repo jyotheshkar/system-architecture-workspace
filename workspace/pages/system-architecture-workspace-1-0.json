@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "coreVersion": "system-architecture-workspace-v1",
+  "id": "system-architecture-workspace-1-0",
+  "name": "System Architecture Workspace",
+  "description": "The architecture of this website: public entry, protected sign-in, interactive 3D views, page settings, local drafts and private GitHub revisions, with a proposed AWS implementation and future prompt-to-design assistant.",
+  "view": "reference",
+  "modules": [],
+  "sections": [],
+  "updatedAt": "2026-10-11T10:00:25.502Z"
+}

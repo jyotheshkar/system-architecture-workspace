@@ -1,0 +1,32 @@
+{
+  "review_date_utc": "2026-10-25",
+  "result": "passed",
+  "json_data_files_parsed": 6,
+  "duplicate_keys_rejected": true,
+  "non_finite_constants_rejected": true,
+  "unchanged_files_matching_source_git_blobs": 5,
+  "graph_checks": [
+    {
+      "path": "workspace/core-reference.json",
+      "node_count": 35,
+      "edge_count": 68
+    },
+    {
+      "path": "workspace/foundation-reference.json",
+      "node_count": 16,
+      "edge_count": 34
+    },
+    {
+      "path": "workspace/website-reference.json",
+      "node_count": 24,
+      "edge_count": 43
+    }
+  ],
+  "page_records_checked": 3,
+  "selected_sensitive_pattern_matches": 0,
+  "manifest_sha256": "245268c47b8cd678e32ca39b4070aa8c491cc87007d882470f6a91e2bc3b505c",
+  "network_calls": 0,
+  "app_executed": false,
+  "aws_deployment_verified": false,
+  "limits": "Static JSON, relationships and byte integrity only; not runtime, deployment or exhaustive security verification."
+}

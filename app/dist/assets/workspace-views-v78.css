@@ -1,0 +1,12 @@
+/* Four equal, fixed-height view choices. Narrow displays scroll the same rail. */
+header.architectureHeader nav{width:min(1040px,100%);gap:0;isolation:isolate;overflow-x:auto;overflow-y:hidden;scrollbar-width:none}
+header.architectureHeader nav::-webkit-scrollbar{display:none}
+header.architectureHeader nav>.selectionTrack{display:none!important}
+header.architectureHeader nav>button{flex:1 0 0;min-width:0;border:0;border-radius:999px!important;font-size:11px;color:#b9bec6;background:transparent!important;transform:none!important;transition:background-color .15s,color .15s}
+header.architectureHeader nav>button[aria-current=page]{background:#f5f5f5!important;color:#111!important}
+header.architectureHeader nav>button:focus-visible{outline:1px solid #a4abb5;outline-offset:-3px}
+header.architectureHeader nav>button:hover:not([aria-current=page]){color:#fff}
+#websiteViewport:is([data-mode=ada],[data-mode=concept]),#websiteViewport.node01Model[data-mode=aws]{touch-action:pan-y}
+@media(max-width:760px){header.architectureHeader nav{justify-content:flex-start}header.architectureHeader nav>button{flex:0 0 auto;min-width:156px;padding-inline:17px;font-size:11px;white-space:nowrap}header.architectureHeader nav>button[data-page=brain]{min-width:112px}}
+@media(max-width:760px),(max-height:560px){body:is(:not(.panelClosed),[data-product-drawer]) #websiteViewport[data-mode=brain]>:is(.brainModelHost,.brainConceptHeader),body[data-fullscreen=true] #stage:has(#rightControlPanel:not([hidden])) #websiteViewport[data-mode=brain]>:is(.brainModelHost,.brainConceptHeader){visibility:hidden!important;pointer-events:none!important}}
+@media(prefers-reduced-motion:reduce){header.architectureHeader nav>button{transition:none}}

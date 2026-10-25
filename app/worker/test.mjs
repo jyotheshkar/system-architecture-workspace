@@ -1,0 +1,75 @@
+import assert from 'node:assert/strict';
+import {pbkdf2Sync,randomBytes} from 'node:crypto';
+import worker from '../dist/server/index.js';
+
+const origin='https://preview.example';const password='test-only-password';const salt=randomBytes(16),records=new Map();
+const env={LOGIN_USERNAME:'test@example.com',LOGIN_VERIFIER:salt.toString('base64')+':'+pbkdf2Sync(password,salt,100000,32,'sha256').toString('hex'),SESSION_SECRET:randomBytes(32).toString('hex'),ARCHIVE:{async get(key){const value=records.get(key);return value?{json:async()=>JSON.parse(value)}:null;},async put(key,value){records.set(key,value);},async delete(key){records.delete(key);}}};
+const request=(path,init={})=>worker.fetch(new Request(origin+path,init),env,{});
+let checks=0;const check=(actual,expected)=>{assert.equal(actual,expected);checks++;};
+check((await request('/workspace?arrival=agentic-core')).headers.get('location'),origin+'/login?arrival=agentic-core');
+check((await request('/index.html')).status,303);
+check((await request('/aws/index.html')).status,303);
+check((await request('/aws/architecture-data.json')).status,401);
+check((await request('/aws/Agentic-Core-AWS-Reference-Pack.zip')).status,401);
+check((await request('/server/content.js')).status,401);
+check((await request('/assets/login.js')).status,200);
+check((await request('/assets/agentic-core-mark.svg')).status,200);
+const loginMarkup=await (await request('/login')).text();
+check(loginMarkup.includes('id="login-form"'),true);
+check(loginMarkup.includes('id="portfolio-scope"'),true);
+for(const forbidden of ['portfolio-experience','portfolio-education','portfolio-contact','class="career-section"','class="education-section"','class="thesis-section"','mailto:','linkedin.com/in/'])check(loginMarkup.includes(forbidden),false);
+for(const fixture of [/(?:[A-Z0-9._%+-]{1,64})@(?!example\.)[A-Z0-9.-]{1,100}\.[A-Z]{2,10}/i,/\b(?:MSc|BSc|Graduate Route)\b/i])check(fixture.test(loginMarkup),false);
+
+check(loginMarkup.includes('Hypothetical Idea'),true);
+check(loginMarkup.includes('Infinity Innovation Hypothesis'),false);
+const publicRoutes=['/', '/login', '/login/', '/portfolio', '/portfolio/', '/hypothetical-idea', '/hypothetical-idea/', '/hypothetical-idea/index.html'];
+for(const route of ['/infinity', '/infinity/', '/infinity/index.html']){
+ const response=await request(route+'?release=76');
+ check(response.status,308);
+ check(response.headers.get('location'),origin+'/hypothetical-idea/?release=76');
+}
+for(const route of publicRoutes){
+ const response=await request(route);check(response.status,200);
+ check(await response.text(),loginMarkup);
+ const head=await request(route,{method:'HEAD'});check(head.status,200);check(await head.text(),'');
+ check((await request(route,{method:'POST'})).status,405);
+}
+for(const route of ['/assets/infinity.css','/assets/infinity.js','/assets/starfield.js'])check((await request(route)).status,200);
+check((await request('/assets/website-explorer.js')).status,401);
+check((await request('/assets/galaxy-cards.js')).status,401);
+check((await request('/unknown-page')).status,401);
+const entryNavigation=loginMarkup.match(/<nav class="profile-nav"[^>]*>([\s\S]*?)<\/nav>/)?.[1]||'';
+check([...entryNavigation.matchAll(/<a\b/g)].length,3);
+for(const href of ['/','/portfolio/','/hypothetical-idea/'])check(entryNavigation.includes('href="'+href+'"'),true);
+check(entryNavigation.includes('github.com'),false);
+check(entryNavigation.includes('linkedin.com'),false);
+check(loginMarkup.includes('class="project-row" href="/"'),true);
+check((await (await request('/')).text()).includes('AWS Blog'),false);
+check((await request('/workspace')).status,303);
+check((await request('/workspace/')).status,308);
+check((await request('/workspace/?arrival=agentic-core')).headers.get('location'),origin+'/workspace?arrival=agentic-core');
+const signIn=(username,pass,extra={})=>request('/api/login',{method:'POST',headers:{Origin:origin,'Content-Type':'application/json',...extra},body:JSON.stringify({username,password:pass})});
+check((await signIn('test@example.com','wrong')).status,401);
+check((await signIn('wrong@example.com',password)).status,401);
+check((await signIn('test@example.com',password,{Origin:'https://foreign.example'})).status,403);
+const signed=await signIn('test@example.com',password);check(signed.status,200);const cookie=signed.headers.get('set-cookie');assert.ok(cookie.includes('Secure')&&cookie.includes('HttpOnly')&&cookie.includes('SameSite=Lax'));checks++;
+const cookieValue=cookie.split(';')[0];check((await request('/workspace',{headers:{Cookie:cookieValue}})).status,200);
+const workspaceMarkup=await (await request('/workspace',{headers:{Cookie:cookieValue}})).text();
+check(workspaceMarkup.includes('stage-credit'),true);
+const architectureNavigation=workspaceMarkup.match(/<nav[^>]+aria-label="Architecture views"[^>]*>([\s\S]*?)<\/nav>/)?.[1]||'';
+check([...architectureNavigation.matchAll(/data-page="([^"]+)"/g)].map(match=>match[1]).join(','),'brain,concept,ada,aws');
+check(architectureNavigation.includes('Architectural Depth Analysis'),true);
+check(architectureNavigation.includes('Reference Architecture'),false);
+check((await request('/api/session',{headers:{Cookie:cookieValue}})).status,200);
+check((await request('/login',{headers:{Cookie:cookieValue}})).status,200);
+check((await (await request('/login?arrival=agentic-core',{headers:{Cookie:cookieValue}})).text()).includes('login-form'),true);
+check((await (await request('/login/',{headers:{Cookie:cookieValue}})).text()).includes('login-form'),true);
+for(const route of ['/', '/portfolio/', '/hypothetical-idea/'])check(await (await request(route,{headers:{Cookie:cookieValue}})).text(),loginMarkup);
+check((await request('/workspace',{headers:{Cookie:cookieValue+'x'}})).status,303);
+check((await request('/server/content.js',{headers:{Cookie:cookieValue}})).status,404);
+check((await request('/api/archive-import',{method:'PUT',headers:{Authorization:'Bearer wrong'},body:'invalid'})).status,405);
+const logout=await request('/api/logout',{method:'POST',headers:{Origin:origin,Cookie:cookieValue}});check(logout.status,200);assert.ok(logout.headers.get('set-cookie').includes('Max-Age=0'));checks++;
+check((await request('/workspace',{headers:{Cookie:cookieValue}})).status,303);
+for(let i=0;i<6;i++)check((await signIn('test@example.com','wrong')).status,401);
+check((await signIn('test@example.com',password)).status,429);
+console.log('Authentication checks passed: '+checks+'.');

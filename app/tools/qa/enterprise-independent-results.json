@@ -1,0 +1,827 @@
+{
+  "kind": "Independent read-only structure and geometry checks; browser interaction and AWS deployment not evaluated",
+  "sourceHash": "e13d1be74357fee3f80c95d650beb4445e96f74d249478bdc62e9b9beb4b7763",
+  "baselineHash": "fae82fd587fd57df02e1713782df0110db7cb5b493ab016a189b9b8eee149800",
+  "checks": [
+    {
+      "check": "parent_architecture_exact_baseline_json",
+      "pass": true,
+      "detail": {
+        "before": "6a00568419c9d4fd2d4ceccac30fe0b6b45737aabb78ba00210609f095fa97af",
+        "after": "6a00568419c9d4fd2d4ceccac30fe0b6b45737aabb78ba00210609f095fa97af"
+      }
+    },
+    {
+      "check": "parent_architecture_equals_revision_source",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "aws_source_blueprint_equals_parent",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "threejs_bundle_byte_identical",
+      "pass": true,
+      "detail": "40e095ec567a52c081de9d39bf9a1d4eb507d0fde0fc87aab4fe78ad4201acfa"
+    },
+    {
+      "check": "concept_layout_source_byte_identical",
+      "pass": true,
+      "detail": {
+        "before": "96483e55b49040ba836ebe4c0fa9ee9621e9533f673a3e9ecd3a273bcf9480a4",
+        "after": "96483e55b49040ba836ebe4c0fa9ee9621e9533f673a3e9ecd3a273bcf9480a4"
+      }
+    },
+    {
+      "check": "study_positions_source_unchanged",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "interface_styles_source_unchanged",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "module_palette_source_unchanged",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "reference_mesh_generation_source_unchanged",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "reference_edge_generation_source_unchanged",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "reference_frame_source_unchanged",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exactly_35_unique_capabilities",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "exactly_68_unique_interfaces",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "all_interface_endpoints_exist",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "mapping_covers_exact_35",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "aws_interface_register_exact_semantic_contracts",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "embedded_aws_data_matches_files",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "all_32_dependency_combinations",
+      "pass": true,
+      "detail": [
+        {
+          "modules": [],
+          "capabilities": 12,
+          "interfaces": 22,
+          "validEndpoints": true,
+          "validBridge": true
+        },
+        {
+          "modules": [
+            "specialists"
+          ],
+          "capabilities": 15,
+          "interfaces": 28,
+          "validEndpoints": true,
+          "validBridge": true
+        },
+        {
+          "modules": [
+            "recovery"
+          ],
+          "capabilities": 16,
+          "interfaces": 29,
+          "validEndpoints": true,
+          "validBridge": true
+        },
+        {
+          "modules": [
+            "recovery",
+            "specialists"
+          ],
+          "capabilities": 19,
+          "interfaces": 35,
+          "validEndpoints": true,
+          "validBridge": true
+        },
+        {
+          "modules": [
+            "tools"
+          ],
+          "capabilities": 17,
+          "interfaces": 29,
+          "validEndpoints": true,
+          "validBridge": true
+        },
+        {
+          "modules": [
+            "specialists",
+            "tools"
+          ],
+          "capabilities": 20,
+          "interfaces": 35,
+          "validEndpoints": true,
+          "validBridge": true
+        },
+        {
+          "modules": [
+            "recovery",
+            "tools"
+          ],
+          "capabilities": 21,
+          "interfaces": 36,
+          "validEndpoints": true,
+          "validBridge": true
+        },
+        {
+          "modules": [
+            "recovery",
+            "specialists",
+            "tools"
+          ],
+          "capabilities": 24,
+          "interfaces": 42,
+          "validEndpoints": true,
+          "validBridge": true
+        },
+        {
+          "modules": [
+            "learning"
+          ],
+          "capabilities": 18,
+          "interfaces": 33,
+          "validEndpoints": true,
+          "validBridge": true
+        },
+        {
+          "modules": [
+            "learning",
+            "specialists"
+          ],
+          "capabilities": 21,
+          "interfaces": 39,
+          "validEndpoints": true,
+          "validBridge": true
+        },
+        {
+          "modules": [
+            "learning",
+            "recovery"
+          ],
+          "capabilities": 22,
+          "interfaces": 40,
+          "validEndpoints": true,
+          "validBridge": true
+        },
+        {
+          "modules": [
+            "learning",
+            "recovery",
+            "specialists"
+          ],
+          "capabilities": 25,
+          "interfaces": 46,
+          "validEndpoints": true,
+          "validBridge": true
+        },
+        {
+          "modules": [
+            "learning",
+            "tools"
+          ],
+          "capabilities": 23,
+          "interfaces": 40,
+          "validEndpoints": true,
+          "validBridge": true
+        },
+        {
+          "modules": [
+            "learning",
+            "specialists",
+            "tools"
+          ],
+          "capabilities": 26,
+          "interfaces": 46,
+          "validEndpoints": true,
+          "validBridge": true
+        },
+        {
+          "modules": [
+            "learning",
+            "recovery",
+            "tools"
+          ],
+          "capabilities": 27,
+          "interfaces": 47,
+          "validEndpoints": true,
+          "validBridge": true
+        },
+        {
+          "modules": [
+            "learning",
+            "recovery",
+            "specialists",
+            "tools"
+          ],
+          "capabilities": 30,
+          "interfaces": 53,
+          "validEndpoints": true,
+          "validBridge": true
+        },
+        {
+          "modules": [
+            "memory"
+          ],
+          "capabilities": 17,
+          "interfaces": 35,
+          "validEndpoints": true,
+          "validBridge": true
+        },
+        {
+          "modules": [
+            "memory",
+            "specialists"
+          ],
+          "capabilities": 20,
+          "interfaces": 41,
+          "validEndpoints": true,
+          "validBridge": true
+        },
+        {
+          "modules": [
+            "memory",
+            "recovery"
+          ],
+          "capabilities": 21,
+          "interfaces": 42,
+          "validEndpoints": true,
+          "validBridge": true
+        },
+        {
+          "modules": [
+            "memory",
+            "recovery",
+            "specialists"
+          ],
+          "capabilities": 24,
+          "interfaces": 48,
+          "validEndpoints": true,
+          "validBridge": true
+        },
+        {
+          "modules": [
+            "memory",
+            "tools"
+          ],
+          "capabilities": 22,
+          "interfaces": 42,
+          "validEndpoints": true,
+          "validBridge": true
+        },
+        {
+          "modules": [
+            "memory",
+            "specialists",
+            "tools"
+          ],
+          "capabilities": 25,
+          "interfaces": 48,
+          "validEndpoints": true,
+          "validBridge": true
+        },
+        {
+          "modules": [
+            "memory",
+            "recovery",
+            "tools"
+          ],
+          "capabilities": 26,
+          "interfaces": 49,
+          "validEndpoints": true,
+          "validBridge": true
+        },
+        {
+          "modules": [
+            "memory",
+            "recovery",
+            "specialists",
+            "tools"
+          ],
+          "capabilities": 29,
+          "interfaces": 55,
+          "validEndpoints": true,
+          "validBridge": true
+        },
+        {
+          "modules": [
+            "learning",
+            "memory"
+          ],
+          "capabilities": 23,
+          "interfaces": 48,
+          "validEndpoints": true,
+          "validBridge": true
+        },
+        {
+          "modules": [
+            "learning",
+            "memory",
+            "specialists"
+          ],
+          "capabilities": 26,
+          "interfaces": 54,
+          "validEndpoints": true,
+          "validBridge": true
+        },
+        {
+          "modules": [
+            "learning",
+            "memory",
+            "recovery"
+          ],
+          "capabilities": 27,
+          "interfaces": 55,
+          "validEndpoints": true,
+          "validBridge": true
+        },
+        {
+          "modules": [
+            "learning",
+            "memory",
+            "recovery",
+            "specialists"
+          ],
+          "capabilities": 30,
+          "interfaces": 61,
+          "validEndpoints": true,
+          "validBridge": true
+        },
+        {
+          "modules": [
+            "learning",
+            "memory",
+            "tools"
+          ],
+          "capabilities": 28,
+          "interfaces": 55,
+          "validEndpoints": true,
+          "validBridge": true
+        },
+        {
+          "modules": [
+            "learning",
+            "memory",
+            "specialists",
+            "tools"
+          ],
+          "capabilities": 31,
+          "interfaces": 61,
+          "validEndpoints": true,
+          "validBridge": true
+        },
+        {
+          "modules": [
+            "learning",
+            "memory",
+            "recovery",
+            "tools"
+          ],
+          "capabilities": 32,
+          "interfaces": 62,
+          "validEndpoints": true,
+          "validBridge": true
+        },
+        {
+          "modules": [
+            "learning",
+            "memory",
+            "recovery",
+            "specialists",
+            "tools"
+          ],
+          "capabilities": 35,
+          "interfaces": 68,
+          "validEndpoints": true,
+          "validBridge": true
+        }
+      ]
+    },
+    {
+      "check": "I064_preserves_critical_interface",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "I065_preserves_critical_interface",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "I066_preserves_critical_interface",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "I067_preserves_critical_interface",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "I068_preserves_critical_interface",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "topology_semantic_card_count_35",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "topology_exact_68_interfaces",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "unique_boundary_and_card_ids",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "all_68_routes_finite_near_orthogonal_and_endpoint_bound",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "check": "nested_group_and_card_containment",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "check": "nested_parent_tree_acyclic",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "check": "svg_canvas_contains_all_boundaries",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "svg_exact_35_semantic_cards",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "svg_exact_68_selectable_edges",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "svg_card_children_fit",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "check": "drawio_enterprise_page_exists",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "drawio_exact_68_semantic_edges",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "drawio_contains_all_35_semantic_cards",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "drawio_correct_edge_endpoints",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "drawio_no_missing_parents",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "check": "drawio_parent_tree_acyclic",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "check": "drawio_child_geometries_within_parents",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "check": "drawio_boundary_parent_org",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "drawio_boundary_parent_control-account",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "drawio_boundary_parent_control-region",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "drawio_boundary_parent_trusted-plane",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "drawio_boundary_parent_memory",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "drawio_boundary_parent_learning",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "drawio_boundary_parent_recovery",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "drawio_boundary_parent_domain-specialist",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "drawio_boundary_parent_tools",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "drawio_boundary_parent_security-controls",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "drawio_boundary_parent_build-account",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "drawio_boundary_parent_build-account-region",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "drawio_boundary_parent_build-account-vpc",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "drawio_boundary_parent_build-account-az0",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "drawio_boundary_parent_build-account-subnet0",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "drawio_boundary_parent_build-account-az1",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "drawio_boundary_parent_build-account-subnet1",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "drawio_boundary_parent_assurance-account",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "drawio_boundary_parent_assurance-account-region",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "drawio_boundary_parent_assurance-account-vpc",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "drawio_boundary_parent_assurance-account-az0",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "drawio_boundary_parent_assurance-account-subnet0",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "drawio_boundary_parent_assurance-account-az1",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "drawio_boundary_parent_assurance-account-subnet1",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "drawio_boundary_parent_target-account",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "drawio_boundary_parent_target-region",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "drawio_boundary_parent_target-runtime",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "drawio_boundary_parent_foundation",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "drawio_boundary_parent_archive-account",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "drawio_boundary_parent_security-account",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "drawio_boundary_parent_platform-account",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "aws_in_shared_workspace",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "single_shared_control_moduleButtons",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "single_shared_control_rightDock",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "single_shared_control_rightControlPanel",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "single_shared_control_search",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "single_shared_control_indexResults",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "single_shared_control_linkWalk",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "single_shared_control_tourBar",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "single_shared_control_inspector",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "single_shared_control_systemTab",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "single_shared_control_nodesTab",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "single_shared_control_study",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "no_standalone_aws_iframe",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "page_switch_keeps_shared_workspace_visible",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "aws_clickaway_excluded_from_global_handler",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "aws_tour_dispatches_camera_focus",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "aws_interactive_taps_avoid_unconditional_view_capture",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "reference_core_scene_data_unchanged",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "all_current_aws_download_paths_exist",
+      "pass": true,
+      "detail": {
+        "paths": [
+          "./aws/Agentic-Core-AWS-Architecture.drawio",
+          "./aws/Agentic-Core-AWS-Architecture.png",
+          "./aws/Agentic-Core-AWS-Reference-Pack.zip",
+          "./aws/Architecture-Decision-Records.md",
+          "./aws/Architecture-to-AWS-Mapping.md",
+          "./aws/Connection-Register.md",
+          "./aws/Deployment-Communication.md",
+          "./aws/Deployment-Communication.svg",
+          "./aws/Enterprise-Architecture-Review.md",
+          "./aws/Official-AWS-References.md",
+          "./aws/Security-and-Operations.md",
+          "./aws/Solutions-Architect-Study-Guide.md",
+          "./aws/Verification-Report.md",
+          "./aws/enterprise.svg"
+        ],
+        "missing": []
+      }
+    },
+    {
+      "check": "legacy_aws_url_redirects_to_shared_view",
+      "pass": true,
+      "detail": null
+    }
+  ],
+  "warnings": [],
+  "summary": {
+    "passed": 91,
+    "failed": 0
+  }
+}

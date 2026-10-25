@@ -1,0 +1,206 @@
+// Pure, bounded teaching abstraction. No cloud resources or application state are changed.
+const clone = value => JSON.parse(JSON.stringify(value));
+const exact = (a,b) => typeof a === 'string' && a.length > 0 && a === b;
+const yes = value => value === true;
+const finiteNonnegative = value => Number.isFinite(value) && value >= 0;
+function validatePlan(tasks) {
+  const errors = [];
+  if (!Array.isArray(tasks) || tasks.length === 0) return {ok:false,errors:['At least one task is required.'],order:[]};
+  const ids = tasks.map(t => t?.id);
+  if (ids.some(id => typeof id !== 'string' || !id)) errors.push('Each task requires a nonempty ID.');
+  if (new Set(ids).size !== ids.length) errors.push('Task IDs must be unique.');
+  const byId = new Map(tasks.map(t => [t?.id,t]));
+  for (const task of tasks) {
+    if (!task || typeof task.owner !== 'string' || !task.owner.trim()) errors.push('Each task requires exactly one accountable owner.');
+    if (Array.isArray(task?.owners) && (task.owners.length !== 1 || task.owners[0] !== task.owner)) errors.push('A task cannot have missing, multiple or contradictory accountable owners.');
+    if (!Array.isArray(task?.deps)) { errors.push('Every task requires an explicit dependency list.'); continue; }
+    if (new Set(task.deps).size !== task.deps.length) errors.push('Dependencies must be unique per task.');
+    for (const dependency of task.deps) if (!byId.has(dependency)) errors.push('Every dependency must reference an existing task.');
+  }
+  if (errors.length) return {ok:false,errors:[...new Set(errors)],order:[]};
+  const remaining = new Map(tasks.map(t => [t.id,new Set(t.deps)]));
+  const order = [];
+  while (remaining.size) {
+    const ready = [...remaining].filter(([,deps]) => deps.size === 0).map(([id]) => id);
+    if (!ready.length) return {ok:false,errors:['The task dependency graph contains a cycle.'],order};
+    for (const id of ready) { order.push(id); remaining.delete(id); for (const deps of remaining.values()) deps.delete(id); }
+  }
+  return {ok:true,errors:[],order};
+}
+function evaluateGate(stage,state) {
+  const s = state || {}, checks = [];
+  const add = (id,label,condition) => checks.push({id,label,ok:condition === true});
+  const c=s.contract||{}, a=s.approval||{}, r=s.run||{}, p=s.plan||{}, spec=s.spec||{}, binding=s.binding||{};
+  const t=s.task||{}, artifact=s.artifact||{}, evidence=s.evidence||{}, owner=s.owner||{}, budget=s.budget||{}, attempt=s.attempt||{};
+  const integrated=s.integrated||{}, final=s.finalEvidence||{}, auth=s.releaseAuthority||{}, intent=s.releaseIntent||{}, receipt=s.receipt||{};
+  const sameContract = v => exact(v.contractId,c.id) && v.contractVersion === c.version && exact(v.contractDigest,c.digest);
+  const currentApproval = () => {
+    add('approval-subject','Approval names the exact current contract ID, revision and digest.',sameContract(a));
+    add('approval-authority','The approver is currently authorised for this contract scope.',yes(a.authorityCurrent) && exact(a.scope,c.scope));
+    add('approval-live','Approval has not been revoked and has not expired.',a.revoked === false && Number.isFinite(s.now) && Number.isFinite(a.expiresAt) && s.now < a.expiresAt);
+  };
+  const runPinned = () => { currentApproval(); add('run-pin','The run still pins the current contract.',sameContract(r)); add('policy','The contract is compatible with current policy.',yes(s.policyCompatible)); };
+  const planReady = () => {
+    runPinned();
+    add('plan-subject','The admitted plan belongs to the current contract.',sameContract(p));
+    add('plan-dag','The task plan is acyclic with unique task IDs and one owner per task.',validatePlan(p.tasks).ok);
+    add('plan-coverage','Required contract obligations are covered by the plan.',yes(p.coverage));
+    add('plan-admitted','Core has admitted this exact plan digest.',yes(p.admitted) && exact(p.digest,r.planDigest));
+  };
+  const specReady = () => {
+    planReady();
+    add('spec-plan','The specification names the admitted plan digest.',exact(spec.planDigest,p.digest));
+    add('patterns','Every required pattern is selected from the eligible set.',Array.isArray(spec.required) && spec.required.length > 0 && Array.isArray(spec.selected) && Array.isArray(spec.eligible) && spec.required.every(x => spec.selected.includes(x)) && spec.selected.every(x => spec.eligible.includes(x)));
+    add('pattern-bindings','Every required inherited guard is bound in the specification.',yes(spec.guardsBound));
+  };
+  const bindingsReady = () => {
+    specReady();
+    add('binding-subject','Bindings name this exact specification and admitted plan.',exact(binding.specDigest,spec.digest) && exact(binding.planDigest,p.digest));
+    add('binding-qualified','Bindings are qualified, schema compatible and pinned.',yes(binding.qualified) && yes(binding.compatible) && yes(binding.versionPinned));
+  };
+  const dependenciesReady = () => {
+    const planned = Array.isArray(p.tasks) ? p.tasks.find(x => x.id === t.id) : null;
+    const records = Array.isArray(s.dependencies) ? s.dependencies : null;
+    const required = planned?.deps;
+    add('dependency-set','Every planned prerequisite has one current acceptance record.',Array.isArray(required) && records !== null && records.length === required.length && new Set(records.map(x=>x.id)).size === records.length && required.every(id => records.some(x=>x.id===id)));
+    add('dependencies-current','Prerequisite acceptance is committed for the current artifact and revision.',records !== null && records.every(x => yes(x.committed) && yes(x.accepted) && exact(x.acceptedDigest,x.currentDigest) && x.acceptedRevision === x.currentRevision));
+  };
+  const taskContext = () => {
+    bindingsReady(); dependenciesReady();
+    const planned=Array.isArray(p.tasks)?p.tasks.find(x=>x.id===t.id):null;
+    add('task-pin','The task names the current contract and admitted plan.',sameContract(t) && exact(t.planDigest,p.digest));
+    add('task-owner','The task owner matches the current admitted plan assignment.',!!planned && exact(t.owner,planned.owner));
+    add('task-permission','Task authority is narrowed to the current run.',yes(t.permissionsWithinRun));
+  };
+  const acceptanceReady = () => {
+    taskContext();
+    add('candidate-attempt','The candidate comes from the exact current task attempt.',exact(artifact.taskId,t.id) && artifact.attemptFence === attempt.currentFence && attempt.fence === attempt.currentFence && yes(attempt.commitAllowed));
+    add('evidence-subject','Evidence describes the exact candidate bytes.',exact(evidence.subjectDigest,artifact.digest));
+    add('evidence-report','The evidence report has its own verified report digest and provenance.',typeof evidence.reportDigest === 'string' && evidence.reportDigest.length>0 && yes(evidence.reportIntegrityVerified) && yes(evidence.provenanceValid));
+    add('evidence-context','Evidence names the current task, attempt, contract and dependency fingerprint.',exact(evidence.taskId,t.id) && evidence.attemptFence===attempt.currentFence && sameContract(evidence) && exact(evidence.dependencyFingerprint,s.dependencyFingerprint));
+    add('independent-tests','Independent required tests and PIC checks pass.',yes(evidence.testsPass) && yes(evidence.picPass) && yes(evidence.independenceSatisfied));
+    add('owner-acceptance','The authorised current task owner accepted this exact candidate and attempt.',exact(owner.subjectDigest,artifact.digest) && exact(owner.taskId,t.id) && owner.attemptFence===attempt.currentFence && exact(owner.identity,t.owner) && sameContract(owner) && yes(owner.accepted) && yes(owner.authorised));
+    add('effects-resolved','Every required external effect has been resolved.',yes(s.requiredEffectsResolved));
+  };
+  const integrationReady = () => {
+    acceptanceReady();
+    const accepted=s.acceptance||{};
+    add('core-acceptance','Core committed acceptance of this exact artifact and current dependencies.',yes(accepted.committed) && exact(accepted.subjectDigest,artifact.digest) && sameContract(accepted) && exact(accepted.dependencyFingerprint,s.dependencyFingerprint));
+    const manifest=integrated.manifest;
+    const records=Array.isArray(s.componentAcceptances)?s.componentAcceptances:[];
+    const required=s.integrationRequirements?.componentIds;
+    add('manifest-completeness','Every required component from the current integration specification is present exactly once.',Array.isArray(required) && required.length>0 && new Set(required).size===required.length && exact(s.integrationRequirements.planDigest,p.digest) && Array.isArray(manifest) && manifest.length===required.length && required.every(id=>records.some(x=>x.id===id&&manifest.includes(x.subjectDigest))));
+    add('manifest','The complete manifest names only currently accepted exact component digests.',Array.isArray(manifest) && manifest.length>0 && new Set(manifest).size===manifest.length && manifest.includes(artifact.digest) && manifest.every(d=>records.some(x=>exact(x.subjectDigest,d) && yes(x.current) && yes(x.committed) && sameContract(x))));
+    add('integrated-subject','The new integrated candidate belongs to this contract.',typeof integrated.digest==='string' && integrated.digest.length>0 && sameContract(integrated));
+  };
+  const finalReady = () => {
+    integrationReady();
+    add('final-subject','Final evidence names the exact integrated package.',exact(final.subjectDigest,integrated.digest) && sameContract(final));
+    add('final-evidence','Final report integrity, system tests, PIC conformance and current manifest checks pass.',typeof final.reportDigest==='string' && final.reportDigest.length>0 && yes(final.reportIntegrityVerified) && yes(final.testsPass) && yes(final.picPass) && yes(final.manifestCurrent));
+  };
+  switch(stage) {
+    case 'intake': add('request','The requirement has an identified source and a valid schema.',yes(s.requirement?.identified) && yes(s.requirement?.schemaValid)); break;
+    case 'approval': currentApproval(); add('contract-consistent','The reviewed contract passes consistency checks.',yes(c.consistent)); break;
+    case 'admission': runPinned(); break;
+    case 'planning': planReady(); break;
+    case 'specialisation': specReady(); break;
+    case 'binding': bindingsReady(); break;
+    case 'execution':
+      taskContext();
+      add('budget','Spent, reserved and requested units fit the finite nonnegative budget.',[budget.spent,budget.reserved,budget.requested,budget.limit].every(finiteNonnegative) && budget.spent+budget.reserved+budget.requested<=budget.limit && yes(budget.atomicAdmission));
+      add('attempt','The dispatch fence and unexpired attempt lease are current.',Number.isInteger(attempt.fence) && attempt.fence>=0 && attempt.fence===attempt.currentFence && yes(attempt.leaseValid));
+      break;
+    case 'acceptance': acceptanceReady(); break;
+    case 'integration': integrationReady(); break;
+    case 'attestation': finalReady(); break;
+    case 'release':
+      finalReady();
+      add('final-commit','Core recorded the final attestation for this exact package.',yes(s.finalAttestation?.committed) && exact(s.finalAttestation?.subjectDigest,integrated.digest));
+      add('release-authority','Current release authority names the package, contract, destination and idempotency key.',exact(auth.subjectDigest,integrated.digest) && sameContract(auth) && yes(auth.authorised) && yes(auth.current) && typeof auth.destination==='string' && auth.destination.length>0 && typeof auth.idempotencyKey==='string' && auth.idempotencyKey.length>0);
+      break;
+    case 'delivery':
+      add('release-intent','An authorised local release intent was committed for the exact package.',yes(intent.committed) && exact(intent.subjectDigest,integrated.digest) && typeof intent.idempotencyKey==='string' && intent.idempotencyKey.length>0);
+      add('receipt-subject','The receipt names the same package, destination and idempotency key as the committed intent.',exact(receipt.subjectDigest,intent.subjectDigest) && exact(receipt.destination,intent.destination) && exact(receipt.idempotencyKey,intent.idempotencyKey));
+      add('receipt-confirmed','Destination receipt is confirmed with verified provenance.',yes(receipt.confirmed) && yes(receipt.provenanceVerified));
+      break;
+    default: add('known-stage','The requested gate exists in this study model.',false);
+  }
+  const failures=checks.filter(x=>!x.ok).map(x=>x.label);
+  return {stage,ok:failures.length===0,checks,failures,scope:'Finite study abstraction; supplied evidence and authority facts require external enforcement.'};
+}
+function sampleState() {
+  const subject={contractId:'contract-1',contractVersion:1,contractDigest:'contract-A'};
+  return {
+    phase:'initial',history:[],now:10,policyCompatible:true,
+    requirement:{identified:true,schemaValid:true},
+    contract:{id:'contract-1',version:1,digest:'contract-A',scope:'project-1',consistent:true},
+    approval:{...subject,scope:'project-1',authorityCurrent:true,revoked:false,expiresAt:100},
+    run:{...subject,id:'run-1',planDigest:'plan-A'},
+    plan:{...subject,digest:'plan-A',coverage:true,admitted:true,tasks:[{id:'design',owner:'design-owner',deps:[]},{id:'package',owner:'package-owner',deps:['design']}]},
+    spec:{digest:'spec-A',planDigest:'plan-A',required:['approval','evidence','release'],selected:['approval','evidence','release'],eligible:['approval','evidence','release','continuity'],guardsBound:true},
+    binding:{specDigest:'spec-A',planDigest:'plan-A',qualified:true,compatible:true,versionPinned:true},
+    task:{...subject,id:'package',owner:'package-owner',planDigest:'plan-A',permissionsWithinRun:true},
+    dependencies:[{id:'design',committed:true,accepted:true,acceptedDigest:'component-A',currentDigest:'component-A',acceptedRevision:1,currentRevision:1}],
+    dependencyFingerprint:'deps-A',budget:{spent:2,reserved:3,requested:4,limit:10,atomicAdmission:true},
+    attempt:{fence:7,currentFence:7,leaseValid:true,commitAllowed:true},
+    artifact:{digest:'artifact-A',taskId:'package',attemptFence:7},
+    evidence:{...subject,taskId:'package',attemptFence:7,subjectDigest:'artifact-A',reportDigest:'report-R',reportIntegrityVerified:true,provenanceValid:true,dependencyFingerprint:'deps-A',testsPass:true,picPass:true,independenceSatisfied:true},
+    owner:{...subject,taskId:'package',attemptFence:7,identity:'package-owner',subjectDigest:'artifact-A',accepted:true,authorised:true},
+    requiredEffectsResolved:true,
+    acceptance:{...subject,subjectDigest:'artifact-A',dependencyFingerprint:'deps-A',committed:true},
+    integrationRequirements:{planDigest:'plan-A',componentIds:['design','package']},
+    componentAcceptances:[{...subject,id:'design',subjectDigest:'component-A',current:true,committed:true},{...subject,id:'package',subjectDigest:'artifact-A',current:true,committed:true}],
+    integrated:{...subject,digest:'package-A',manifest:['component-A','artifact-A']},
+    finalEvidence:{...subject,subjectDigest:'package-A',reportDigest:'report-final-A',reportIntegrityVerified:true,testsPass:true,picPass:true,manifestCurrent:true},
+    finalAttestation:{subjectDigest:'package-A',committed:true},
+    releaseAuthority:{...subject,subjectDigest:'package-A',authorised:true,current:true,destination:'consumer-D',idempotencyKey:'release-1'},
+    releaseIntent:{subjectDigest:'package-A',destination:'consumer-D',idempotencyKey:'release-1',committed:true},
+    receipt:{subjectDigest:'package-A',destination:'consumer-D',idempotencyKey:'release-1',confirmed:true,provenanceVerified:true}
+  };
+}
+const order=['intake','approval','admission','planning','specialisation','binding','execution','acceptance','integration','attestation','release','delivery'];
+function runEvent(state,event) {
+  const stage=typeof event==='string'?event:event?.stage;
+  const s=clone(state||{}), previous=s.phase||'initial';
+  const next=previous==='initial'?0:order.indexOf(previous)+1;
+  if((previous!=='initial'&&!order.includes(previous)) || next<0 || order[next]!==stage) return {ok:false,state:s,stage,failures:['The transition is out of sequence. Required earlier guards cannot be skipped.'],checks:[]};
+  const result=evaluateGate(stage,s);
+  if(!result.ok) return {...result,state:s};
+  s.phase=stage;s.history=[...(s.history||[]),{stage,decision:'allowed'}];
+  return {...result,state:s};
+}
+model.scenarios=[
+  {id:'valid',title:'Current evidence and all gates pass',stage:'release',mutations:[],expected:true},
+  {id:'stale-approval',title:'Contract changed after approval',stage:'execution',mutations:[['contract.digest','contract-B']],expected:false},
+  {id:'revoked-approval',title:'Approval was revoked',stage:'release',mutations:[['approval.revoked',true]],expected:false},
+  {id:'expired-approval',title:'Approval expired at the exact deadline',stage:'execution',mutations:[['now',100]],expected:false},
+  {id:'plan-cycle',title:'Task dependencies contain a cycle',stage:'planning',mutations:[['plan.tasks.0.deps',['package']]],expected:false},
+  {id:'pic-gap',title:'A required inherited pattern is missing',stage:'specialisation',mutations:[['spec.selected',['approval','evidence']]],expected:false},
+  {id:'capability-gap',title:'The selected capability is unqualified',stage:'execution',mutations:[['binding.qualified',false]],expected:false},
+  {id:'stale-dependency',title:'An accepted dependency was replaced',stage:'execution',mutations:[['dependencies.0.currentDigest','component-B']],expected:false},
+  {id:'budget-overrun',title:'Concurrent reservations would exceed the budget',stage:'execution',mutations:[['budget.requested',6]],expected:false},
+  {id:'stale-attempt',title:'A late worker presents an old fence',stage:'acceptance',mutations:[['attempt.currentFence',8]],expected:false},
+  {id:'wrong-artifact',title:'The report describes different artifact bytes',stage:'acceptance',mutations:[['artifact.digest','artifact-B']],expected:false},
+  {id:'wrong-task-report',title:'A passing report belongs to another task',stage:'acceptance',mutations:[['evidence.taskId','other-task']],expected:false},
+  {id:'report-digest-distinct',title:'Artifact and report have different valid hashes',stage:'acceptance',mutations:[['evidence.reportDigest','a-different-valid-report-hash']],expected:true},
+  {id:'missing-owner',title:'Independent owner acceptance is missing',stage:'acceptance',mutations:[['owner.accepted',false]],expected:false},
+  {id:'unknown-effect',title:'An external effect is unresolved',stage:'acceptance',mutations:[['requiredEffectsResolved',false]],expected:false},
+  {id:'no-core-commit',title:'The verifier passed but Core did not commit acceptance',stage:'integration',mutations:[['acceptance.committed',false]],expected:false},
+  {id:'incomplete-manifest',title:'An accepted component is missing from the integrated package',stage:'integration',mutations:[['integrated.manifest',['artifact-A']]],expected:false},
+  {id:'stale-final',title:'The package changed after final validation',stage:'release',mutations:[['integrated.digest','package-B']],expected:false},
+  {id:'no-release-authority',title:'Tests pass but release authority is absent',stage:'release',mutations:[['releaseAuthority.authorised',false]],expected:false},
+  {id:'unknown-delivery',title:'The destination receipt is unknown',stage:'delivery',mutations:[['receipt.confirmed',false]],expected:false},
+  {id:'wrong-destination',title:'The receipt comes from a different destination',stage:'delivery',mutations:[['receipt.destination','consumer-other']],expected:false}
+];
+function scenarioState(id) {
+  const scenario=model.scenarios.find(x=>x.id===id);if(!scenario) throw new Error('Unknown study scenario.');
+  const state=sampleState();
+  for(const [path,value] of scenario.mutations){const keys=path.split('.');let target=state;for(const key of keys.slice(0,-1)) target=target[key];target[keys.at(-1)]=clone(value);}
+  return state;
+}
+model.validatePlan=validatePlan;
+model.evaluateGate=evaluateGate;
+model.sampleState=sampleState;
+model.scenarioState=scenarioState;
+model.runEvent=runEvent;
+model.stageOrder=order;

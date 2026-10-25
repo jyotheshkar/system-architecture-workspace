@@ -1,0 +1,61 @@
+{
+  "verified_date_utc": "2026-10-25",
+  "recovery_method": "Read-only local Git object export after official Sites source helper failed at Git DNS/network resolution",
+  "source_files_modified": true,
+  "site_changes": false,
+  "github_writes": false,
+  "history_exported": false,
+  "source_history_security_clearance": false,
+  "publication_scope": "Manifest-listed project source after explicit removal of unnecessary personal career/profile/contact payload; original runtime routes and authentication boundaries retained.",
+  "review": {
+    "credential_scan": "Current snapshot text scanned for recognised key formats and credential literals. Candidate matches were manually classified as non-secret identifiers or synthetic test fixtures.",
+    "private_data": "The embedded personal career, education, thesis and contact profile is removed from the public-copy entry component. Operational datasets, credentials, storage state and private documents remain excluded. Author attribution and generic architecture examples are not treated as career records.",
+    "third_party": "Existing vendor licences and provenance retained; no claim of exclusive rights to bundled libraries or architecture icons."
+  },
+  "project": "System Architecture Workspace",
+  "site_project_id": "appgprj_6ac4af97cde08191809b622dfd5d693d",
+  "latest_site_version": 81,
+  "latest_site_source_commit": "4f583cb90bff726eada9a180a0eeba4118981a73",
+  "recovered_version": 81,
+  "recovered_source_commit": "4f583cb90bff726eada9a180a0eeba4118981a73",
+  "matches_latest_site_source": false,
+  "source_commit_timestamp": "2026-10-24T13:40:20Z",
+  "site_deployment_status": "succeeded",
+  "site_url": "https://sa-workspace.jyothesh-karnam.chatgpt.site",
+  "original_source_files": 177,
+  "original_source_bytes": 23260199,
+  "excluded": [
+    ".openai/hosting.json",
+    "dist/server generated bundles",
+    "dist/aws/Agentic-Core-AWS-Reference-Pack.zip",
+    "WORKSPACE-PRODUCT.md",
+    "runtime credentials and storage records",
+    ".git source history",
+    "embedded personal career/education/thesis/contact profile"
+  ],
+  "binary_review": "Eight included PNG files visually inspected; architecture/case-study diagrams and decorative galaxy images only.",
+  "runtime_repository_reference": "Worker code retains a private backing-repository name as integration routing configuration. No private repository contents or credentials are included.",
+  "maturity": "Implemented browser/Cloudflare Worker workspace; AWS diagrams are proposed target architectures, not deployed AWS evidence.",
+  "source_identity_matches_published_version": true,
+  "export_kind": "curated_privacy_sanitized_derivative",
+  "source_transformations": [
+    {
+      "path": "dist/login/index.html",
+      "reason": "Removed hidden personal profile, employment, education, thesis and contact panels; retained project overview route and existing sign-in/hypothesis components.",
+      "source_sha256": "fdebbc31ff4076c89326324ba0997d6f60ee381f1d3185c60ecbd19f6234e15b",
+      "export_sha256": "ea29d80ca7874589ae64734cf0e69e42607204657bd282890762482dcc58d703"
+    },
+    {
+      "path": "dist/assets/login.js",
+      "reason": "Aligned project-overview title and skip-link label after removal of personal profile; routing/auth logic unchanged.",
+      "source_sha256": "f0d9acf88460ebf553d3d565d3b35ba5d8acc5311bc1c7d248e8f6c32b528350",
+      "export_sha256": "59a11fa4f6e5fedade95ad8917d666fb6001285fdf75a31b8c2ec6978ac05808"
+    },
+    {
+      "path": "worker/test.mjs",
+      "reason": "Replaced assertions requiring career/contact content with project-only and personal-payload absence regression checks; existing auth/session and route coverage retained.",
+      "source_sha256": "9ef2e9a28760f21e941bcc8f6b236a4b55cfe0908ceef80d8dda376a98735132",
+      "export_sha256": "de341485cdcd7168e74558ba51c44745bf35c9131ce620e004549086cce31152"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+/* Both architecture rails share one fixed geometry. Layer selection is
+   represented by each button's aria-pressed state, including multiple layers. */
+:root{--saw-toolbar-height:44px;--saw-toolbar-pill-height:34px;--saw-toolbar-padding:4px}
+header.architectureHeader nav{height:var(--saw-toolbar-height);min-height:var(--saw-toolbar-height);max-height:var(--saw-toolbar-height);box-sizing:border-box;padding:var(--saw-toolbar-padding)}
+header.architectureHeader nav>button{height:var(--saw-toolbar-pill-height);min-height:var(--saw-toolbar-pill-height);max-height:var(--saw-toolbar-pill-height);box-sizing:border-box;padding-top:0;padding-bottom:0;transform:none!important}
+.websiteModulebar.layerToolbar,.modulebar{position:relative;display:flex;align-items:center;gap:0;min-height:var(--saw-toolbar-height);height:var(--saw-toolbar-height);max-height:var(--saw-toolbar-height);max-width:100%;box-sizing:border-box;flex:0 0 auto;padding:var(--saw-toolbar-padding);border:1px solid #ffffff26;border-radius:999px;background:transparent!important;box-shadow:none!important;overflow-x:auto;overflow-y:hidden;scrollbar-width:thin;scrollbar-color:#66cfc0 transparent;isolation:isolate}
+.websiteModulebar.layerToolbar button,.modulebar button{position:relative;display:flex;align-items:center;justify-content:center;gap:10px;flex:1 0 auto;height:var(--saw-toolbar-pill-height);min-height:var(--saw-toolbar-pill-height);max-height:var(--saw-toolbar-pill-height);min-width:112px;box-sizing:border-box;margin:0;padding:0 17px;border:0!important;border-radius:999px!important;background:transparent!important;box-shadow:none!important;color:#aeb0b8!important;font-family:inherit;font-size:12px;font-weight:550;line-height:1.2;white-space:nowrap;transform:none!important;transition:background-color .16s ease,color .16s ease;cursor:pointer}
+.websiteModulebar.layerToolbar button[aria-pressed=true],.modulebar button[aria-pressed=true],.modulebar #skeleton[aria-pressed=true],.modulebar #allModules[aria-pressed=true],.modulebar #picStudy[aria-pressed=true],.modulebar #moduleButtons button[aria-pressed=true]{background:#f5f5f5!important;color:#111!important;transform:none!important}
+.websiteModulebar.layerToolbar button:hover:not([aria-pressed=true]),.modulebar button:hover:not([aria-pressed=true]),.modulebar #moduleButtons button:hover:not([aria-pressed=true]){background:#ffffff08!important;color:#f0f1f3!important}
+.websiteModulebar.layerToolbar button:focus-visible,.modulebar button:focus-visible{outline:2px solid #dce3ec!important;outline-offset:-3px;border-radius:999px!important}
+.websiteModulebar.layerToolbar button[aria-pressed=true]:focus-visible,.modulebar button[aria-pressed=true]:focus-visible{outline-color:#737b87!important}
+/* Contiguous selections share a filled strip. Only each run's outer ends are
+   rounded, so selecting another layer never leaves a dark notch between pills.
+   The selectors respond directly to aria-pressed, including keyboard changes. */
+.websiteModulebar.layerToolbar button[aria-pressed=true]:has(+button[aria-pressed=true]),.modulebar button[aria-pressed=true]:has(+button[aria-pressed=true]){border-top-right-radius:0!important;border-bottom-right-radius:0!important}
+.websiteModulebar.layerToolbar button[aria-pressed=true]+button[aria-pressed=true],.modulebar button[aria-pressed=true]+button[aria-pressed=true]{border-top-left-radius:0!important;border-bottom-left-radius:0!important}
+.layerToolbarIcon{display:grid;place-items:center;width:14px;height:14px;flex:0 0 14px;color:var(--layer-color,#a6acb6);pointer-events:none}
+.layerToolbarIcon svg{display:block;width:14px;height:14px}
+.layerToolbarLabel{min-width:0;line-height:1.2;pointer-events:none}
+.modulebar .selectionTrack{display:none!important}
+.websiteModulebar.layerToolbar::-webkit-scrollbar,.modulebar::-webkit-scrollbar{display:block;height:3px}
+.websiteModulebar.layerToolbar::-webkit-scrollbar-track,.modulebar::-webkit-scrollbar-track{background:transparent}
+.websiteModulebar.layerToolbar::-webkit-scrollbar-thumb,.modulebar::-webkit-scrollbar-thumb{background:#66cfc0;border-radius:999px}
+@media(max-width:760px){.websiteModulebar.layerToolbar button,.modulebar button{min-width:118px;flex:0 0 auto;gap:8px;padding:0 14px;font-size:11px}.layerToolbarIcon,.layerToolbarIcon svg{width:13px;height:13px}.layerToolbarIcon{flex-basis:13px}}
+@media(prefers-reduced-motion:reduce){.websiteModulebar.layerToolbar button,.modulebar button{transition:none}}

@@ -1,0 +1,6 @@
+{
+  "method": "Actual bundled parent scripts executed in linkedom/Node VM with WebGL unavailable; DOM and event verification, not rendered browser testing",
+  "passed": 169,
+  "failed": 0,
+  "errors": []
+}

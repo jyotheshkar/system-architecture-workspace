@@ -1,0 +1,84 @@
+{
+  "schema_version": "1.0.0",
+  "export_kind": "curated_design_data_snapshot",
+  "source_repository_id": "1413161174",
+  "source_repository_name": "jyotheshkar/system-architecture-workspace-data",
+  "source_visibility_at_snapshot": "private",
+  "source_commit_sha": "dacd1ad369be24d5d0d8536ee10ed075e61feb23",
+  "source_review_date_utc": "2026-10-25",
+  "public_export_repository_url": "https://github.com/jyotheshkar/system-architecture-workspace",
+  "publication_status": "prepared_for_public_commit",
+  "site_application_identity": {
+    "site_version": 81,
+    "source_commit_sha": "4f583cb90bff726eada9a180a0eeba4118981a73",
+    "status": "curated_privacy_sanitized_v81_derivative_reviewed_separately",
+    "relative_directory": "app/",
+    "source_files_modified": true,
+    "matches_latest_site_source": false,
+    "export_kind": "curated_privacy_sanitized_derivative",
+    "privacy_repair_receipt": "app/docs/privacy-repair.json",
+    "source_transformation_paths": [
+      "app/dist/login/index.html",
+      "app/dist/assets/login.js",
+      "app/worker/test.mjs"
+    ],
+    "generated_paths_excluded_from_publication": [
+      "app/dist/server/"
+    ]
+  },
+  "files": [
+    {
+      "path": "workspace/core-reference.json",
+      "source_git_blob_sha": "e1f2595d44fd60d927c2e2b54a9264f7ce973a67",
+      "source_size_bytes": 307414,
+      "editorially_modified": false,
+      "editorial_changes": []
+    },
+    {
+      "path": "workspace/foundation-reference.json",
+      "source_git_blob_sha": "e12e2cc8917ff7ebec22ce01ca93a4981ee068b2",
+      "source_size_bytes": 111303,
+      "editorially_modified": false,
+      "editorial_changes": []
+    },
+    {
+      "path": "workspace/pages/agentic-core.json",
+      "source_git_blob_sha": "2a7b40ffde6edc2b9eec80bfc8becfbc62d50952",
+      "source_size_bytes": 409,
+      "editorially_modified": false,
+      "editorial_changes": []
+    },
+    {
+      "path": "workspace/pages/system-architecture-workspace-1-0.json",
+      "source_git_blob_sha": "90bf844c9c5f56bac8853a850944ec5e43744170",
+      "source_size_bytes": 508,
+      "editorially_modified": false,
+      "editorial_changes": []
+    },
+    {
+      "path": "workspace/retired-pages/agentic-core-scaled.json",
+      "source_git_blob_sha": "aa1c9b6c59cd85cfa74f9ab90375e90c6cb745fd",
+      "source_size_bytes": 429,
+      "editorially_modified": false,
+      "editorial_changes": []
+    },
+    {
+      "path": "workspace/website-reference.json",
+      "source_git_blob_sha": "79183358303aca5c69ba92a7d2ce2d3a4ce5feec",
+      "source_size_bytes": 86289,
+      "editorially_modified": true,
+      "editorial_changes": [
+        "Remove active private-repository URL/visibility assertions from exported evidence metadata.",
+        "Record exact source repository ID/SHA as historical provenance and record the verified public export repository URL with prepared-for-public-commit status.",
+        "Clarify historical source-file/status labels; do not assert current implementation, configuration or deployment.",
+        "Replace GitHub node's private-original identity/connection assertion with public-snapshot boundaries."
+      ]
+    }
+  ],
+  "excluded_original_paths": [
+    "README.md (replaced with a public-export README; original private configuration instructions omitted)"
+  ],
+  "history_included": false,
+  "credentials_or_operational_records_included": false,
+  "public_export_repository_id": "1433091316"
+}

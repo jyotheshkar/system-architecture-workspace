@@ -1,0 +1,23 @@
+name: Workspace verification
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Verify architecture data and provenance hashes
+        run: python scripts/validate_design_export.py
+      - name: Build and verify the public app
+        working-directory: app
+        run: |
+          node worker/build.mjs
+          node worker/test.mjs
+          node worker/test-workspace-store.mjs

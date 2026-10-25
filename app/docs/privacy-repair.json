@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0.0",
+  "status": "sanitized_and_locally_verified",
+  "blocked_batch_unchanged": true,
+  "source_commit_sha": "4f583cb90bff726eada9a180a0eeba4118981a73",
+  "changes": [
+    {
+      "path": "dist/login/index.html",
+      "original_sha256": "fdebbc31ff4076c89326324ba0997d6f60ee381f1d3185c60ecbd19f6234e15b",
+      "export_sha256": "ea29d80ca7874589ae64734cf0e69e42607204657bd282890762482dcc58d703",
+      "original_bytes": 34177,
+      "export_bytes": 26641,
+      "reason": "Removed hidden personal profile, employment, education, thesis and contact panels; retained project overview route and existing sign-in/hypothesis components."
+    },
+    {
+      "path": "dist/assets/login.js",
+      "original_sha256": "f0d9acf88460ebf553d3d565d3b35ba5d8acc5311bc1c7d248e8f6c32b528350",
+      "export_sha256": "59a11fa4f6e5fedade95ad8917d666fb6001285fdf75a31b8c2ec6978ac05808",
+      "original_bytes": 14405,
+      "export_bytes": 14433,
+      "reason": "Aligned project-overview title and skip-link label after removal of personal profile; routing/auth logic unchanged."
+    },
+    {
+      "path": "worker/test.mjs",
+      "original_sha256": "9ef2e9a28760f21e941bcc8f6b236a4b55cfe0908ceef80d8dda376a98735132",
+      "export_sha256": "de341485cdcd7168e74558ba51c44745bf35c9131ce620e004549086cce31152",
+      "original_bytes": 6286,
+      "export_bytes": 6477,
+      "reason": "Replaced assertions requiring career/contact content with project-only and personal-payload absence regression checks; existing auth/session and route coverage retained."
+    }
+  ],
+  "removed_field_categories": [
+    "career history",
+    "education and award details",
+    "thesis record",
+    "personal contact and social profile targets"
+  ],
+  "preserved": [
+    "Existing route mapping",
+    "Sign-in form and authentication/session Worker logic",
+    "Workspace store implementation",
+    "Hypothesis component",
+    "Project architecture source and design models"
+  ],
+  "independent_review": {
+    "status": "CLEARED_WITHIN_INSPECTED_PROJECTS_ONLY_PRIVACY_SCOPE",
+    "receipt_sha256": "b8af214ecfb46f8b2b507cd35644d5e092faba8c8c1176b1a45734d6dfa242b9",
+    "nongenerated_decodable_files_reviewed": 174,
+    "original_sensitive_fragments_checked": 17,
+    "remaining_original_sensitive_fragments": 0,
+    "generic_negative_privacy_tests_are_records": false,
+    "scope_limit": "Current curated project snapshot only; no whole-history, dependency or production-security certification."
+  },
+  "values_logged": false,
+  "curated_app_text_files_scanned": 173,
+  "personal_payload_pattern_counts": {
+    "personal_email_occurrences": 0,
+    "personal_social_url_occurrences": 0,
+    "institution_name_occurrences": 0,
+    "employment_role_phrase_occurrences": 0
+  },
+  "source_files_modified": true,
+  "export_kind": "curated_privacy_sanitized_derivative",
+  "source_changed_count": 3,
+  "build_exit_code": 0,
+  "authentication_route_privacy_assertions": 115,
+  "mocked_storage_assertions": 344,
+  "frozen_rejected_batch_retried": false
+}

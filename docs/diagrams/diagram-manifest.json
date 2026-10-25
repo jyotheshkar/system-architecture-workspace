@@ -1,0 +1,74 @@
+{
+  "schema_version": "1.0.0",
+  "project": "system-architecture-workspace",
+  "source_product": "System Architecture Workspace",
+  "source_site_version": 81,
+  "source_commit_sha": "4f583cb90bff726eada9a180a0eeba4118981a73",
+  "source_commit_at": "2026-10-24T13:40:20Z",
+  "publication_status": "prepared_for_publication",
+  "publication_url": null,
+  "library_binary_downloaded": false,
+  "runtime_claim": "Authored reference/target designs. AWS deployment and runtime validation pending.",
+  "review": {
+    "diagram_pixels": "Five selected PNGs inspected. No candidate records, actual credentials or private endpoints observed.",
+    "selected_svg_markup": "Current case-study SVGs contain no script, event handlers, hrefs or foreignObject elements.",
+    "editable_drawio": "Parsed successfully: eight pages; enterprise reference, distinct from current scoped case study.",
+    "source_integrity": "Each copied file SHA-256 matches source-file-allowlist and the final copied bytes.",
+    "sensitive_text": "Targeted private-URL/credential scan and text review passed for selected textual assets.",
+    "scope": "This review concerns the selected files, not all source history or operational cloud security."
+  },
+  "files": [
+    {
+      "project": "system-architecture-workspace",
+      "source_path": "dist/case-studies/workspace.png",
+      "export_path": "System-Architecture-Workspace-AWS-Target.png",
+      "role": "current_scoped_aws_target",
+      "maturity": "AWS migration target; current implemented hosting is separate Worker/browser prototype.",
+      "source_commit_sha": "4f583cb90bff726eada9a180a0eeba4118981a73",
+      "git_blob_sha": "d13bdb8f4ee19599ceebfcc71378652aa6ba2131",
+      "sha256": "73309157adeb7f292459d1db5517b0cf2ab283bc5f2dc44c37966021cc03b6c4",
+      "bytes": 1379695,
+      "unchanged_source_bytes": true,
+      "visual_review": "Diagram pixels reviewed; no candidate records, credentials or private endpoints visible."
+    },
+    {
+      "project": "system-architecture-workspace",
+      "source_path": "dist/case-studies/workspace.svg",
+      "export_path": "System-Architecture-Workspace-AWS-Target.svg",
+      "role": "current_scoped_aws_target",
+      "maturity": "Editable vector design; no automatic provisioning or AWS runtime proof.",
+      "source_commit_sha": "4f583cb90bff726eada9a180a0eeba4118981a73",
+      "git_blob_sha": "55bccb164bf9153d6bb1d5ae2d8d48e7b2e9d884",
+      "sha256": "3a3eef682dae310800eb2227139f0eeff4fbe0e040fb75f695e261833ca26bd9",
+      "bytes": 21095,
+      "unchanged_source_bytes": true,
+      "visual_review": "Text/markup reviewed; no private repository URL or credential pattern found."
+    },
+    {
+      "project": "system-architecture-workspace",
+      "source_path": "dist/case-studies/workspace-case-study.md",
+      "export_path": "System-Architecture-Workspace-AWS-Case-Study.md",
+      "role": "current_case_study",
+      "maturity": "Authored architecture decisions and six-pillar evidence obligations.",
+      "source_commit_sha": "4f583cb90bff726eada9a180a0eeba4118981a73",
+      "git_blob_sha": "186dff3dc926de09d0548c9a5f258cbc3d7e89e2",
+      "sha256": "8690eecf073b090b6d7732c3807706f88f37c0e5b2723f4cc1be3353836cb73a",
+      "bytes": 9079,
+      "unchanged_source_bytes": true,
+      "visual_review": "Text/markup reviewed; no private repository URL or credential pattern found."
+    },
+    {
+      "project": "system-architecture-workspace",
+      "source_path": "dist/case-studies/case-studies.json",
+      "export_path": "Case-Study-Source-Data.json",
+      "role": "authored_shared_case_study_data",
+      "maturity": "Versioned authored source data for both case studies; not measured production telemetry.",
+      "source_commit_sha": "4f583cb90bff726eada9a180a0eeba4118981a73",
+      "git_blob_sha": "2a9655ef542121ef1d911ecb6dce986f3c0d1b14",
+      "sha256": "05e392d349a904eca03360b1147a9cd771baed70b7e8aa1fc76a13d1c0148570",
+      "bytes": 26713,
+      "unchanged_source_bytes": true,
+      "visual_review": "Text/markup reviewed; no private repository URL or credential pattern found."
+    }
+  ]
+}

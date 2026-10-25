@@ -1,0 +1,19 @@
+{
+  "sourceDigest": "6a00568419c9d4fd2d4ceccac30fe0b6b45737aabb78ba00210609f095fa97af",
+  "sourceCapabilities": 35,
+  "sourceInterfaces": 68,
+  "mappingResponsibilitiesAuthoritiesRulesUnchanged": true,
+  "allInterfaceFieldsUnchanged": true,
+  "files": [
+    "Official-AWS-References.md",
+    "Enterprise-Architecture-Review.md",
+    "Architecture-Decision-Records.md",
+    "Enterprise-Architecture-Decisions.md",
+    "Security-and-Operations.md",
+    "Architecture-to-AWS-Mapping.md",
+    "Connection-Register.md",
+    "Solutions-Architect-Study-Guide.md",
+    "Connection-Register.csv"
+  ],
+  "verificationScope": "Document/source fidelity only. No AWS deployment/runtime/security/capacity test claims."
+}

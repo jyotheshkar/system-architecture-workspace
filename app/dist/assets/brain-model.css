@@ -1,0 +1,32 @@
+/* A compact, transparent 3D Brain concept view using the current page data. */
+#websiteViewport .brainModelHost{position:absolute;inset:0;pointer-events:none;background:transparent!important;overflow:hidden;isolation:isolate}
+#websiteViewport .brainModelHost[hidden]{display:none!important}
+#websiteViewport .brainModelCanvas,#websiteViewport .brainModelEdges,#websiteViewport .brainModelLeaders,#websiteViewport .brainModelLabels{position:absolute;inset:0;width:100%;height:100%;background:transparent!important}
+.brainModelCanvas{pointer-events:none}.brainModelEdges{overflow:visible;pointer-events:none}.brainModelEdges path{fill:none;stroke:transparent;stroke-width:14;pointer-events:stroke;cursor:pointer;outline:none}
+.brainModelEdges path:focus-visible{stroke:#f3f4f6;stroke-width:1.4;filter:drop-shadow(0 0 2px #fff8)}
+.brainModelFallback .brainModelEdges path{stroke:#8c929a;stroke-width:1;opacity:.42}.brainModelFallback .brainModelEdges path.isRelated{stroke:#fff;opacity:1;stroke-width:1.5}.brainModelFallback .brainModelEdges path.isDashed{stroke-dasharray:4 4}
+.brainModelLeaders{pointer-events:none}.brainModelLeaders line{stroke:#939aa3;stroke-width:.65;opacity:.32}.brainModelLeaders line.isSelected{stroke:#e8edf1;opacity:.68}.brainModelLabels{pointer-events:none}
+html#ac-sky-root body#ac-transparent-workspace #websiteViewport .brainModelNode{position:absolute;display:flex;justify-content:center;align-items:center;gap:7px;width:var(--brain-node-width,34px)!important;min-width:var(--brain-node-width,34px)!important;max-width:var(--brain-node-width,34px)!important;height:34px!important;min-height:34px!important;max-height:34px!important;margin:0;padding:0!important;border:1px solid #c2c8d36b;border-radius:50%;background:transparent!important;box-shadow:none!important;color:#d9dee4;transform:translate(-50%,-50%)!important;transition:border-color .15s,color .15s,background-color .15s;pointer-events:auto;cursor:pointer;overflow:visible;font-family:inherit;font-size:11px;font-weight:500;line-height:1.2}
+html#ac-sky-root body#ac-transparent-workspace #websiteViewport .brainModelNode.isEndpoint{border-radius:7px;padding:4px 7px!important}
+html#ac-sky-root body#ac-transparent-workspace #websiteViewport .brainModelNode:hover,html#ac-sky-root body#ac-transparent-workspace #websiteViewport .brainModelNode.isConnected{border-color:#dee5ecad}
+html#ac-sky-root body#ac-transparent-workspace #websiteViewport .brainModelNode.isSelected{background:#f5f5f5!important;border-color:#f5f5f5;color:#111}
+html#ac-sky-root body#ac-transparent-workspace #websiteViewport .brainModelNode.isDestination{animation:brainDestinationPulse 1.45s ease-in-out infinite}
+html#ac-sky-root body#ac-transparent-workspace #websiteViewport .brainModelNode:focus-visible{outline:2px solid #f4f6f8;outline-offset:3px}
+html#ac-sky-root body#ac-transparent-workspace #websiteViewport .brainModelNode[hidden]{display:none!important}
+.brainModelGlyph{display:grid;place-items:center;flex:0 0 15px;width:15px;height:15px;color:var(--brain-color,#a4a9b1)}.brainModelGlyph svg{width:15px;height:15px;display:block}.brainModelNode.isSelected .brainModelGlyph{color:#242a30}.brainModelEndpointName{display:block;max-width:78px;font-size:10px;line-height:1.2;text-align:center;overflow-wrap:normal}
+.brainModelCaption{position:absolute;display:block;transform:translate(-50%,-50%);padding:5px 7px;border:0;background:transparent!important;color:#edf2f5;font-size:11px;font-weight:500;line-height:1.4;text-align:center;pointer-events:none;text-shadow:0 1px 3px #000,0 0 6px #000;overflow-wrap:anywhere;white-space:normal}
+.brainModelCaption[hidden]{display:none!important}.hideBrainNames .brainModelEndpointName{display:none}.hideBrainNames .brainModelNode.isEndpoint{border-radius:50%!important;padding:0!important}
+.brainModelSerial{position:absolute;left:50%;bottom:-14px;transform:translateX(-50%);font-size:9px;font-weight:500;line-height:1;color:#e0e4e9;pointer-events:none;text-shadow:0 1px 3px #000,0 0 6px #000}
+.brainModelNode.isSelected .brainModelSerial{color:#fff}.brainModelNode.isEndpoint .brainModelSerial{left:6px;top:4px;bottom:auto;transform:none;font-size:8px}.brainModelNode.isEndpoint.isSelected .brainModelSerial{color:#222;text-shadow:none}
+.brainModelEdgeSerial{fill:#fff;font-family:inherit;font-size:10px;font-weight:500;text-anchor:middle;dominant-baseline:middle;paint-order:stroke;stroke:#000;stroke-width:3px;stroke-linejoin:round;pointer-events:none}
+@keyframes brainDestinationPulse{0%,100%{border-color:#858a92}50%{border-color:#fff}}
+@media(prefers-reduced-motion:reduce){html#ac-sky-root body#ac-transparent-workspace #websiteViewport .brainModelNode{transition:none}html#ac-sky-root body#ac-transparent-workspace #websiteViewport .brainModelNode.isDestination{animation:none;border-color:#fff}}
+/* The Node 01 customer model makes every responsibility readable at rest.
+   The label follows its real 3D point; orbit still reveals branch depth. */
+html#ac-sky-root body#ac-transparent-workspace #websiteViewport .isCustomerBrain .brainModelNode.isNamedComponent{height:var(--brain-node-height,44px)!important;min-height:var(--brain-node-height,44px)!important;max-height:var(--brain-node-height,44px)!important;border-radius:8px;padding:11px 7px 6px!important;gap:6px}
+.isCustomerBrain .brainModelNode .brainModelEndpointName{font-size:10px;max-width:83px;line-height:1.25;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;max-height:25px;overflow-wrap:normal;text-align:left}
+.isCustomerBrain .brainModelNode .brainModelGlyph{width:14px;height:14px;flex-basis:14px}
+.isCustomerBrain .brainModelNode .brainModelGlyph svg{width:14px;height:14px}
+.isCustomerBrain .brainModelNode .brainModelSerial{left:7px;top:4px;bottom:auto;transform:none;font-size:8px;color:#c5cbd2}
+.isCustomerBrain .brainModelNode.isSelected .brainModelSerial{color:#252a30;text-shadow:none}
+.isCustomerBrain .brainModelNode[data-site-node=n01-node02]{border-style:dashed}

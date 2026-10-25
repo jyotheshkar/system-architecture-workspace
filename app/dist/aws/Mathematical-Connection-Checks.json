@@ -1,0 +1,171 @@
+{
+  "status": "PASS",
+  "scope": "Finite local graph and guard model checks. No cloud/runtime/security/business correctness proof.",
+  "counts": {
+    "structure": 70,
+    "moduleConfigurations": 32,
+    "scenarios": 21,
+    "gateConjunctions": 128,
+    "subjectBindingCases": 24,
+    "planCases": 10,
+    "sequenceCases": 17
+  },
+  "total": 302,
+  "modelSha256": "241dddff316f9102d159554e06155b8aa1894dffcc9a86e0317f1b1e540136ef",
+  "source": {
+    "path": "dist/aws/architecture-data.json#blueprint",
+    "nodeCount": 35,
+    "edgeCount": 68,
+    "canonicalSha256": "6330672c8c016a305c320ca92ee460666cf4fef0e357c2b707d1f76da8959070",
+    "canonicalization": "UTF-8 JSON; sorted keys; no whitespace; ASCII-escaped strings"
+  },
+  "scenarioResults": [
+    {
+      "id": "valid",
+      "title": "Current evidence and all gates pass",
+      "stage": "release",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "stale-approval",
+      "title": "Contract changed after approval",
+      "stage": "execution",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "revoked-approval",
+      "title": "Approval was revoked",
+      "stage": "release",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "expired-approval",
+      "title": "Approval expired at the exact deadline",
+      "stage": "execution",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "plan-cycle",
+      "title": "Task dependencies contain a cycle",
+      "stage": "planning",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "pic-gap",
+      "title": "A required inherited pattern is missing",
+      "stage": "specialisation",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "capability-gap",
+      "title": "The selected capability is unqualified",
+      "stage": "execution",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "stale-dependency",
+      "title": "An accepted dependency was replaced",
+      "stage": "execution",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "budget-overrun",
+      "title": "Concurrent reservations would exceed the budget",
+      "stage": "execution",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "stale-attempt",
+      "title": "A late worker presents an old fence",
+      "stage": "acceptance",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "wrong-artifact",
+      "title": "The report describes different artifact bytes",
+      "stage": "acceptance",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "wrong-task-report",
+      "title": "A passing report belongs to another task",
+      "stage": "acceptance",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "report-digest-distinct",
+      "title": "Artifact and report have different valid hashes",
+      "stage": "acceptance",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "missing-owner",
+      "title": "Independent owner acceptance is missing",
+      "stage": "acceptance",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "unknown-effect",
+      "title": "An external effect is unresolved",
+      "stage": "acceptance",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "no-core-commit",
+      "title": "The verifier passed but Core did not commit acceptance",
+      "stage": "integration",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "incomplete-manifest",
+      "title": "An accepted component is missing from the integrated package",
+      "stage": "integration",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "stale-final",
+      "title": "The package changed after final validation",
+      "stage": "release",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "no-release-authority",
+      "title": "Tests pass but release authority is absent",
+      "stage": "release",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "unknown-delivery",
+      "title": "The destination receipt is unknown",
+      "stage": "delivery",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "wrong-destination",
+      "title": "The receipt comes from a different destination",
+      "stage": "delivery",
+      "expected": false,
+      "observed": false
+    }
+  ]
+}

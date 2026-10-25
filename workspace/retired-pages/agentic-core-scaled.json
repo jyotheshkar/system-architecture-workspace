@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "coreVersion": "agentic-core-reference-v1",
+  "id": "agentic-core-scaled",
+  "name": "Agentic Core Scaled",
+  "description": "The complete Agentic Core reference, with memory, learning, tools, recovery and specialists.",
+  "view": "reference",
+  "modules": [
+    "memory",
+    "learning",
+    "tools",
+    "recovery",
+    "specialists"
+  ],
+  "sections": [],
+  "updatedAt": "2026-10-10T12:32:42.702Z"
+}

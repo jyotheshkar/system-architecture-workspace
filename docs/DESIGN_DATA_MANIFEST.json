@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.0.0",
+  "scope": "design_data_and_export_docs_only",
+  "source_repository_id": "1413161174",
+  "source_commit_sha": "dacd1ad369be24d5d0d8536ee10ed075e61feb23",
+  "excluded_separate_directory": "app/",
+  "files": [
+    {
+      "path": "README.md",
+      "size_bytes": 4287,
+      "sha256": "81aa50951c4dcd311a4fbd56ef0f6d29fb85ea5a7f746fe78648db0a9bb40d6a"
+    },
+    {
+      "path": "docs/PROVENANCE.md",
+      "size_bytes": 3360,
+      "sha256": "5bdbce5051d8543be0a406fec51856949e7c2c65db4c19470fa98a28ee8502cc"
+    },
+    {
+      "path": "docs/SOURCE_INDEX.json",
+      "size_bytes": 3515,
+      "sha256": "7540a76509a3e331cb41230dae7344c8aded94f0ef95304eb1af03b6bc2c3819"
+    },
+    {
+      "path": "scripts/validate_design_export.py",
+      "size_bytes": 7321,
+      "sha256": "ece12cb715adfb39e5b749e0ed40e9812e5c2f3f9b356b5c76abf5556be7aa8f"
+    },
+    {
+      "path": "workspace/core-reference.json",
+      "size_bytes": 307414,
+      "sha256": "a47c4fc0731089e8d0ac6b9958b206232da9aec3b8d0c2dffcd2aa50bc781728"
+    },
+    {
+      "path": "workspace/foundation-reference.json",
+      "size_bytes": 111303,
+      "sha256": "6a66a4e15539e4a619bb0a3b8d6284278aeaa0f2d86dfacb5bd3594637ef6c55"
+    },
+    {
+      "path": "workspace/pages/agentic-core.json",
+      "size_bytes": 409,
+      "sha256": "33ae521ad285e1250079456265b3cbf0cd7f000da68abb0857084973bdb1d462"
+    },
+    {
+      "path": "workspace/pages/system-architecture-workspace-1-0.json",
+      "size_bytes": 508,
+      "sha256": "e071cd8b3cfcd2b2df3849c45e3cf75fddf35d9cc9928a9a6074d65ceb712a08"
+    },
+    {
+      "path": "workspace/retired-pages/agentic-core-scaled.json",
+      "size_bytes": 429,
+      "sha256": "d718c1e3c584817c2aaebb04300e8ca2f80014bb310ead817902872822adf15a"
+    },
+    {
+      "path": "workspace/website-reference.json",
+      "size_bytes": 89066,
+      "sha256": "60f210575b4d3dd234114b14b6ba0b154b84f008f2e321ea3d358545ad0e9cb5"
+    }
+  ]
+}

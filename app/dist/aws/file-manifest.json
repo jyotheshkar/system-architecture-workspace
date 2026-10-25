@@ -1,0 +1,255 @@
+{
+  "sourceDigest": "6a00568419c9d4fd2d4ceccac30fe0b6b45737aabb78ba00210609f095fa97af",
+  "files": [
+    {
+      "path": "aws/Agentic-Core-AWS-Architecture.drawio",
+      "sha256": "799fb0cdcf71f689b164960520445446bed3783d0f13badd79b1e1b563e0ca75",
+      "bytes": 989523
+    },
+    {
+      "path": "aws/Agentic-Core-AWS-Architecture.png",
+      "sha256": "e192fb04c83f049141aa471ee09ca4e96e3b3ba07b433e08447be143a9de670e",
+      "bytes": 3493467
+    },
+    {
+      "path": "aws/Architecture-Decision-Records.md",
+      "sha256": "70c6008e7072991d9f997ca07daae05b3bff4131eb5c1f484838b614b2dc0f3a",
+      "bytes": 21866
+    },
+    {
+      "path": "aws/Architecture-to-AWS-Mapping.md",
+      "sha256": "bef61e4c6173d7263c5d116fa2f8573aaaae3d48603289952ab4a6450ffd51a5",
+      "bytes": 74404
+    },
+    {
+      "path": "aws/Connection-Register.csv",
+      "sha256": "1ef9cdad7cf2af9183341995a55abc342a663ff8e110f2c8938f82592955c27a",
+      "bytes": 75800
+    },
+    {
+      "path": "aws/Connection-Register.md",
+      "sha256": "5b2e5c6305cdfd5f44e13dc98170d45723ece1bf19a0a61bfbc4eecc5a489f10",
+      "bytes": 106659
+    },
+    {
+      "path": "aws/Deployment-Communication.md",
+      "sha256": "8c9fed9a5446a374f477bba56fc9878a0e9f3930f4b1737f3456a5cafa32b536",
+      "bytes": 3467
+    },
+    {
+      "path": "aws/Deployment-Communication.png",
+      "sha256": "8cae0e56ed2073b77154be40a21244c70885c8a89006c98afd4328ffb38ba00b",
+      "bytes": 3445963
+    },
+    {
+      "path": "aws/Deployment-Communication.svg",
+      "sha256": "1cae64158136980228b90f91b4165da7713ae1489e4e997bc5584ca2050cb98c",
+      "bytes": 298990
+    },
+    {
+      "path": "aws/Enterprise-Architecture-Decisions.md",
+      "sha256": "70c6008e7072991d9f997ca07daae05b3bff4131eb5c1f484838b614b2dc0f3a",
+      "bytes": 21866
+    },
+    {
+      "path": "aws/Enterprise-Architecture-Review.md",
+      "sha256": "656e6b1a0f4ff8494806f57356a414e28dec6065348db0fdeaf303baf625b997",
+      "bytes": 4190
+    },
+    {
+      "path": "aws/Official-AWS-References.md",
+      "sha256": "99b2abc2f5c41ab4e68b36f5b7e42042f3a8b0c5e54b52e9c137104c96a5177c",
+      "bytes": 9127
+    },
+    {
+      "path": "aws/README.md",
+      "sha256": "101f9b3038ceec9a2a1c7b1b65ee978814aa601202369f5dd21d2f128873db86",
+      "bytes": 1994
+    },
+    {
+      "path": "aws/Security-and-Operations.md",
+      "sha256": "3ded5fc97d154ff5f236b75e135008198ad39f0055446af03eaae3aad0365e9a",
+      "bytes": 18171
+    },
+    {
+      "path": "aws/Solutions-Architect-Study-Guide.md",
+      "sha256": "1836bbb6c59adc30a5d44eb97cdf22bbaa5c9feac8013fa8695c4e41c8fa5e96",
+      "bytes": 13081
+    },
+    {
+      "path": "aws/Verification-Report.md",
+      "sha256": "61da455872a1c9e39749bc8621cab092d798d0712ba48b79aa6a3a7e7edc8d63",
+      "bytes": 3144
+    },
+    {
+      "path": "aws/architecture-data.json",
+      "sha256": "132bd96e4caaef3736ba4374bd43f806c841cf72e7a49befa1ffb75cbb60e728",
+      "bytes": 1586187
+    },
+    {
+      "path": "aws/doc-source-checks.json",
+      "sha256": "aeeca12f2ab64222dbfb56d74be2e161634c82b7899de750cb458f20f6b6cf5a",
+      "bytes": 726
+    },
+    {
+      "path": "aws/enterprise-topology.json",
+      "sha256": "17c4befa643bff2b9161fb57be38759a41850363854b5568908fedbced8139e2",
+      "bytes": 580860
+    },
+    {
+      "path": "aws/enterprise.svg",
+      "sha256": "8aac39c1935317a5496f2a9f1384e0e8503324acafd0cf41dd60d20eea3b615b",
+      "bytes": 338332
+    },
+    {
+      "path": "aws/icons/Arch_AWS-AppConfig_64.svg",
+      "sha256": "dbef86715f0afbf8db1fb42ebd31659f7b8da0ef6bb8179102232ded1f693cb1",
+      "bytes": 4133
+    },
+    {
+      "path": "aws/icons/Arch_AWS-CloudTrail_64.svg",
+      "sha256": "dc0aad2b867b66b3903536b4231a8201d7408fd00ba191e278081b4c7b23f5dc",
+      "bytes": 2303
+    },
+    {
+      "path": "aws/icons/Arch_AWS-Fargate_64.svg",
+      "sha256": "5dd8379abb912f190c0770036ebe6e74cd869a5a56c74bf89890464f3146e99a",
+      "bytes": 3012
+    },
+    {
+      "path": "aws/icons/Arch_AWS-Identity-and-Access-Management_64.svg",
+      "sha256": "33710f6a1888d1c37033c71e152a64608f968001d669763ce75f06fc67544328",
+      "bytes": 2036
+    },
+    {
+      "path": "aws/icons/Arch_AWS-Key-Management-Service_64.svg",
+      "sha256": "461b37532d2f8f352b5ad021454092baa1841ae46fa2bf9b71f6f43b389074b6",
+      "bytes": 5342
+    },
+    {
+      "path": "aws/icons/Arch_AWS-Lambda_64.svg",
+      "sha256": "ad03b64659a382d0fb4634a5b575c94fed6c99fcf31caa80460f4fd4dba21539",
+      "bytes": 1819
+    },
+    {
+      "path": "aws/icons/Arch_AWS-Secrets-Manager_64.svg",
+      "sha256": "494928b8a40b843ac0c929409630e27aa8679218bf2fea6e20ae953dbe2c7d7a",
+      "bytes": 2940
+    },
+    {
+      "path": "aws/icons/Arch_AWS-Step-Functions_64.svg",
+      "sha256": "cddfb5bd7fb1b91d4954ea4f6e4567c1aff9cacfa21ad9ce1765353162ebc33c",
+      "bytes": 2049
+    },
+    {
+      "path": "aws/icons/Arch_AWS-WAF_64.svg",
+      "sha256": "9788f7997c639e26cba9dc50187f3fcb784193459a7b4c3f66830b4b857a8ca8",
+      "bytes": 3730
+    },
+    {
+      "path": "aws/icons/Arch_Amazon-API-Gateway_64.svg",
+      "sha256": "1eccde62f0f567c5385702f36316c026db5d0d70e0fdf05b553c47331cf98556",
+      "bytes": 1925
+    },
+    {
+      "path": "aws/icons/Arch_Amazon-Bedrock-AgentCore_64.svg",
+      "sha256": "f3bbaacac68e8ae094c805347324dc3e88369efdd37d54db4e645f932533d5f5",
+      "bytes": 2968
+    },
+    {
+      "path": "aws/icons/Arch_Amazon-Bedrock_64.svg",
+      "sha256": "a82353e3d646078ec17e462cf86f88d3b0f202fe8230fe2458e89cb19f4fa405",
+      "bytes": 4277
+    },
+    {
+      "path": "aws/icons/Arch_Amazon-CloudWatch_64.svg",
+      "sha256": "4aa931c50bf99d40cd285532a8e03f5dc8ec268ac51a3edfe29a652c4b29eef2",
+      "bytes": 4301
+    },
+    {
+      "path": "aws/icons/Arch_Amazon-Cognito_64.svg",
+      "sha256": "b99da7dd0e0083b68a2f892079e6f9c46655274c4ee7cf1f776c297188d0fd2d",
+      "bytes": 4944
+    },
+    {
+      "path": "aws/icons/Arch_Amazon-DynamoDB_64.svg",
+      "sha256": "fe4783ced8ac81d14d8314d67886231f1d9516c4c0abaf623eee74936336f93d",
+      "bytes": 6025
+    },
+    {
+      "path": "aws/icons/Arch_Amazon-Elastic-Container-Registry_64.svg",
+      "sha256": "a9d6ae724d8d5a136885f2c6fce90709fed973186aa6a8ea555a99c1acacf4ee",
+      "bytes": 2518
+    },
+    {
+      "path": "aws/icons/Arch_Amazon-Simple-Queue-Service_64.svg",
+      "sha256": "eb094d1d89a3a298522614eaed37c4b29fa42095792a2005fca7af75f28a74df",
+      "bytes": 6065
+    },
+    {
+      "path": "aws/icons/Arch_Amazon-Simple-Storage-Service_64.svg",
+      "sha256": "3b04a3cba3d8b426038b2380b275a3f7601d3a8c50d91b52680b61a977c5c309",
+      "bytes": 2021
+    },
+    {
+      "path": "aws/icons/Arch_Amazon-Virtual-Private-Cloud_64.svg",
+      "sha256": "a3e8dcc25077cbf8ffcefc3c03e96b822b1649cc2d10e428392c5dc3904a8ca5",
+      "bytes": 3574
+    },
+    {
+      "path": "aws/index.html",
+      "sha256": "842699992328980d646000dc52db4cf792d18392dfac4cc67de3a7ade938067c",
+      "bytes": 263
+    },
+    {
+      "path": "aws/interaction-checks.json",
+      "sha256": "8714dec8ef576595c20c970cca3e3a25eeb906f40560f0429cc507f74488947f",
+      "bytes": 210
+    },
+    {
+      "path": "aws/learning.svg",
+      "sha256": "c2be6bcd883295c465d4e119ea13471622d93d6fa53011a528bdc0d9f71f2cc5",
+      "bytes": 43160
+    },
+    {
+      "path": "aws/main.svg",
+      "sha256": "8aac39c1935317a5496f2a9f1384e0e8503324acafd0cf41dd60d20eea3b615b",
+      "bytes": 338332
+    },
+    {
+      "path": "aws/memory.svg",
+      "sha256": "11d6109ba6756aad2970a998443057c80b8d45d460bc1d748c4bad6be95be945",
+      "bytes": 45212
+    },
+    {
+      "path": "aws/pic.svg",
+      "sha256": "c8ebffe2c20ac8c1f3e13440af0e24c169c3c9db6a0eb9c9dabb9f374e6b1863",
+      "bytes": 50147
+    },
+    {
+      "path": "aws/recovery.svg",
+      "sha256": "a70e549a1744611f6aac4026f0345278ab42e76563cfe77b6fdf7e5ce8ab2544",
+      "bytes": 51159
+    },
+    {
+      "path": "aws/security.svg",
+      "sha256": "8aac39c1935317a5496f2a9f1384e0e8503324acafd0cf41dd60d20eea3b615b",
+      "bytes": 338332
+    },
+    {
+      "path": "aws/specialists.svg",
+      "sha256": "3c2e5bd8b6a09cce558e660d9c1d6070894141fc117620251fdc3f57807c49e6",
+      "bytes": 56264
+    },
+    {
+      "path": "aws/tools.svg",
+      "sha256": "a031b6c5c584fbd2c0348887b0cd39299cb341dafffef1436d16a9d6105be0de",
+      "bytes": 56595
+    },
+    {
+      "path": "aws/verification.json",
+      "sha256": "af798394aab56291d178e316eda157939a5a31a610fba821ef4d444fad47a358",
+      "bytes": 23481
+    }
+  ]
+}

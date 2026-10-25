@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "coreVersion": "agentic-core-reference-v1",
+  "id": "agentic-core",
+  "name": "Agentic Core",
+  "description": "A focused User-to-MOA foundation: Contract Engine, Core Controller, Workflow Builder and Verifier, with inherited PIC controls and a guarded workflow-package handoff.",
+  "view": "reference",
+  "modules": [],
+  "sections": [],
+  "updatedAt": "2026-10-10T16:47:34.516Z"
+}

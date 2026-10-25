@@ -1,0 +1,57 @@
+{
+  "verified_date_utc": "2026-10-25",
+  "node_version": "24.14.0",
+  "source_commit": "4f583cb90bff726eada9a180a0eeba4118981a73",
+  "tested_runtime_files_match_public_allowlist": true,
+  "tests": [
+    {
+      "command": "node worker/build.mjs",
+      "exit_code": 0,
+      "output": "Worker built: 145 embedded resources; 2 private archive files.",
+      "meaning": "Two large image references in the generated Worker; no production storage was read or written."
+    },
+    {
+      "command": "node worker/test.mjs",
+      "exit_code": 0,
+      "output": "Authentication checks passed: 108.",
+      "scope": "Local mocked authentication assertions."
+    },
+    {
+      "command": "node worker/test-workspace-store.mjs",
+      "exit_code": 0,
+      "output": "Private GitHub workspace storage checks passed: 344.",
+      "scope": "Mocked GitHub transport and in-memory storage; no live GitHub writes."
+    }
+  ],
+  "not_verified": [
+    "Browser interactions",
+    "Production runtime bindings/secret configuration",
+    "AWS deployment",
+    "Full source history",
+    "Original omitted ZIP download"
+  ],
+  "generated_bundle_exported": false,
+  "planning_document_omission": "WORKSPACE-PRODUCT.md omitted from final public subset; tested runtime source files remain byte-identical.",
+  "privacy_repair_verification": {
+    "date": "2026-10-25",
+    "build": {
+      "command": "node worker/build.mjs",
+      "exit_code": 0,
+      "embedded_resources": 145,
+      "external_image_references": 2
+    },
+    "authentication_routes_privacy": {
+      "command": "node worker/test.mjs",
+      "exit_code": 0,
+      "assertion_count": 115
+    },
+    "mocked_workspace_store": {
+      "command": "node worker/test-workspace-store.mjs",
+      "exit_code": 0,
+      "assertion_count": 344
+    },
+    "external_api_calls": false,
+    "deployment_performed": false,
+    "source_scope": "Curated privacy-sanitized v81 derivative. Existing authentication and storage tests retained; new privacy absence regressions added."
+  }
+}

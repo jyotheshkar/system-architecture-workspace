@@ -1,0 +1,621 @@
+{
+  "status": "Independent enterprise architecture review; proposed reference design, not an AWS deployment",
+  "reviewDate": "2026-10-06",
+  "source": "blueprint-current.json: 35 capabilities, 68 typed interfaces, five optional modules; latest-source/dist/aws study guide and ADRs reviewed",
+  "costs": "Excluded",
+  "executiveNarrative": "Agentic Core researches how an approved business requirement can become an inspectable, governed MOA workflow package. AWS supplies identity, orchestration, model execution, isolated job compute and storage. Custom AC software retains deterministic plan admission, PIC trace compilation, accountable acceptance and exact release authority. Enterprise isolation reduces the blast radius of model-assisted construction and separates the people/services that propose, construct, verify and release. The generated product has a separate operating authority and deployment lifecycle; successful engineering does not automatically authorise its domain actions.",
+  "architectureChoice": "One authoritative AWS Region, multiple workload accounts, private task networks across at least two AZs, regional managed services outside customer VPC boundaries, and a same-account completion/approval broker in the Engineering Control account. Add measured DR later; do not draw active-active control or assume service replicas preserve application authority.",
+  "nestedBoundaryPrinciples": [
+    "AWS Organization contains foundation and workload account boundaries. Management/landing-zone administration contains no application workloads.",
+    "Account contains its regional resources and a separate global-authority annotation. IAM/Organizations/Control Tower are global or organization control facets, not services hosted in an AZ subnet.",
+    "Each chosen Region contains regional managed-service resources and customer VPC networks as siblings. Step Functions, DynamoDB, S3, Bedrock, AgentCore, API Gateway, Cognito, ECR and CloudWatch are not drawn as application servers inside customer subnets.",
+    "Customer VPC contains AZ A/private job subnet and AZ B/private job subnet. Separate Fargate tasks have task ENIs there. Availability placements describe a pool/relaunch strategy; a single task is not simultaneously present in two AZs.",
+    "PrivateLink endpoint ENIs are inside customer subnets and connect to managed-service APIs outside the VPC. S3/DynamoDB gateway endpoints are route-table access paths, not S3/DynamoDB servers inside the VPC.",
+    "AgentCore Runtime VPC connectivity creates customer ENIs for access to private resources. Keep the managed Runtime service outside the VPC and draw a network attachment to those ENIs; do not imply the customer operates its host infrastructure.",
+    "The external stakeholder and external SaaS/on-premises/consumer systems sit outside the Engineering Control trust boundary. Delivered MOA Workflow lives in a separate target account or explicitly external destination.",
+    "Trust, deployment, service ownership and semantic module boundaries are different facets. Use clearly named nested deployment boxes and separate optional-module shading; a Memory boundary is not an AWS network boundary."
+  ],
+  "accounts": [
+    {
+      "id": "foundation-management",
+      "name": "Organization management / landing zone",
+      "purpose": "Account provisioning and organization controls only",
+      "sourceNodes": [],
+      "controls": "No AC workload in management account. SCPs set limits for member identities, do not grant permission and do not constrain management-account or service-linked-role actions."
+    },
+    {
+      "id": "foundation-security",
+      "name": "Security tooling / audit account",
+      "purpose": "Read-only investigation, security monitoring and controlled response",
+      "sourceNodes": [],
+      "controls": "Security roles are distinct from business approval and release authority. Any break-glass remediation is separately authorised, logged and reconciled; do not claim administrators are unable to compromise the system."
+    },
+    {
+      "id": "foundation-logs",
+      "name": "Log Archive account",
+      "purpose": "Central audit/operational log copies",
+      "sourceNodes": [],
+      "controls": "Restricted writers/readers, S3 ownership policy, selected organization CloudTrail/data-event coverage, encryption and explicit retention. Audit logs are not task acceptance evidence. Keep application workers out of this account."
+    },
+    {
+      "id": "platform-deployments",
+      "name": "Platform engineering / deployment account",
+      "purpose": "Reviewed IaC and code pipeline for the AC service itself and qualified shared catalog artifacts",
+      "sourceNodes": [],
+      "controls": "Repository commit review; separate deployment and approval identities; scoped cross-account CloudFormation roles; no runtime approval/acceptance writes. Provisioning privileged control infrastructure is a distinct trusted operations boundary. This account is not the Organization management account."
+    },
+    {
+      "id": "control",
+      "name": "Engineering Control account",
+      "purpose": "Authoritative contract/run ledger, deterministic guards, qualified planning, PIC, registries, release and mediated integrations",
+      "sourceNodes": [
+        "contract",
+        "core",
+        "plan",
+        "pic",
+        "cap",
+        "release",
+        "mem",
+        "store",
+        "scope",
+        "retrieve",
+        "checkpoint",
+        "outcomes",
+        "candidate",
+        "promote",
+        "versions",
+        "rollback",
+        "need",
+        "adapters",
+        "boundary",
+        "gateway",
+        "effect",
+        "queue",
+        "leases",
+        "retry",
+        "observe",
+        "domain"
+      ],
+      "controls": "Core is sole run-phase writer. Separate proposer, admission, evidence-ingest, release, credential and policy-admin roles. Planning/Domain/Candidate Runtime sessions may propose only. All exact ledger transactions stay in this account/Region. Optional semantic modules do not widen authority."
+    },
+    {
+      "id": "build",
+      "name": "Construction / Execution account",
+      "purpose": "Bounded model-assisted work, qualified image jobs and candidate composition",
+      "sourceNodes": [
+        "exec",
+        "integrate",
+        "construct"
+      ],
+      "controls": "Separate private tasks across two AZ subnets. No final acceptance, release, approval or target credential rights. Exact candidate artifacts have restricted namespaces. Generated/hostile code needs its own threat assessment before admission."
+    },
+    {
+      "id": "assurance",
+      "name": "Independent Assurance account",
+      "purpose": "Task verification, final whole-system validation, held-out evaluation and risk assurance",
+      "sourceNodes": [
+        "verify",
+        "final",
+        "evaluate",
+        "assure"
+      ],
+      "controls": "Separate account, task definitions, IAM roles and workspaces from builders. Read exact candidates, write evidence only. Final asymmetric attestation signing key belongs to a separately scoped validator role; no right to alter candidate bytes or publish the MOA product."
+    },
+    {
+      "id": "consumer",
+      "name": "MOA Workflow target account / external destination",
+      "purpose": "Receive and, under separate authority, deploy/run the generated domain workflow",
+      "sourceNodes": [
+        "workflow"
+      ],
+      "controls": "Engineering Release hands off a package, not unrestricted production credentials. Child workflow preserves mandated PIC guards and receives narrowed domain scope. Target deployment, domain effects, monitoring and retirement have their own approved operating contract."
+    },
+    {
+      "id": "external-human",
+      "name": "Authorised business stakeholders and task owners",
+      "purpose": "Requirements, scoped contract approval, owner decisions, promotion/rollback authority",
+      "sourceNodes": [
+        "user"
+      ],
+      "controls": "Authenticated identity is necessary, not sufficient for authority. Contract approver, task owner and change approver may be different people; preserve exact digest/version bindings."
+    }
+  ],
+  "materialCorrections": [
+    {
+      "id": "ER-01",
+      "priority": "mandatory",
+      "finding": "The prior single enterprise account box does not express the blast-radius and approval/assurance separation expected by a full enterprise review.",
+      "recommendation": "Present Control, Build and Assurance as distinct account boundaries, with generated-product destination and Security/Log Archive foundation accounts. Production and development/test environments need separate workload accounts; do not put dev tooling dependencies in the production run path.",
+      "verification": "Attempt builder access to controller state, final signing key, evidence mutation and released artifacts; deny. Show per-account trust policies and explicit operational owners.",
+      "references": [
+        "organizations",
+        "controltower",
+        "foundation"
+      ]
+    },
+    {
+      "id": "ER-02",
+      "priority": "mandatory",
+      "finding": "A diagram can imply AWS managed services live in private subnets or that a task is replicated across AZs.",
+      "recommendation": "Keep regional managed services outside customer VPC boxes. Show task ENIs, private endpoint ENIs and AZ-specific task capacity inside. Managed storage multi-AZ properties do not imply duplicate application state writers. Label Runtime ENIs as service networking attachments.",
+      "verification": "Inspect every service placement and every AZ label; no S3/DynamoDB/Step Functions server inside subnet. Show what survives task/AZ failure and what must be relaunched.",
+      "references": [
+        "agentcore-vpc",
+        "agentcore-privatelink",
+        "multiaz"
+      ]
+    },
+    {
+      "id": "ER-03",
+      "priority": "mandatory",
+      "finding": "Moving workers to separate accounts changes completion semantics; direct cross-account task-token callback is unsupported.",
+      "recommendation": "Use a same-account authenticated completion broker in Control. Workers send signed completion envelopes to a narrowly permitted Control ingestion API. Broker validates current run/task/attempt/fence/digests, commits accepted transport/result metadata idempotently, then uses the protected token as a Control-account principal. Token possession never grants acceptance. Use cross-account Credentials roles for supported job dispatch and appropriate polling permissions.",
+      "verification": "Replay delayed callbacks; use another tenant/attempt; send token from another account; confirm no state progression. Simulate broker commit followed by callback failure; reconcile without duplicate business transition.",
+      "references": [
+        "callbacks",
+        "cross-account-sfn"
+      ]
+    },
+    {
+      "id": "ER-04",
+      "priority": "mandatory",
+      "finding": "AgentCore native Step Functions integration now exists; prior broad no-native-integration assumptions would be outdated.",
+      "recommendation": "Document native InvokeHarness as a deliberate alternative for bounded agent invocations. It is Request/Response only, returns final text and aggregated usage, omits tool/reasoning blocks, and has a 900-second Task maximum. Timeouts/stopping Step Functions do not stop the harness. Retain a custom Runtime connector when framework-neutral code, full artifact/evidence envelopes or longer session work is required. Neither path grants the harness trusted Core/PIC/release authority.",
+      "verification": "Test timeout with continuing harness, exact final artifact reference, missing evidence and independent cancellation/fencing. Do not infer whole-run completion from final assistant text.",
+      "references": [
+        "invoke-harness",
+        "callbacks",
+        "runtime"
+      ]
+    },
+    {
+      "id": "ER-05",
+      "priority": "mandatory",
+      "finding": "No-Internet job execution needs explicit image, artifact and log access paths, not merely a VPC box.",
+      "recommendation": "For modern Fargate private ECR pulls, show ecr.api/ecr.dkr interface endpoints and S3 gateway endpoint; show CloudWatch Logs endpoint when awslogs has no public path. Use supported endpoints for other dependencies and constrain endpoint policies/security groups. AgentCore private APIs have data-plane, control-plane and Gateway PrivateLink endpoints. NAT connectivity is not allowlisting or a firewall.",
+      "verification": "Launch a pinned qualified image with no broad internet route; fetch only admitted objects; write allowed logs; deny arbitrary domains/targets. Check DNS, endpoint policy, SG and actual regional service support.",
+      "references": [
+        "ecr-endpoints",
+        "agentcore-privatelink",
+        "ecs-roles"
+      ]
+    },
+    {
+      "id": "ER-06",
+      "priority": "mandatory",
+      "finding": "Per-task identity alone is weaker than the claimed per-run/task scope; an ECS task role is shared by code inside that task.",
+      "recommendation": "Distinguish task execution role (image pulls/logging) from task role (application data access). Use project/task-scoped access tokens or approved role/session/resource controls and separate wrappers for sensitive APIs. Do not place builder and verifier sidecars in one task. Deny workers direct Gateway/target calls; custom admission service remains the mediated caller.",
+      "verification": "Run adversarial code that reads task credentials, calls targets directly, requests another run's S3 prefix or invokes release. All must fail through actual policies/network controls.",
+      "references": [
+        "ecs-roles",
+        "ecs-task-role",
+        "fargate"
+      ]
+    },
+    {
+      "id": "ER-07",
+      "priority": "mandatory",
+      "finding": "Cross-account evidence/artifact reads require both object policy and encryption permission; a diagram line is not an access grant.",
+      "recommendation": "Use bucket-owner-enforced object ownership, explicit bucket/access-point policies and both resource-owner KMS key policy and consumer IAM permission. Builders write candidates only; assurance reads exact object version IDs and cannot mutate bytes; controller records evidence only after exact verification. Prefer customer-managed encryption keys for defined cross-account sharing and separate asymmetric attestation keys.",
+      "verification": "Deny unsupported ACL uploads, wrong key/prefix/version and evidence mutation. Prove same bytes and manifest identity across staging, final attestation and delivery.",
+      "references": [
+        "s3-ownership",
+        "cross-account-kms",
+        "sse-kms",
+        "kms-sign"
+      ]
+    },
+    {
+      "id": "ER-08",
+      "priority": "mandatory",
+      "finding": "Enterprise data-residency claims can be contradicted by model or Memory extraction routing even when the authority ledger is single-Region.",
+      "recommendation": "Separate authoritative control Region, artifact storage location and inference-processing geography. Select/pin permitted models and profiles; no global inference profile by default. AgentCore Memory/Policy/Evaluations may use cross-Region inference; include their geography in the data-processing policy. London availability of a primitive does not mean Runtime V2, every selected model or every feature is available there.",
+      "verification": "Validate exact feature/model/profile availability, source and candidate destination Regions, invocation policies/SCP exceptions and audit inferenceRegion. Reject a contract whose residency boundary cannot be met.",
+      "references": [
+        "regions",
+        "runtime-v2",
+        "bedrock-cross-region",
+        "agentcore-cross-region"
+      ]
+    },
+    {
+      "id": "ER-09",
+      "priority": "mandatory",
+      "finding": "Memory-off and Learning-without-Memory are stricter in the conceptual blueprint than ordinary cloud persistence.",
+      "recommendation": "Preserve semantic off behaviour: no application cross-run restore/retrieval and continuity-dependent contracts refused; no durable learning history unless both modules enabled. Label cloud infrastructure retention as an adaptation, not a hidden semantic Memory implementation. Baseline operational monitoring/security logs remain service operations, not enabled Recovery-module authority.",
+      "verification": "Test all 32 module combinations against requires and off contracts. Learning-only candidate/registry stays session-bound; I067/I068 require Learning and Memory. Turning Memory off never recalls approvals from past runs.",
+      "references": [
+        "runtime",
+        "memory"
+      ]
+    },
+    {
+      "id": "ER-10",
+      "priority": "mandatory",
+      "finding": "PIC cannot be represented by a managed model guardrail or by prompt instructions alone.",
+      "recommendation": "Preserve custom PIC compiler/conformance checker and Required(R,policy) subset K_R subset K. Each mandatory pattern maps to actual child enforcing code, typed interface, positive/negative tests and current evidence. Checkers reject missing patterns/unenforced guards. An adjacency matrix may explain reachability; neither determinant nor node count proves buildability/correctness.",
+      "verification": "Remove or disable one inherited guard, change candidate digest or substitute old test evidence; no release. Task plan DAG is acyclic; architecture feedback cycles for repair/learning are intentional and are not invalid merely for being cycles.",
+      "references": [
+        "guardrails",
+        "automated-reasoning"
+      ]
+    },
+    {
+      "id": "ER-11",
+      "priority": "mandatory",
+      "finding": "Full deployment flow must preserve independent task-owner decisions and final attestation feedback before release.",
+      "recommendation": "Maintain exact I064 Plan\u2192Core admission; I065 Core\u2192PIC mandate; I066 Core\u2192Verifier owner attestation; I012 Verification\u2192Core; I016 Final\u2192Core; I017 Core\u2192Release; I018 Release\u2192MOA. No direct Final\u2192Release shortcut and no worker-completion\u2192release transition. Human contract approval does not automatically become every task owner decision.",
+      "verification": "Show these edges in main/trace views and the complete 68-interface register. Remove any release predicate and expect no authorised intent or delivery.",
+      "references": [
+        "transactions",
+        "callbacks"
+      ]
+    },
+    {
+      "id": "ER-12",
+      "priority": "mandatory",
+      "finding": "S3 writes, DynamoDB transactions, callbacks and target actions cannot be one distributed atomic commit.",
+      "recommendation": "Write and verify immutable artifact versions first; atomically guard ledger transition plus outbox in Control. Delivery/reconciliation uses durable business keys and current fence. Distinguish release-intent committed, destination receipt confirmed and product deployed. Define contract revocation at/after the commit point, cancellation, compensating actions and unresolved effect state.",
+      "verification": "Crash after each step, duplicate dispatch/receipt, revoke contract during handoff and return misleading success. Never claim delivered or effect-accepted while receipt/postcondition is uncertain.",
+      "references": [
+        "transactions",
+        "object-lock",
+        "callbacks"
+      ]
+    },
+    {
+      "id": "ER-13",
+      "priority": "mandatory",
+      "finding": "Two-AZ jobs and regional managed-service availability are not a tested disaster-recovery plan.",
+      "recommendation": "Set RTO/RPO and data-loss tolerances from business requirements; define backups/restore for exact ledger, manifests, qualification and configuration. Begin one authoritative Region with explicit stop/admission behaviour on outage. Optional DR is backup/restore or measured warm standby; no active-active authority until epoch/fencing/conflict design is verified.",
+      "verification": "Lose an AZ, pause a worker, restore a checkpoint, rotate a key and simulate region/identity unavailability. Record actual recovery time and missing-data bounds; revalidate approvals/pins before resuming.",
+      "references": [
+        "multiaz",
+        "backup"
+      ]
+    },
+    {
+      "id": "ER-14",
+      "priority": "mandatory",
+      "finding": "Promotion of code/config defaults and deployment of the generated child product are different lifecycles.",
+      "recommendation": "Maintain a complete immutable run pin manifest: pattern/capability/policy/schema versions, state-machine version, image digests and selected model configuration. AppConfig updates future defaults only; snapshots isolate active runs. Separately package, deliver, approve target deployment, monitor domain outcomes and retire the child MOA workflow.",
+      "verification": "Change future defaults during active run, roll back after promotion, start new run and verify stable old/new pins. No global improvement claim beyond held-out evaluated distribution.",
+      "references": [
+        "sfn-versions",
+        "appconfig",
+        "evaluation"
+      ]
+    },
+    {
+      "id": "ER-15",
+      "priority": "important",
+      "finding": "Prior full architecture uses optional-summary boxes in the overview, which obscures the actual source capabilities.",
+      "recommendation": "Use one architecture-data source containing all 35 source capability IDs and all 68 interfaces. Show independently toggleable Skeleton/Memory/Learning/Tools/Recovery/Specialists in the same familiar 3D UX; deployment account/Region/VPC/AZ containers are a separate boundary layer. Service resources/helpers have explicit sourceNodeId mappings and do not replace or add AC responsibilities.",
+      "verification": "Count unique source IDs for all-enabled view=35; every original interface remains inspectable; disabled endpoints/requires remove only applicable edges. Preserve original responsibility, authority and rule text verbatim.",
+      "references": []
+    },
+    {
+      "id": "ER-16",
+      "priority": "important",
+      "finding": "The business value claim remains broad without a bounded domain and observable success criteria.",
+      "recommendation": "Present AC as reusable governed engineering for a selected domain/workflow class. Demonstrate approved requirement\u2192versioned package with explainable gates, a deliberately failing guard case and one qualified independent test. Proposed study measures: reviewable engineering lead time, mandatory-pattern coverage, stale-evidence rejection, blocked scope expansion and successful recovery under specified faults. Do not claim automation of every business problem.",
+      "verification": "Use synthetic/non-sensitive fixture data, an explicit baseline and repeatable acceptance tests. Record human decisions and limitations. The L6 discussion should separate research hypothesis, reference architecture, implemented prototype and production evidence.",
+      "references": [
+        "prescriptive"
+      ]
+    },
+    {
+      "id": "ER-17",
+      "priority": "mandatory",
+      "finding": "User reference asks for shared deployment/IaC and Dev/Preprod/Prod, which prior design did not express.",
+      "recommendation": "Add a small Platform Deployment account with reviewed immutable assemblies and scoped cross-account stages. Show one detailed environment and repeat-equivalent environment summaries. Preserve separate environment data/security boundaries and distinguish platform deployment from AC generated-package release.",
+      "verification": "Every promotion shows exact artifact/template/policy versions, pre/post checks and authorized production deployment. No Dev credentials or state enter Prod; no pipeline success is substituted for I066/I012/I016/I017.",
+      "references": [
+        "cdk-pipelines",
+        "codepipeline-approval",
+        "cfn-changesets",
+        "ops-change-tests",
+        "ops-deployment-tests"
+      ]
+    }
+  ],
+  "callbackBrokerContract": {
+    "placement": "Engineering Control account, same authoritative Region/account as parent Step Functions state machine",
+    "input": "Signed caller identity + tenant/project/run/task/attempt IDs + expected ledger revision + fence + contract/plan pins + artifact version/digest + completion status + measured use; no arbitrary acceptance claim",
+    "checks": [
+      "Validate caller/role against admitted task identity",
+      "Validate current lease/fence/cancellation/approval",
+      "Check exact artifact/evidence availability and digest references",
+      "Deduplicate durable completion key and reject stale revisions",
+      "Record result transport/provenance only; Verification and owner decision remain independent",
+      "After appropriate guarded transition, signal protected callback token as Control-account principal"
+    ],
+    "negativeTests": [
+      "Wrong tenant/task/attempt",
+      "Stale fence",
+      "Duplicate callback after token rotation",
+      "Worker claims FinalPass without evidence",
+      "Broker crash after ledger commit before SendTaskSuccess",
+      "Parent cancellation while worker continues"
+    ],
+    "limits": "A callback transport event is not acceptance. A worker in another account can assume an explicitly authorised Control-account broker role, but should not receive unprotected callback authority or token handling privileges. Prefer the validating broker. Cross-account .sync integration polls; task cancellation is best-effort."
+  },
+  "privateNetworkStudy": {
+    "taskPaths": [
+      "Task execution role\u2192ECR ecr.api/ecr.dkr interface endpoints\u2192S3 image layers through S3 gateway endpoint",
+      "Task application role\u2192only admitted S3 objects / scoped DynamoDB API / model endpoint as needed",
+      "awslogs\u2192CloudWatch Logs interface endpoint",
+      "Approved mediated tool client\u2192AgentCore Gateway PrivateLink endpoint; external calls originate only from qualified adapter path"
+    ],
+    "agentCorePaths": [
+      "PrivateLink data-plane/control-plane/Gateway endpoints expose managed APIs privately",
+      "Runtime VPC connectivity uses customer ENIs to private resources; use explicit SG/resource policy",
+      "Private Gateway target access may require supported VPC Lattice integration; verify exact target type and Region before depicting the path"
+    ],
+    "pitfalls": [
+      "Default endpoint policy can be broad; endpoint connectivity grants no business authority",
+      "AgentCore OAuth requests require wildcard principal in endpoint policy because the endpoint does not evaluate OAuth user identity; application/Gateway authorizer and contextual policy still enforce that identity",
+      "Security groups do not provide arbitrary hostname-level Internet allowlisting",
+      "ECR pull-through-cache first pull may need upstream access; pre-stage qualified images for an isolated worker design",
+      "S3 storage class choice matters; do not use One Zone variants for multi-AZ durability claims"
+    ]
+  },
+  "operatingLifecycle": [
+    "Authenticate stakeholder and define reviewable requirement; classify domain/data/residency/effect risk.",
+    "Version contract; bind scoped approval identity to exact digest/revision; invalidate approval on change.",
+    "Planner proposes owned task DAG; Core validates and admits current plan; PIC specialises required patterns; bind qualified capabilities.",
+    "Reserve shared limits, issue current attempt/fence when Recovery enabled, dispatch bounded tasks with immutable inputs.",
+    "Capture artifact provenance; task owner attests independently; Verification tests exact current output/dependencies; Core commits acceptance or bounded repair.",
+    "Integrate accepted components into a new unaccepted candidate; independent final validation establishes digest-bound current attestation.",
+    "Core authorises exact release intent; Release delivers idempotently and reconciles destination receipt. MOA deployment/execution has separate target authority.",
+    "Optional scoped Memory restores only with current checks; optional outcomes/evaluation/promotion make future eligible versions; active pins never mutate.",
+    "Operate with explicit cancellation/revocation, incident ownership, redacted audit retention, backup/restore exercises, adapter/image/key rotation and measured capacity.",
+    "Retire/expire artifacts, credentials and child workflows under approved retention policy; historical evidence remains interpretable and is not silently reused as current authority."
+  ],
+  "assumptionsToExpose": [
+    "Chosen domain, tenant model, expected task durations, concurrency and artifact sizes are not yet measured.",
+    "Each task has one accountable owner; human/business and machine technical validation responsibilities are separately assigned.",
+    "Admitted execution initially uses qualified code/images. Hostile generated-code handling remains a threat-model and sandbox acceptance question.",
+    "Exact selected Region, model IDs/profiles, AgentCore features, PrivateLink/VPC target support and service quotas pass implementation admission.",
+    "External targets provide sufficient idempotency/postcondition read-back or the contract explicitly allows blocked uncertainty/manual reconciliation.",
+    "Organization account administration, break-glass and security response are trusted operating roles with audits; multi-account isolation does not defeat a fully privileged compromised administrator.",
+    "Service processing geography, telemetry payloads, semantic-memory extraction, encryption keys, retention and purge requirements are approved for the data classification.",
+    "Research conformance equations and static/UI checks are bounded evidence, not proof of production correctness, security certification or universal scalability."
+  ],
+  "presentationGuidance": {
+    "lead": "Start at User and show why requirement approval, PIC inheritance, independent evidence and exact handoff matter for the chosen domain.",
+    "canvas": "Show the complete 35-capability map inside credible deployment/trust containers; progressive subsystem toggles and neighbour/route focus make it readable.",
+    "details": "Each selected capability explains source responsibility, AWS mapping, account/Region/network placement, identity, current guards, exact state, failure handling and evidence required.",
+    "math": "After purpose and flow, show permission narrowing, guard-preserving transitions, aggregate reservations, immutable pins and exact release conjunction with enforcement assumptions.",
+    "avoid": "No unsupported performance/cost/production claims, no unexplained icon list, no direct Final\u2192Release edge, no managed-service-inside-subnet placement, no isolated-sandbox assertion solely from a Fargate icon."
+  },
+  "references": {
+    "organizations": {
+      "url": "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_best-practices.html",
+      "ref": "turn12search6",
+      "supports": "Account security boundaries; foundational accounts; separate production/non-production"
+    },
+    "controltower": {
+      "url": "https://docs.aws.amazon.com/controltower/latest/userguide/what-shared.html",
+      "ref": "turn13search8",
+      "supports": "Management/log archive/audit accounts; no production workloads in management account"
+    },
+    "foundation": {
+      "url": "https://docs.aws.amazon.com/whitepapers/latest/organizing-your-aws-environment/foundational-ous.html",
+      "ref": "turn12search7",
+      "supports": "Restricted central log archive and security foundations"
+    },
+    "scps": {
+      "url": "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html",
+      "ref": "turn15view0",
+      "supports": "SCP ceilings, no grants, management/service-linked-role exceptions"
+    },
+    "agentcore-vpc": {
+      "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/agentcore-vpc.html",
+      "ref": "turn12search0",
+      "supports": "Runtime VPC connectivity creates customer ENIs"
+    },
+    "agentcore-privatelink": {
+      "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/vpc-interface-endpoints.html",
+      "ref": "turn12search1",
+      "supports": "Private data/control/Gateway endpoints; OAuth endpoint-policy limitation"
+    },
+    "agentcore-private-target": {
+      "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/vpc-egress-private-endpoints.html",
+      "ref": "turn12search3",
+      "supports": "Gateway/private target connection through VPC Lattice resource gateways/configurations"
+    },
+    "ecr-endpoints": {
+      "url": "https://docs.aws.amazon.com/AmazonECR/latest/userguide/vpc-endpoints.html",
+      "ref": "turn12search9",
+      "supports": "Modern Fargate ECR+S3 endpoint requirements; awslogs endpoint; cache-first-pull caveat"
+    },
+    "ecs-roles": {
+      "url": "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/security-iam-roles.html",
+      "ref": "turn13search4",
+      "supports": "Separate task execution and task roles"
+    },
+    "ecs-task-role": {
+      "url": "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-iam-roles.html",
+      "ref": "turn13search3",
+      "supports": "Application credentials/task isolation; containers in a task are not independent security boundaries"
+    },
+    "fargate": {
+      "url": "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/fargate-security-considerations.html",
+      "ref": "turn0search8",
+      "supports": "Dedicated task infrastructure, same-task resource sharing and customer network responsibility"
+    },
+    "callbacks": {
+      "url": "https://docs.aws.amazon.com/step-functions/latest/dg/connect-to-resource.html",
+      "ref": "turn15view2",
+      "supports": "Same-account callback principals; .sync cancellation/polling limitations; integration support"
+    },
+    "cross-account-sfn": {
+      "url": "https://docs.aws.amazon.com/step-functions/latest/dg/concepts-access-cross-acct-resources.html",
+      "ref": "turn13search0",
+      "supports": "Target role/Credentials; cross-account polling; no cross-Region resource access"
+    },
+    "invoke-harness": {
+      "url": "https://docs.aws.amazon.com/step-functions/latest/dg/connect-bedrockagentcore.html",
+      "ref": "turn16view0",
+      "supports": "Native InvokeHarness, Request/Response only, final text, 900-second maximum, continuing harness after stop"
+    },
+    "runtime": {
+      "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-sessions.html",
+      "ref": "turn3search2",
+      "supports": "Session isolation and ephemeral/session-persistent distinctions"
+    },
+    "regions": {
+      "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/agentcore-regions.html",
+      "ref": "turn15view1",
+      "supports": "Current feature-by-Region matrix; precise feature checks still required"
+    },
+    "runtime-v2": {
+      "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-how-it-works.html",
+      "ref": "turn14search0",
+      "supports": "Runtime platform version selection and V2 regional limits"
+    },
+    "bedrock-cross-region": {
+      "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html",
+      "ref": "turn12search4",
+      "supports": "Geographic/global inference-processing routing differs from storage and authority location"
+    },
+    "agentcore-cross-region": {
+      "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/cross-region-inference.html",
+      "ref": "turn14search1",
+      "supports": "Memory/Policy/Evaluations processing geography"
+    },
+    "s3-ownership": {
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/about-object-ownership.html",
+      "ref": "turn14search8",
+      "supports": "Bucket owner enforced; ACL-free cross-account object ownership"
+    },
+    "cross-account-kms": {
+      "url": "https://docs.aws.amazon.com/kms/latest/developerguide/key-policy-modifying-external-accounts.html",
+      "ref": "turn13search5",
+      "supports": "Resource KMS key policy plus consumer IAM policy required"
+    },
+    "sse-kms": {
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingKMSEncryption.html",
+      "ref": "turn13search6",
+      "supports": "KMS key same Region as S3 bucket; GenerateDataKey/Decrypt permissions"
+    },
+    "kms-sign": {
+      "url": "https://docs.aws.amazon.com/kms/latest/APIReference/API_Sign.html",
+      "ref": "turn10search6",
+      "supports": "Asymmetric SIGN_VERIFY key and exact message/digest signature"
+    },
+    "multiaz": {
+      "url": "https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/rel_fault_isolation_multiaz_region_system.html",
+      "ref": "turn14search6",
+      "supports": "Multi-AZ deployment; managed data multi-AZ; multi-Region only for required resilience"
+    },
+    "backup": {
+      "url": "https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/back-up-data.html",
+      "ref": "turn14search7",
+      "supports": "RTO/RPO-based backup and periodic recovery verification"
+    },
+    "transactions": {
+      "url": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_TransactWriteItems.html",
+      "ref": "turn1search0",
+      "supports": "One account/Region atomic write boundary; limits and token idempotency window"
+    },
+    "object-lock": {
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html",
+      "ref": "turn1search1",
+      "supports": "Object-version retention, versioning and governance/compliance distinctions"
+    },
+    "memory": {
+      "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/long-term-saving-and-retrieving-insights.html",
+      "ref": "turn3search5",
+      "supports": "Asynchronous memory extraction; not exact authority state"
+    },
+    "guardrails": {
+      "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails.html",
+      "ref": "turn2search8",
+      "supports": "Content/sensitive-data/grounding safeguards, not PIC implementation"
+    },
+    "automated-reasoning": {
+      "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/integrate-automated-reasoning-checks.html",
+      "ref": "turn0search11",
+      "supports": "Detect-only findings; application decides enforcement"
+    },
+    "sfn-versions": {
+      "url": "https://docs.aws.amazon.com/step-functions/latest/dg/concepts-state-machine-version.html",
+      "ref": "turn2search6",
+      "supports": "Immutable version ARN invocation"
+    },
+    "appconfig": {
+      "url": "https://docs.aws.amazon.com/appconfig/latest/userguide/monitoring-deployments.html",
+      "ref": "turn10search1",
+      "supports": "Configured deployment alarm rollback; custom active-run pins remain needed"
+    },
+    "evaluation": {
+      "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/evaluation.html",
+      "ref": "turn2search5",
+      "supports": "Finite automated/human/model-judge performance evaluation"
+    },
+    "prescriptive": {
+      "url": "https://docs.aws.amazon.com/prescriptive-guidance/latest/agentic-ai-patterns/designing-agentic-workflows-on-aws.html",
+      "ref": "turn3search8",
+      "supports": "Complementary orchestration, tool, memory and monitoring service roles"
+    },
+    "cdk-pipelines": {
+      "url": "https://docs.aws.amazon.com/cdk/v2/guide/cdk-pipeline.html",
+      "ref": "turn20search2",
+      "supports": "Bootstrapped account/Region environments, repeated stages, test/approval hooks; self-updating-pipeline privilege caution"
+    },
+    "codepipeline-approval": {
+      "url": "https://docs.aws.amazon.com/codepipeline/latest/userguide/approvals.html",
+      "ref": "turn20search1",
+      "supports": "Manual authorized pipeline review pauses a stage; rejection/timeout fails it"
+    },
+    "cfn-changesets": {
+      "url": "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-changesets.html",
+      "ref": "turn20search5",
+      "supports": "Preview changes before executing; no guarantee of successful runtime update"
+    },
+    "ops-change-tests": {
+      "url": "https://docs.aws.amazon.com/wellarchitected/latest/operational-excellence-pillar/ops_dev_integ_test_val_chg.html",
+      "ref": "turn20search4",
+      "supports": "Test code, infrastructure, security controls and operational procedure changes"
+    },
+    "ops-deployment-tests": {
+      "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/ops_mit_deploy_risks_test_val_chg.html",
+      "ref": "turn20search8",
+      "supports": "Production-like preproduction deployment and recovery tests"
+    },
+    "ops-design": {
+      "url": "https://docs.aws.amazon.com/wellarchitected/latest/operational-excellence-pillar/design-for-operations.html",
+      "ref": "turn20search7",
+      "supports": "Operations as code, version/configuration management and multiple environments"
+    },
+    "lambda-vpc": {
+      "url": "https://docs.aws.amazon.com/lambda/latest/dg/configuration-vpc.html",
+      "ref": "turn22search0",
+      "supports": "Lambda function hosts remain in Lambda-managed VPC; customer private connectivity uses Hyperplane ENIs"
+    }
+  },
+  "environmentStrategy": {
+    "pattern": "Repeat the same Control / Build / Assurance / consumer topology per environment: Dev, Preprod and Prod. Display one detailed selected environment and compact sibling environment summaries; do not duplicate all 35 capabilities on screen.",
+    "separation": "Each environment owns distinct account roles, contract/run state, data keys, secrets, memory namespaces, artifact prefixes and defaults. No production run depends on development-state availability or non-production credentials.",
+    "promotion": "Promote immutable reviewed platform assemblies and qualified image/pattern/capability versions through Dev \u2192 Preprod \u2192 approved Prod deployment. A template is reused; runtime state and approval/evidence are never shared between environments.",
+    "logicalVsPhysical": "Solid containers describe physical account/Region/VPC/AZ placement. Dashed subsystem contours describe logical Core/Memory/Learning/Tools/Recovery/Specialist grouping; they confer no AWS network isolation.",
+    "referenceScope": "All are proposed deployment stages; diagram/environment toggle is a study filter and does not provision or switch actual production infrastructure."
+  },
+  "platformDeliveryLifecycle": {
+    "selectedServices": "AWS CDK-generated CloudFormation; CodePipeline for controlled stage promotion; CodeBuild for synth/tests; S3/ECR for reviewed assemblies/images. Existing enterprise equivalents may be substituted; do not add a new agent role for the pipeline.",
+    "sequence": [
+      "Version-controlled source, infrastructure, typed guard schemas, adapter manifests and policies",
+      "Synthesize reviewed IaC; build immutable qualified images; record commit and digests",
+      "Run static policy/schema and capability compatibility checks",
+      "Deploy Dev; run positive/negative guard tests and cross-account isolation tests",
+      "Deploy production-like Preprod using the same controls/configuration shape; run integration, callback/outbox interruption, security smoke and recovery tests",
+      "Review CloudFormation change set and scoped production approval; deploy exact reviewed platform assembly",
+      "Run post-deploy smoke/negative tests; retain decision/evidence; roll back or reconcile according to approved operations runbook"
+    ],
+    "importantDistinction": "Platform CI/CD deploys the AC infrastructure/software. AC Core/Release I017/I018 produces and delivers a specific user-governed MOA package. A successful platform pipeline or CodePipeline manual approval is not the contract approval, task owner acceptance, PIC conformance or exact child-product release predicate.",
+    "limits": "CloudFormation change sets preview planned updates but cannot guarantee deployment success. CDK self-mutating pipeline/bootstrapping trust must be reviewed and bounded; never present broad AdministratorAccess examples as the final production permissions. Model/profile selections, policy versions and artifact digests must remain pinned by Core even after platform deployment.",
+    "verification": "Test production deployment with lower-privileged roles, malicious IaC/policy changes, credential cross-environment access, altered image digest, skipped Preprod test and failure during deployment. Pipeline operator cannot silently approve a business contract or forge current verification evidence."
+  }
+}

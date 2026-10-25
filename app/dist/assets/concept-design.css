@@ -1,0 +1,31 @@
+/* The concept is a readable, scrollable responsibility map on the shared sky. */
+#websiteViewport .conceptDesignHost{position:absolute;inset:76px 58px 45px;background:transparent!important;overflow:hidden;pointer-events:auto;isolation:isolate}
+#websiteViewport .conceptDesignHost[hidden]{display:none!important}
+.conceptViewport{position:relative;width:100%;height:100%;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#89929a transparent;outline:none;background:transparent!important}
+.conceptViewport:focus-visible{outline:1px solid #b8bdc4;outline-offset:-2px}
+.conceptSheet{position:relative;width:100%;min-height:300px;background:transparent!important}
+.conceptLanes{position:absolute;inset:0 36px auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:7%;height:32px;align-items:center;pointer-events:none}
+.conceptLanes span{color:#a9adb6;text-align:center;font-size:10px;font-weight:500;letter-spacing:.06em;line-height:1.4}
+.conceptLanes[hidden]{display:none}
+.conceptCards{position:absolute;inset:0;pointer-events:none}
+html#ac-sky-root body#ac-transparent-workspace #websiteViewport .conceptNode{position:absolute;display:flex;align-items:center;justify-content:flex-start;gap:10px;box-sizing:border-box;min-width:0!important;max-width:none!important;min-height:70px!important;max-height:70px!important;margin:0;padding:17px 12px 10px!important;border:1px solid #777e87;border-radius:8px;background:transparent!important;color:#edf0f4;font:inherit;text-align:left;line-height:1.25;box-shadow:none!important;transform:none!important;pointer-events:auto;cursor:pointer;transition:border-color .15s,color .15s;overflow:hidden}
+html#ac-sky-root body#ac-transparent-workspace #websiteViewport .conceptNode:hover{border-color:#bbc1c8}
+html#ac-sky-root body#ac-transparent-workspace #websiteViewport .conceptNode.isSelected{border-color:#fff;color:#fff;background:transparent!important}
+html#ac-sky-root body#ac-transparent-workspace #websiteViewport .conceptNode:focus-visible{outline:2px solid #fff;outline-offset:3px}
+html#ac-sky-root body#ac-transparent-workspace #websiteViewport .conceptNode.isBoundary{border-style:dashed}
+.conceptNode>svg{width:22px;height:22px;flex:0 0 22px;color:#c6cbd2}
+.conceptSerial{position:absolute;top:5px;left:9px;color:#b9bec6;font-size:9px;line-height:1}
+.conceptNodeCopy{display:block;min-width:0}
+.conceptNodeCopy strong{display:block;font-size:11px;font-weight:600;line-height:1.2;overflow-wrap:normal}
+.conceptNodeCopy>span{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-top:4px;font-size:9px;font-weight:400;line-height:1.3;color:#aeb5bd}
+.isProgramConcept .conceptNodeCopy strong{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;max-height:27px}
+.isProgramConcept .conceptNodeCopy>span{-webkit-line-clamp:1}
+.conceptEdges{position:absolute;inset:0;width:100%;overflow:visible;pointer-events:none}
+.conceptEdges .conceptEdge{fill:none;stroke:#727983;stroke-width:1;opacity:.72;pointer-events:stroke;cursor:pointer;outline:none}
+.conceptEdges .conceptEdge:hover,.conceptEdges .conceptEdge:focus-visible,.conceptEdges .conceptEdge.isRelated{stroke:#fff;stroke-width:1.65;opacity:1}
+.conceptEdges .conceptEdgeLabel{font-family:inherit;font-size:9px;fill:#fff;paint-order:stroke;stroke:#000;stroke-width:4px;stroke-linejoin:round;pointer-events:none}
+html#ac-sky-root body#ac-transparent-workspace #websiteViewport .conceptNode.isDestination{animation:conceptDestinationPulse 1.45s ease-in-out infinite}
+@keyframes conceptDestinationPulse{0%,100%{border-color:#777e87}50%{border-color:#fff}}
+@media(max-width:760px){#websiteViewport .conceptDesignHost{inset:65px 49px 39px}html#ac-sky-root body#ac-transparent-workspace #websiteViewport .conceptNode{padding-left:11px!important;padding-right:11px!important}.conceptNodeCopy strong{font-size:11px}.conceptNodeCopy>span{font-size:9px}}
+@media(max-width:760px),(max-height:560px){body:is(:not(.panelClosed),[data-product-drawer]) #websiteViewport>.conceptDesignHost,body[data-fullscreen=true] #stage:has(#rightControlPanel:not([hidden])) #websiteViewport>.conceptDesignHost{display:none!important}}
+@media(prefers-reduced-motion:reduce){html#ac-sky-root body#ac-transparent-workspace #websiteViewport .conceptNode{transition:none}html#ac-sky-root body#ac-transparent-workspace #websiteViewport .conceptNode.isDestination{animation:none;border-color:#fff}}

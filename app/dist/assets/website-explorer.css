@@ -1,0 +1,51 @@
+body.websiteMode #viewport,body.websiteMode #conceptViewport,body.websiteMode #awsViewport,body.websiteMode #rightControlPanel>.dockSection{display:none!important}
+#websiteViewport[hidden],#websiteTools[hidden]{display:none!important}
+/* Selection announcements remain available to screen readers without covering routes. */
+body.websiteMode #delta{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;border:0!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;clip-path:inset(50%)!important;white-space:nowrap!important;pointer-events:none!important}
+#websiteViewport{position:absolute;inset:0;overflow:hidden;touch-action:none;outline-offset:-6px}
+#websiteViewport canvas,.websiteLines,.websiteLabels{position:absolute;inset:0;width:100%;height:100%}
+.websiteLines{pointer-events:none;overflow:visible}.websiteLines path{fill:none;stroke:#aeb5bd;stroke-width:1;opacity:.45}.websiteLines path.planned{stroke-dasharray:5 5}
+.websiteLabels{pointer-events:none}
+html#ac-sky-root body#ac-transparent-workspace .websiteNode{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:8px;padding:7px 10px;max-width:162px;border:1px solid #ffffff40;background:#070707dc!important;border-radius:12px;color:#e4e7eb;pointer-events:auto;font-size:11px;line-height:1.3;box-shadow:none}
+html#ac-sky-root body#ac-transparent-workspace .websiteNode[hidden]{display:none!important}
+html#ac-sky-root body#ac-transparent-workspace .websiteNode.selected{border-color:#fff;background:#f5f5f5!important;color:#111}
+.websiteNodeIcon{display:grid;place-items:center;flex:0 0 22px;width:22px;height:22px}.websiteNodeIcon svg{width:20px;height:20px;stroke:currentColor;stroke-width:1.25}
+.websiteNode.hideText .websiteNodeText{display:none}.websiteNodeText small{display:block;font-size:9px;opacity:.75;margin-bottom:4px}.websiteAwsMark{font:600 12px Arial;border-bottom:1px solid currentColor;border-radius:0 0 50% 50%;padding-bottom:3px}
+#websiteViewport[data-mode=aws] .websiteNode,#websiteViewport[data-mode=concept] .websiteNode{width:170px;max-width:170px;transform:translate(-50%,-50%) scale(var(--website-card-scale,1));min-height:54px}
+.websiteViewHint{position:absolute;left:62px;right:62px;bottom:40px;margin:0;text-align:center;color:#999fa7;font-size:10px;pointer-events:none}
+.websiteComponentList{display:grid;gap:0;margin:12px 0 20px}.websiteTextLink{text-align:left;border:0;border-bottom:1px solid #ffffff18;border-radius:0;padding:12px 0;color:#e2e5e8;line-height:1.55;font-size:13px}.websiteTextLink:hover{color:#fff;text-decoration:underline;text-underline-offset:4px}.websiteTextLink small{display:block;font-size:11px;color:#aeb4bb;margin-top:4px}
+.websiteStatus{font-size:11px;color:#d6d9dc;border-left:2px solid #cdd0d3;padding-left:10px}.websiteMeta{font-size:12px;color:#aeb4bb}.websiteAwsDecision{padding:16px 0;border-bottom:1px solid #ffffff20}.websiteAwsDecision h3{margin-top:0!important}.websiteAwsDecision a{color:#e4e7eb!important;text-underline-offset:4px}
+#websiteTools{padding:18px 20px 26px;overflow:auto;max-height:65dvh;scrollbar-width:thin;scrollbar-color:#66cfc0 transparent}#websiteTools p{font-size:13px;line-height:1.7;color:#c5c9cf}#websiteTools label{font-size:12px;display:grid;gap:8px}#websiteTools input{width:100%;border:1px solid #ffffff38;border-radius:10px;padding:10px;color:#f2f2f2}#websiteTools button[aria-pressed=true]{background:#f5f5f5!important;color:#111!important}.websiteToolGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.websiteToolGrid button{border:1px solid #ffffff30;border-radius:12px;font-size:12px}
+@media(max-width:760px){.websiteViewHint{left:48px;right:48px;font-size:9px;bottom:34px}html#ac-sky-root body#ac-transparent-workspace .websiteNode{font-size:10px;padding:6px;max-width:135px}.websiteNodeIcon{flex-basis:18px;width:18px}.websiteNodeIcon svg{width:16px;height:16px}}
+@media(prefers-reduced-motion:reduce){.websiteNode{transition:none}}
+
+#websiteViewport[data-mode=reference] .websiteNode{width:104px;max-width:104px;font-size:10px;padding:6px;gap:5px;min-height:34px}
+@media(max-width:760px){body[data-product-drawer] #websiteViewport{visibility:hidden!important}}
+
+#stage:has(#designSections:not(:empty)) .websiteViewHint{bottom:78px}
+
+/* One stable card geometry in reference, concept and AWS views. */
+html#ac-sky-root body#ac-transparent-workspace #websiteViewport .websiteNode{width:140px;max-width:140px;height:90px;min-height:90px;padding:14px 9px 10px;display:flex;flex-direction:column;justify-content:center;gap:7px;border:1px solid #ffffff2e;border-radius:13px;background:transparent!important;transform:translate(-50%,-50%) scale(var(--website-card-scale,1))!important;box-shadow:none!important;transition:color .15s,border-color .15s,background-color .15s}
+html#ac-sky-root body#ac-transparent-workspace #websiteViewport .websiteNode:hover{border-color:#ffffff85}
+html#ac-sky-root body#ac-transparent-workspace #websiteViewport .websiteNode.selected{background:#f5f5f5!important;border-color:#f5f5f5;color:#111}
+.websiteNodeIcon{width:24px;height:24px;flex:0 0 24px}.websiteNodeIcon img{width:24px;height:24px;object-fit:contain;display:block}.websiteNodeText{font-size:11px;line-height:1.3;text-align:center}.websiteNodeText small{font-size:9px;line-height:1.15;margin:3px 0 0;color:inherit;opacity:.65}.websiteStep{position:absolute;left:9px;top:7px;font-size:8px;letter-spacing:.08em;opacity:.6}.websiteNode.hideText{height:90px}.websiteLines path{stroke:#ffffff;opacity:.14}.websiteLines path.journey{opacity:.62;stroke-width:1.1}.websiteLines path.journey.planned{stroke-dasharray:4 4}
+.websiteStory{position:absolute;left:70px;right:70px;top:65px;text-align:center;pointer-events:none}.websiteStory span{font-size:9px;letter-spacing:.17em;color:#b4bbc4}.websiteStory p{font-size:15px;color:#edf0f3;margin:6px 0;line-height:1.4}.websiteViewHint{bottom:32px}
+.websiteAwsHeading{display:flex;align-items:center;gap:14px;margin-bottom:12px}.websiteAwsHeading img{width:34px;height:34px;object-fit:contain}.websiteAwsHeading h3{margin:0!important}.websiteJourney{padding-left:20px}.websiteJourney li{padding:8px 0 8px 4px}.websiteJourney p{margin:4px 0!important;font-size:13px!important}.websiteJourney strong{font-weight:500}
+#stage:has(#delta.visible) .websiteStory{visibility:hidden}
+.websiteLines marker path{fill:#d6dbe1;stroke:none;opacity:1}
+.websiteNode.selected img.websiteNeutralIcon{filter:brightness(0)}
+@media(max-width:760px){.websiteStory{left:60px;right:60px;top:53px}.websiteStory p{font-size:12px}.websiteStory span{font-size:8px}.websiteViewHint{font-size:8px;bottom:34px}}
+@media(max-width:560px){.websiteStory p{display:none}}
+.websiteNodeIcon.hasServices{display:flex;justify-content:center;gap:5px;width:auto;max-width:100%}.websiteNodeIcon.hasServices img{width:22px;height:22px}
+.foundationModel .websiteNodeText{font-size:13px}.foundationModel .websiteNodeText small{font-size:9px}.foundationModel .websiteStep{font-size:10px}.foundationModel .websiteStory{top:46px}
+.foundationStudy{border:0;border-top:1px solid #ffffff24;padding:0;margin:0}.foundationStudy summary{cursor:pointer;padding:18px 0;font-size:14px;line-height:1.5;color:#eceff2}.foundationStudy[open]{padding-bottom:18px}.foundationStudy summary:focus-visible{outline:1px solid #fff;outline-offset:3px}
+.foundationFormula,.foundationAlgorithm{font-family:ui-monospace,Consolas,monospace;font-size:12px;line-height:1.75;white-space:pre-wrap;overflow-wrap:anywhere;background:transparent;padding:12px 0;border:0;border-block:1px solid #ffffff20;color:#edf0f4}.foundationAlgorithm{font-size:11px}
+.foundationTableWrap{overflow-x:auto;scrollbar-width:thin;scrollbar-color:#66cfc0 transparent}.foundationTable{width:100%;border-collapse:collapse;table-layout:fixed;font-size:12px;line-height:1.6}.foundationTable :is(td,th){text-align:left;vertical-align:top;border-bottom:1px solid #ffffff24;padding:10px 6px;overflow-wrap:anywhere}.foundationTable :is(td,th):first-child{width:17%;padding-left:0}.foundationTable th{font-weight:500;color:#f1f2f4}.foundationSource{overflow-wrap:anywhere}.foundationSource small{font-size:10px;color:#aeb4bc}
+.foundationServices>div{display:flex;align-items:flex-start;gap:12px;padding:14px 0;border-top:1px solid #ffffff18}.foundationServices img{width:28px;height:28px;flex:0 0 28px}.foundationServices span{min-width:0}.foundationServices strong{font-size:13px;font-weight:500}.foundationServices p{font-size:12px!important}.foundationServices a{font-size:12px}
+.diagramZoom{position:absolute;right:70px;bottom:60px;display:flex;align-items:center;gap:3px;z-index:8;border:1px solid #ffffff30;border-radius:999px;padding:3px;background:transparent}
+.diagramZoom[hidden]{display:none!important}
+html#ac-sky-root body#ac-transparent-workspace .diagramZoom button{width:32px;height:32px;min-width:32px;min-height:32px;padding:0;border:0;border-radius:50%;background:transparent!important;color:#eceff3;line-height:1;font-size:16px;transform:none!important;box-shadow:none!important}
+html#ac-sky-root body#ac-transparent-workspace .diagramZoom button[data-site-action=fit]{font-size:11px}
+html#ac-sky-root body#ac-transparent-workspace .diagramZoom button:hover{color:#fff;outline:1px solid #ffffff66;outline-offset:-2px}
+.diagramZoom button:focus-visible{outline:1px solid #fff;outline-offset:1px}
+@media(max-width:600px){.diagramZoom{right:54px;bottom:58px}}
