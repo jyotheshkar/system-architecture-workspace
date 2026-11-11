@@ -7,8 +7,8 @@
   "files": [
     {
       "path": "README.md",
-      "size_bytes": 4287,
-      "sha256": "81aa50951c4dcd311a4fbd56ef0f6d29fb85ea5a7f746fe78648db0a9bb40d6a"
+      "size_bytes": 4533,
+      "sha256": "a29d5bb9cb6ccf4d862e5a5160ca1862ce4dbc565e0b68a08e44c4cb563a5e31"
     },
     {
       "path": "docs/PROVENANCE.md",
@@ -22,8 +22,8 @@
     },
     {
       "path": "scripts/validate_design_export.py",
-      "size_bytes": 7321,
-      "sha256": "ece12cb715adfb39e5b749e0ed40e9812e5c2f3f9b356b5c76abf5556be7aa8f"
+      "size_bytes": 7394,
+      "sha256": "fcabd745e321975337a7d776fb9173b91737ee471af43cb362046b6ccbbe73d6"
     },
     {
       "path": "workspace/core-reference.json",

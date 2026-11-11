@@ -1991,10 +1991,11 @@
       "bytes": 3142,
       "source_sha256": "38a6d95f678b4d133bcc89c8217a1e7ffd3f0bfb6c1ad113ac257379bad3eb9f",
       "source_git_blob_sha": "4550e07191e3911b6f84ac843a3fe23529619aa1",
-      "export_sha256": "38a6d95f678b4d133bcc89c8217a1e7ffd3f0bfb6c1ad113ac257379bad3eb9f",
-      "export_git_blob_sha": "4550e07191e3911b6f84ac843a3fe23529619aa1",
-      "export_bytes": 3142,
-      "source_bytes_preserved": true
+      "export_sha256": "09ed012ee02a4a8ecd76342a103d197328bb0cfe5752dd6b1b05a11efce1b177",
+      "export_git_blob_sha": "6c0de5d124c07f2c76b4f404f66eb1afdf1a18dd",
+      "export_bytes": 716,
+      "source_bytes_preserved": false,
+      "maintenance_note": "Standalone loopback-only preview repair on 2026-11-11; original source hashes retained."
     },
     {
       "path": "worker/test-workspace-store.mjs",

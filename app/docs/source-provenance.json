@@ -57,5 +57,15 @@
       "source_sha256": "9ef2e9a28760f21e941bcc8f6b236a4b55cfe0908ceef80d8dda376a98735132",
       "export_sha256": "de341485cdcd7168e74558ba51c44745bf35c9131ce620e004549086cce31152"
     }
-  ]
+  ],
+  "maintenance_2026_11_11": {
+    "ai_assisted": true,
+    "changes": [
+      "Standalone preview no longer requires omitted ZIP or sibling checkout",
+      "Loopback preview retains application authentication and no backing GitHub connection",
+      "New local-preview transport and integration test are maintained additions, not recovered source"
+    ],
+    "deployment_performed": false,
+    "current_hashes": "maintenance-20261111.json"
+  }
 }

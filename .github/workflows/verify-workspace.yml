@@ -21,3 +21,4 @@ jobs:
           node worker/build.mjs
           node worker/test.mjs
           node worker/test-workspace-store.mjs
+          node --test worker/preview.test.mjs

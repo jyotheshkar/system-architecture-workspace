@@ -2,6 +2,7 @@
 """Validate this design-data export without executing the app or contacting providers."""
 from __future__ import annotations
 import argparse
+from datetime import datetime, timezone
 import hashlib
 import json
 import re
@@ -136,7 +137,7 @@ def main():
                 "files": hashes}
     if args.write_manifest:
         MANIFEST.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
-        receipt = {"review_date_utc": "2026-10-25", "result": "passed",
+        receipt = {"review_date_utc": datetime.now(timezone.utc).date().isoformat(), "result": "passed",
                    "json_data_files_parsed": 6, "duplicate_keys_rejected": True,
                    "non_finite_constants_rejected": True,
                    "unchanged_files_matching_source_git_blobs": unchanged,
