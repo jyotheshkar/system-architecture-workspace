@@ -1,5 +1,10 @@
 # System Architecture Workspace
 
+[Implementation architecture, standalone preview and operating limits](docs/ARCHITECTURE.md)
+
+Maintained export changes on 11 November 2026 are AI assisted. Historical source
+identity is retained separately from current maintenance checks.
+
 Turn a customer idea into an architecture baseline an engineer can review: map component responsibilities, inspect connections, record controls and assumptions, and compare proposed AWS service choices in an interactive 3D workspace.
 
 The current experience supports manual architecture design and reference views. A prompt-to-design assistant is future work.

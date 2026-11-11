@@ -32,7 +32,7 @@ The build generates `dist/server/`. Generated bundles are excluded from the revi
 
 Hosting identity/configuration, runtime secrets and storage records, Git history, generated server bundles, the duplicate reference ZIP, the private integration-planning document, and the original hidden personal career/education/contact profile are omitted. Existing routes now present a labelled project overview where that profile previously appeared. Original source files refer to the private backing-repository adapter; a repository name is routing configuration, not a credential or permission grant.
 
-Production sign-in requires separately configured runtime bindings and secret values. The original preview helper also expects the omitted ZIP and a sibling historical checkout, so it is not a standalone preview command for this export. No production configuration, deployment or cloud data has been changed.
+Production sign-in requires separately configured runtime bindings and secret values. The maintained preview helper now runs this export standalone with a synthetic loopback login and an ephemeral in-memory archive; see [architecture and preview instructions](../docs/ARCHITECTURE.md) and the [maintenance receipt](docs/maintenance-20261111.json). No production configuration, deployment or cloud data has been changed.
 
 All eight included PNGs were visually inspected as architecture diagrams or decorative galaxy images. Third-party notices remain with their source assets. The review covers the exported snapshot, not the entire source history or every external dependency.
 

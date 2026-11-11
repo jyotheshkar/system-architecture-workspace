@@ -1,0 +1,41 @@
+{
+  "date_utc": "2026-11-11",
+  "scope": "AI-assisted local export maintenance; no deployment or provider writes",
+  "files": [
+    {
+      "path": "worker/preview.mjs",
+      "sha256": "09ed012ee02a4a8ecd76342a103d197328bb0cfe5752dd6b1b05a11efce1b177"
+    },
+    {
+      "path": "worker/local-preview.mjs",
+      "sha256": "731a84013f51b13f33e6a0e2b942318a61753f9c51d80124956cb50e1c7fdd86"
+    },
+    {
+      "path": "worker/preview.test.mjs",
+      "sha256": "c3e2980514855e63920321452500e079fea2f168b209d939884bddeb44330032"
+    }
+  ],
+  "checks": [
+    {
+      "command": "node worker/build.mjs",
+      "result": "passed; 145 embedded resources and 2 large archive references"
+    },
+    {
+      "command": "node worker/test.mjs",
+      "result": "passed; 115 assertions"
+    },
+    {
+      "command": "node worker/test-workspace-store.mjs",
+      "result": "passed; 344 mocked storage assertions"
+    },
+    {
+      "command": "node --test worker/preview.test.mjs",
+      "result": "passed; one local HTTP integration test, including sign-in, private route, no GitHub connection, large image and body limit"
+    }
+  ],
+  "limitations": [
+    "No browser interaction check",
+    "No live GitHub or AWS operation",
+    "Synthetic in-memory preview store is ephemeral"
+  ]
+}
