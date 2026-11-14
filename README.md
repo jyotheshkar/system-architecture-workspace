@@ -48,3 +48,5 @@ The [design-data manifest](docs/DESIGN_DATA_MANIFEST.json) covers the data and s
 The original private Git history, tokens, environment inventories, personal CV/contact/application records and runtime databases are omitted. A public portfolio copy must not become a private operational store.
 
 Official AWS documentation links and retained assets keep their respective rights and notices. Public visibility alone is not a licence grant; no unsupported relicensing or production-readiness claim is introduced.
+
+**Year provenance:** The `2026` suffix records this repository's creation year (created 2026-10-25). Later maintenance retains its own dates.
